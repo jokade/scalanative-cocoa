@@ -48,7 +48,6 @@ object ObjC {
           case x => x
         }
         cls.updBody(transformedBody)
-//        cls
 
         /* transform companion object */
       case obj: ObjectTransformData =>
@@ -111,7 +110,6 @@ object ObjC {
           c.error(c.enclosingPosition,"multiple parameter lists not supported for ObjC classes")
           ???
       }
-//      q"_root_.objc.runtime.objc_msgSend[$rettype]($target,$selectorVal,..$argnames)"
       q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
     }
 

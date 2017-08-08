@@ -1,4 +1,4 @@
-//     Project: scalan-cocoa
+//     Project: scalanative-cocoa
 //      Module: objc
 // Description: Bindings to the ObjC runtime defined in objc/*.h
 package objc

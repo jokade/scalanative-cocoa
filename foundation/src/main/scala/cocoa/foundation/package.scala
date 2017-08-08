@@ -1,4 +1,4 @@
-//     Project: scalan-cocoa
+//     Project: scalanative-cocoa
 //      Module:
 // Description:
 package cocoa
@@ -13,9 +13,6 @@ package object foundation {
 
   private val ZERO_ULong = 0.toULong
 
-//  implicit class RichNSUInteger(val i: CUnsignedLong) extends AnyVal {
-//    def toBoolean: Boolean = i > ZERO_ULong
-//  }
   implicit def integerToBoolean(i: NSUInteger): Boolean = i > ZERO_ULong
 
   /** NSString literal. */

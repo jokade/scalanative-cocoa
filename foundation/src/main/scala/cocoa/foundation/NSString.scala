@@ -1,4 +1,4 @@
-//     Project: scalan-cocoa
+//     Project: scalanative-cocoa
 //      Module:
 // Description:
 package cocoa.foundation

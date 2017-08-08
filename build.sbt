@@ -5,15 +5,21 @@ version := "0.0.1-SNAPSHOT"
 scalaVersion in ThisBuild := "2.11.11"
 
 val Version = new {
+  val config      = "1.3.1"
+  val scopt       = "3.6.0"
   val smacrotools = "0.0.6"
+  val slogging    = "0.5.3"
 }
 
 
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-deprecation","-unchecked","-feature","-language:implicitConversions","-Xlint"),
-  nativeLinkingOptions ++= Seq("-framework","Foundation"),
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
   )
+
+lazy val nativeSettings = Seq(
+  nativeLinkingOptions ++= Seq("-framework","Foundation")
+)
 
 lazy val root = project.in(file("."))
   .aggregate(objc,foundation)
@@ -24,7 +30,7 @@ lazy val root = project.in(file("."))
 
 lazy val objc = project
   .enablePlugins(ScalaNativePlugin)
-  .settings(commonSettings:_*)
+  .settings(commonSettings ++ nativeSettings:_*)
   .settings(
     name := "scalanative-objc",
     libraryDependencies ++= Seq(
@@ -35,7 +41,7 @@ lazy val objc = project
 lazy val foundation = project
   .enablePlugins(ScalaNativePlugin)
   .dependsOn(objc)
-  .settings(commonSettings:_*)
+  .settings(commonSettings ++ nativeSettings:_*)
   .settings(
     name := "scalanative-cocoa-foundation"
   )
@@ -43,7 +49,20 @@ lazy val foundation = project
 lazy val test = project
   .enablePlugins(ScalaNativePlugin)
   .dependsOn(foundation)
-  .settings(commonSettings ++ dontPublish:_*)
+  .settings(commonSettings ++ nativeSettings ++ dontPublish:_*)
+
+lazy val bindgen = project
+  .settings(commonSettings ++ antlr4Settings:_*)
+  .settings(
+    name := "scalanative-objc-bindgen",
+    antlr4PackageName in Antlr4 := Some("bindgen.antlr"),
+    antlr4GenVisitor in Antlr4 := true,
+    libraryDependencies ++= Seq(
+      "biz.enef"         %% "slogging" % Version.slogging,
+      "com.github.scopt" %% "scopt" % Version.scopt,
+      "com.typesafe"     %  "config" % Version.config
+    )
+  )
 
 lazy val dontPublish = Seq(
   publish := {},
