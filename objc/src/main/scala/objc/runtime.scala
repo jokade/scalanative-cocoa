@@ -26,7 +26,7 @@ object runtime {
   /**
    * A pointer to an object or an atomic response to a message.
    */
-  type id = CUnsignedLong //Ptr[Byte]
+  type id =  CUnsignedLong //Ptr[Byte]
 
   type SEL = Ptr[Byte]
 

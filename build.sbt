@@ -7,7 +7,7 @@ scalaVersion in ThisBuild := "2.11.11"
 val Version = new {
   val config      = "1.3.1"
   val scopt       = "3.6.0"
-  val smacrotools = "0.0.6"
+  val smacrotools = "0.0.7-SNAPSHOT"
   val slogging    = "0.5.3"
 }
 

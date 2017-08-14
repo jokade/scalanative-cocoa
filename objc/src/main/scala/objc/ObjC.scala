@@ -78,17 +78,6 @@ object ObjC {
           .map( p => genSelectorDef(p._1,p._2) )
         // new body = (transformed) statements ++ selector definitions
         val transformedBody = Seq(ccastImport, objcCls) ++ objStmts ++ selectorDefs
-//        // replace all methods with 'extern' RHS with the corresponding obj_msgSend call
-//        val transformedBody = (objcCls +: clsSelectors) ++ obj.origParts.body.flatMap{
-//          case t @ DefDef(mods,name,types,args,rettype,Ident(TermName("extern"))) =>
-//            val (selector,selectorTerm) = genSelector(name,args)
-//            val call = genCall(clsTarget,selectorTerm,args,rettype) //q"objc.objc_msgSend(_cls,$selectorVal,${paramNames(t)})"
-//            Seq(
-//              genSelectorDef(selector,selectorTerm),
-//              DefDef(mods,name,types,args,rettype,call)
-//            )
-//          case default => Seq(default)
-//        }
         obj.updBody(transformedBody)
       case default => default
     }
@@ -128,8 +117,20 @@ object ObjC {
           c.error(c.enclosingPosition,"multiple parameter lists not supported for ObjC classes")
           ???
       }
-      q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
+      // TODO: check if intermediate casting is still required
+      if(intermediateCastRequired(rettype))
+        q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
+      else
+        q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
     }
 
+    // As of scala-native 0.3.2, casting from unsigned (UInt, ULong, ...) to signed (CInt, CLong, ...)
+    // is not supported. Hence we need to add an additional cast to Object in these cases.
+    private def intermediateCastRequired(rettype: Tree): Boolean = getQualifiedTypeName(rettype,withMacrosDisabled = true, dealias = true) match {
+      case "Boolean" => true
+      case x =>
+        println(x)
+        false
+    }
   }
 }
