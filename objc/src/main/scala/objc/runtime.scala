@@ -18,12 +18,20 @@ object runtime {
    */
   type ObjCClass = Ptr[Byte]
 
+  trait ObjCObject
+
+//  implicit final class RichObjCObject(val o: ObjCObject) extends AnyVal {
+//    @inline def id: id = o.cast[id]
+//  }
   /**
    * A pointer to an object or an atomic response to a message.
    */
-  type ID = CUnsignedLong //Ptr[Byte]
+  type id = CUnsignedLong //Ptr[Byte]
 
   type SEL = Ptr[Byte]
+
+  type IMP = CFunctionPtr
+
 
   /**
    * Returns whether an object is a class object.
@@ -31,7 +39,7 @@ object runtime {
    * @param obj An Objective-C object.
    * @return true if the object is a class or metaclass
    */
-  def object_isClass(obj: ID): CBool = extern
+  def object_isClass(obj: id): CBool = extern
 
   /**
    * Returns the class name of a given object.
@@ -39,7 +47,7 @@ object runtime {
    * @param obj An Objective-C object.
    * @return The name of the class of which `obj` is an instance
    */
-  def object_getClassName(obj: ID): CString = extern
+  def object_getClassName(obj: id): CString = extern
 
   /**
    * Returns the class definition of a specified class.
@@ -70,7 +78,7 @@ object runtime {
    */
   def sel_registerName(str: CString): SEL = extern
 
-  def objc_msgSend(self: Any, op: SEL, args: native.CVararg*): ID = extern
+  def objc_msgSend(self: Any, op: SEL, args: native.CVararg*): id = extern
 
 }
 
