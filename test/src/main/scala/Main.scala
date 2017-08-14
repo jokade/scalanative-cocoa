@@ -1,21 +1,25 @@
-import cocoa.foundation.NSLog
-
-import scala.scalanative.native
 //     Project: scalanative-cocoa
 //      Module: 
-// Description: 
+// Description:
 
 import cocoa.foundation._
-import objc.runtime._
+import global._
+
 import scalanative.native._
 
 object Main extends App {
-  val s = ns"My first app!"
-  val l = s.length
-  println(l)
-  if(s.hasPrefix(ns"My"))
-    println("YEAH")
-//  val l = objc_msgSend(s,sel_registerName(c"length"))
-  NSLog(s)
+
+  val s1 = NSString.string()
+//  NSLog("%s",s1)
+//  val s2 = NSString.stringWithCString(c"Hello",NSStringEncoding.NSASCIIStringEncoding)
+  val s2 = NSString(c"Hello Worldößä&!")
+
+  println(s1.length())
+  println(s2.length())
+  NSLog(s2)
+//  if(!o.isProxy()) {
+//    println("yeah!")
+//  }
   println("end")
 }
+

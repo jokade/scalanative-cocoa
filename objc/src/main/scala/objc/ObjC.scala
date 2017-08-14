@@ -15,6 +15,8 @@ class ObjC() extends StaticAnnotation {
   def macroTransform(annottees: Any*): Any = macro ObjC.Macro.impl
 }
 
+class selector(name: String) extends StaticAnnotation
+
 object ObjC {
 
   def idToString(id: Any): String = ""
@@ -31,7 +33,7 @@ object ObjC {
     private val ccastImport = q"import scalanative.native.CCast"
 
     override def analyze: Analysis = super.analyze andThen {
-      case (cls: ClassParts, data) =>
+      case (cls: CommonParts, data) =>
         // collect selectors to be emitted into companion object body
         val selectors = cls.body.collect{
           case DefDef(mods,name,types,args,rettype,Ident(TermName("extern"))) =>
@@ -118,19 +120,33 @@ object ObjC {
           ???
       }
       // TODO: check if intermediate casting is still required
-      if(intermediateCastRequired(rettype))
-        q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
-      else
-        q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
+      castMode(rettype) match {
+        case CastMode.Direct =>
+          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
+        case CastMode.Object =>
+          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
+        case CastMode.Float =>
+          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).toFloat"
+      }
     }
 
     // As of scala-native 0.3.2, casting from unsigned (UInt, ULong, ...) to signed (CInt, CLong, ...)
     // is not supported. Hence we need to add an additional cast to Object in these cases.
-    private def intermediateCastRequired(rettype: Tree): Boolean = getQualifiedTypeName(rettype,withMacrosDisabled = true, dealias = true) match {
-      case "Boolean" => true
+    private def castMode(rettype: Tree): CastMode.Value = getQualifiedTypeName(rettype,withMacrosDisabled = true, dealias = true) match {
+      case "Boolean" | "Int" | "Long" | "Short" |
+           "scala.scalanative.native.UShort" => CastMode.Object
+      case "Float" =>
+//        println(rettype)
+        CastMode.Float
       case x =>
-        println(x)
-        false
+//        println(x)
+        CastMode.Direct
+    }
+
+    object CastMode extends Enumeration {
+      val Direct = Value
+      val Object = Value
+      val Float =  Value
     }
   }
 }
