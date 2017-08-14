@@ -51,19 +51,6 @@ lazy val test = project
   .dependsOn(foundation)
   .settings(commonSettings ++ nativeSettings ++ dontPublish:_*)
 
-lazy val bindgen = project
-  .settings(commonSettings ++ antlr4Settings:_*)
-  .settings(
-    name := "scalanative-objc-bindgen",
-    antlr4PackageName in Antlr4 := Some("bindgen.antlr"),
-    antlr4GenVisitor in Antlr4 := true,
-    libraryDependencies ++= Seq(
-      "biz.enef"         %% "slogging" % Version.slogging,
-      "com.github.scopt" %% "scopt" % Version.scopt,
-      "com.typesafe"     %  "config" % Version.config
-    )
-  )
-
 lazy val dontPublish = Seq(
   publish := {},
   publishLocal := {},
