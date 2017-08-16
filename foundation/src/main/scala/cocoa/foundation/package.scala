@@ -18,7 +18,12 @@ package object foundation {
   type unichar    = UShort
 
   type NSZone  = Ptr[Byte]
-  type NSRange = Ptr[Byte]
+  type NSRange = Ptr[CStruct2[NSUInteger,NSUInteger]]
+  type NSPoint = Ptr[CStruct2[CDouble,CDouble]]
+  type NSSize  = NSPoint
+  type NSRect  = Ptr[CStruct2[CStruct2[CDouble,CDouble],CStruct2[CDouble,CDouble]]]
+
+  val nil: id = 0.cast[id]
 
   implicit def objectToId(o: ObjCObject): id = o.cast[id]
 
@@ -26,6 +31,15 @@ package object foundation {
   implicit class NSQuote(val ctx: StringContext) {
     def ns(): NSString = macro Macros.nsquoteImpl
   }
+
+  @inline def @@(int: Int): NSNumber = NSNumber(int)
+  @inline def @@(double: Double): NSNumber = NSNumber(double)
+  @inline def @@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)
+//  @inline def @@@(ints: Int*): NSArray[NSNumber] = NSArray(ints.map(NSNumber.apply):_*)
+//  @inline def @@@(doubles: Double*): NSArray[NSNumber] = NSArray(doubles.map(NSNumber.apply):_*)
+//  @inline def @@@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)
+
+//  @inline def @@@[T<:NSObject](objects: T*) = NSArray.arrayWithObjects(objects:_*)
 
   type NSComparisonResult = NSInteger
   object NSComparisonResult {

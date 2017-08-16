@@ -14,17 +14,13 @@ object Main extends App {
 
   def hello(self: id, cmd: SEL): Unit = println("Hello!")
 
-  val o = NSObject.alloc()
-  val m = MyClass.alloc()
-  NSLog(ns"%@",o)
-  NSLog(ns"%@",m)
-
+  val array = @@(@@(1), @@(2), @@(3))
+  NSLog(ns"%@",array)
   println("end")
 }
 
 @ObjC
 @ScalaDefined
-@debug
 class MyClass extends NSObject {
 }
 object MyClass extends NSObjectClass {

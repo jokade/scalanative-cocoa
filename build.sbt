@@ -14,7 +14,9 @@ val Version = new {
 
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-deprecation","-unchecked","-feature","-language:implicitConversions","-Xlint"),
-  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
+  libraryDependencies += "com.lihaoyi" %%% "utest" % "0.4.8" % "test",
+  testFrameworks += new TestFramework("utest.runner.Framework")
   )
 
 lazy val nativeSettings = Seq(
@@ -22,7 +24,7 @@ lazy val nativeSettings = Seq(
 )
 
 lazy val root = project.in(file("."))
-  .aggregate(objc,foundation)
+  .aggregate(objc,foundation,appkit)
   .settings(dontPublish:_*)
   .settings(
     name := "scalanative-cocoa"
@@ -46,9 +48,18 @@ lazy val foundation = project
     name := "scalanative-cocoa-foundation"
   )
 
-lazy val test = project
+lazy val appkit = project
   .enablePlugins(ScalaNativePlugin)
   .dependsOn(foundation)
+  .settings(commonSettings ++ nativeSettings:_*)
+  .settings(
+    name := "scalanative-cocoa-appkit"
+  )
+
+
+lazy val test = project
+  .enablePlugins(ScalaNativePlugin)
+  .dependsOn(appkit)
   .settings(commonSettings ++ nativeSettings ++ dontPublish:_*)
 
 lazy val dontPublish = Seq(

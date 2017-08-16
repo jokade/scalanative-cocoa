@@ -25,5 +25,7 @@ object global {
 //  def CFBridgingRetain(X: id): CFTypeRef = extern
 //  def CFBridgingRelease(X: CFTypeRef): id = extern
 
+  def NXReadNSObjectFromCoder(decoder: NSCoder): NSObject = extern
+
   def NSLog(format: NSString, args: CVararg*): Unit = extern
 }

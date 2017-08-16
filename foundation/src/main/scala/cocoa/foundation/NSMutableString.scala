@@ -1,10 +1,11 @@
 //     Project: scalanative-cocoa
-//      Module:
-// Description:
+//      Module: Foundation
+// Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
+//              Foundation/NSString.h
 package cocoa.foundation
 
 import scalanative.native._
-import objc.ObjC
+import objc.{ObjC, ObjCClass}
 import cocoa.foundation._
 
 
@@ -21,7 +22,12 @@ class NSMutableString extends NSString {
   @inline def initWithCapacity(capacity: NSUInteger): NSMutableString = extern
 }
 
-object NSMutableString {
+@ObjCClass
+abstract class NSMutableStringClass extends NSStringClass {
   @inline def stringWithCapacity(capacity: NSUInteger): NSMutableString = extern
+}
+
+object NSMutableString extends NSMutableStringClass {
+  override type InstanceType = NSMutableString
 }
 

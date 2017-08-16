@@ -77,7 +77,6 @@ object ObjC {
         // collect selectors to be emitted into companion object body
         val selectors = cls.body.collect {
           case DefDef(mods, name, types, args, rettype, Ident(TermName("extern"))) =>
-//          case DefDef(mods, name, types, args, rettype, _) =>
             genSelector(name, args)
         }
         (cls, data.selectors = selectors)
@@ -88,7 +87,7 @@ object ObjC {
       /* transform class */
       case cls: ClassTransformData =>
         val transformedBody = cls.modParts.body.map {
-          case t@DefDef(mods, name, types, args, rettype, Ident(TermName(rhs))) =>
+          case t@DefDef(mods, name, types, args, rettype, Ident(TermName("extern"))) =>
             val selectorTerm = q"${cls.modParts.name.toTermName}.${genSelector(name, args)._2}"
             val call =
               if(isObjCClass)
@@ -98,8 +97,8 @@ object ObjC {
             DefDef(mods, name, types, args, rettype, call)
           case x => x
         }
-        val toString = q"""@inline override def toString(): String = ${cls.modParts.fullName}+"("+this.cast[objc.runtime.id]+")""""
-        cls.updBody(ccastImport +: transformedBody :+ toString)
+//        val toString = q"""@inline override def toString(): String = ${cls.modParts.fullName}+"("+this.cast[objc.runtime.id]+")""""
+        cls.updBody(ccastImport +: transformedBody) // :+ toString)
 
       /* transform companion object */
       case obj: ObjectTransformData =>
@@ -113,9 +112,14 @@ object ObjC {
         val clsSelectors = obj.data.selectors
         // collect selector definitions and statements (transformed ObjC-calls and other statements)
         // from companion
-        val (objSelectors, objStmts) = obj.modParts.body.map {
+        val (objSelectors, objStmts) = obj.modParts.body
+          // filter out dummy _cls defs
+//          .filter{
+//            case DefDef(_, name, _, _, _, _) if name.toString == "_cls" => false
+//            case _ => true
+//          }
+          .map {
           case t@DefDef(mods, name, types, args, rettype, Ident(TermName("extern"))) =>
-//          case t@DefDef(mods, name, types, args, rettype, _) =>
             val sel = genSelector(name, args)
             val call = genCall(clsTarget, sel._2, args, rettype) //q"objc.objc_msgSend(_cls,$selectorVal,${paramNames(t)})"
             (Some(sel), DefDef(mods, name, types, args, rettype, call))
@@ -139,11 +143,23 @@ object ObjC {
     private def genCall(target: TermName, selectorVal: TermName, argsList: List[List[ValDef]], rettype: Tree): Tree =
       genCall(q"$target", q"$selectorVal", argsList, rettype)
 
+//    private def genCall(target: Tree, selectorVal: Tree, argsList: List[List[ValDef]], rettype: Tree): Tree = argsList match {
+//      case Nil => q"""objc.helper.msgSend($target,$selectorVal)"""
+//      case List(args) =>q"""objc.helper.msgSend($target,$selectorVal, ..$args)"""
+//    }
+
     private def genCall(target: Tree, selectorVal: Tree, argsList: List[List[ValDef]], rettype: Tree): Tree = {
       val argnames = argsList match {
         case Nil => Nil
         case List(args) => args map {
-          case ValDef(_, name, _, _) => name
+          case t@ValDef(_, name, tpe, _) =>
+            // TODO: do we really need this casting? without, the NIR compiler complains about a missing type tag
+            castMode(tpe) match {
+              case CastMode.TypeArg =>
+                q"$name.asInstanceOf[AnyRef]"
+              case _ => q"$name"
+            }
+//            name
         }
         case x =>
           c.error(c.enclosingPosition, "multiple parameter lists not supported for ObjC classes")
@@ -155,10 +171,8 @@ object ObjC {
           q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
         case CastMode.Object =>
           q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
-        case CastMode.InstanceOf =>
+        case CastMode.InstanceOf | CastMode.TypeArg =>
           q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].asInstanceOf[$rettype]"
-//        case CastMode.InstanceOf =>
-//          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
       }
     }
 
@@ -175,13 +189,14 @@ object ObjC {
       }
       // TODO: we shouldn't need this catch - can we avoid this Excpetion?
     } catch {
-      case _: Throwable => CastMode.InstanceOf
+      case _: Throwable => CastMode.TypeArg
     }
 
     object CastMode extends Enumeration {
       val Direct = Value
       val Object = Value
       val InstanceOf = Value
+      val TypeArg  = Value
     }
 
 //    private def collectObjectClassMembers(cls: TypeParts) = {

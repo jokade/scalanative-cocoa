@@ -3,6 +3,9 @@
 // Description: Bindings to the ObjC runtime defined in objc/*.h
 package objc
 
+import objc.runtime.SEL
+
+import scala.reflect.ClassTag
 import scala.reflect.macros.blackbox
 import scala.scalanative.native
 import scala.scalanative.native._
@@ -13,6 +16,10 @@ import scala.scalanative.runtime._
  */
 @extern
 object runtime {
+
+  type int32_t = CInt
+  type int64_t = CLong
+
   /**
    * An opaque type that represents an Objective-C class.
    */
@@ -87,6 +94,12 @@ object runtime {
   def objc_msgSend(self: Any, op: SEL, args: native.CVararg*): id = extern
 
 }
+
+//object helper {
+//  import runtime.objc_msgSend
+//  @inline final def msgSend[R: ClassTag](self: Any, op: SEL): R = objc_msgSend(self,op).cast[R]
+//  @inline final def msgSend[R: ClassTag,T1<:AnyRef:ClassTag](self: Any, op: SEL, arg1: T1): R = objc_msgSend(self,op,arg1.cast[Ptr[Byte]]).cast[R]
+//}
 
 
 

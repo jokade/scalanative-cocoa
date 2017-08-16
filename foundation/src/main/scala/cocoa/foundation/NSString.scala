@@ -1,19 +1,19 @@
 //     Project: scalanative-cocoa
-//      Module:
-// Description:
+//      Module: Foundation
+// Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
+//              Foundation/NSString.h, Foundation/NSURL.h
 package cocoa.foundation
 
 import de.surfice.smacrotools.debug
 
 import scala.scalanative.native._
-import objc.{ObjC, selector}
+import objc.{ObjC, ObjCClass, selector}
 import objc.runtime._
 
 @ObjC
 class NSString extends NSObject with NSCopying with NSMutableCopying with NSSecureCoding {
   @inline def characterAtIndex(index: NSUInteger): unichar = extern
-  @inline override def init(): NSString = extern
-//  @inline def initWithCoder(aDecoder: NSCoder): NSString = extern
+  @inline def initWithCoder(aDecoder: NSCoder): NSString = extern
   @inline def length(): NSUInteger = extern
   @inline def substringFromIndex(from: NSUInteger): NSString = extern
   @inline def substringToIndex(to: NSUInteger): NSString = extern
@@ -136,15 +136,15 @@ class NSString extends NSObject with NSCopying with NSMutableCopying with NSSecu
 //  @inline def initWithCString(bytes: Ptr[CSignedChar]): id = extern
 //  @deprecated
 //  @inline def getCharacters(buffer: unichar): Unit = extern
+
+
+  // from Foundation/NSURL.h
+  @inline def stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters: NSCharacterSet): NSString = extern
+  @inline def stringByRemovingPercentEncoding(): NSString = extern
 }
 
-object NSString {
-  /**
-   * Convenience Method for creating UTF8 encoded NSStrings from scala-native CStrings.
-   * @param cstring
-   * @return
-   */
-  def apply(cstring: CString): NSString = stringWithCString(cstring,NSStringEncoding.NSUTF8StringEncoding)
+@ObjCClass
+abstract class NSStringClass extends NSObjectClass {
 
   @inline def availableStringEncodings(): Ptr[NSStringEncoding] = extern
   @inline def localizedNameOfStringEncoding(encoding: NSStringEncoding): NSString = extern
@@ -169,3 +169,26 @@ object NSString {
 //  @deprecated
 //  @inline def stringWithCString(bytes: Ptr[CSignedChar]): id = extern
 }
+
+object NSString extends NSStringClass {
+  override type InstanceType = NSString
+  /**
+   * Convenience Method for creating UTF8 encoded NSStrings from scala-native CStrings.
+   * @param cstring
+   * @return
+   */
+  def apply(cstring: CString): NSString = stringWithCString(cstring,NSStringEncoding.NSUTF8StringEncoding)
+
+  implicit final class RichNSString(val ns: NSString) extends AnyVal {
+    /**
+     * Returns the CString representation of this NSString.
+     */
+    @inline def cstring: CString = ns.UTF8String()
+
+    /**
+     * Returns the Scala String representation of this NSString
+     */
+    @inline def string: String = fromCString(ns.UTF8String())
+  }
+}
+
