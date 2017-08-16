@@ -18,7 +18,7 @@ lazy val commonSettings = Seq(
   )
 
 lazy val nativeSettings = Seq(
-  nativeLinkingOptions ++= Seq("-framework","Foundation")
+  nativeLinkingOptions ++= Seq("-framework","Cocoa")
 )
 
 lazy val root = project.in(file("."))

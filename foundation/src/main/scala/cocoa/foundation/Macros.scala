@@ -3,6 +3,8 @@
 // Description:
 package cocoa.foundation
 
+import de.surfice.smacrotools.BlackboxMacroTools
+
 import scala.reflect.macros.blackbox
 
 /**
@@ -10,7 +12,7 @@ import scala.reflect.macros.blackbox
  *
  * @param c
  */
-private[this] class Macros(val c: blackbox.Context) {
+private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools {
   import c.universe._
 
   def nsquoteImpl()  = {
@@ -19,4 +21,5 @@ private[this] class Macros(val c: blackbox.Context) {
     }
     c.Expr(q"cocoa.foundation.NSString($expr)")
   }
+
 }

@@ -4,25 +4,65 @@
 package objc
 
 import de.surfice.smacrotools.MacroAnnotationHandler
+import objc.internal.ObjCMacroTools
 import objc.runtime.id
 
 import scala.language.experimental.macros
 import scala.annotation.{StaticAnnotation, compileTimeOnly}
-import scala.reflect.macros.whitebox
+import scala.reflect.macros.{TypecheckException, whitebox}
 
 @compileTimeOnly("enable macro paradise to expand macro annotations")
 class ObjC() extends StaticAnnotation {
-  def macroTransform(annottees: Any*): Any = macro ObjC.Macro.impl
+  def macroTransform(annottees: Any*): Any = macro ObjC.ObjCMacro.impl
+}
+
+@compileTimeOnly("enable macro paradise to expand macro annotations")
+class ObjCClass() extends StaticAnnotation {
+  def macroTransform(annottees: Any*): Any = macro ObjC.ObjCClassMacro.impl
 }
 
 class selector(name: String) extends StaticAnnotation
 
 object ObjC {
 
-  def idToString(id: Any): String = ""
+  private[objc] class ObjCMacro(val c: whitebox.Context) extends BaseMacro {
+    override def isObjCClass: Boolean = false
+  }
+  private[objc] class ObjCClassMacro(val c: whitebox.Context) extends BaseMacro {
+    override def isObjCClass: Boolean = true
+  }
 
-  private[objc] class Macro(val c: whitebox.Context) extends MacroAnnotationHandler {
+  private[objc] abstract class BaseMacro
+    extends MacroAnnotationHandler
+    with ObjCMacroTools
+    with ScalaDefined.Handler {
+
     import c.universe._
+
+    def isObjCClass: Boolean
+
+    implicit class ObjCData(var data: Map[String, Any]) {
+      type Data = Map[String, Any]
+      type Selectors = Seq[(String, TermName)]
+      type Statements = Seq[Tree]
+
+      // selectors to be defined in the companion object
+      def selectors: Selectors = data.getOrElse("selectors", Nil).asInstanceOf[Selectors]
+
+      def selectors_=(selectors: Selectors): Data = {
+        data += "selectors" -> selectors
+        data
+      }
+
+      // statements to be executed during ObjC class intialization for @ScalaDefined classes
+      // (i.e. the code required to define the ObjC class when the first call to a class method is issued)
+      def objcClassInits: Statements = data.getOrElse("objcClassInits", Nil).asInstanceOf[Statements]
+
+      def objcClassInits_=(stmts: Statements): Data = {
+        data += "objcClassInits" -> stmts
+        data
+      }
+    }
 
     override val annotationName: String = "ObjC"
     override val supportsClasses: Boolean = true
@@ -33,51 +73,58 @@ object ObjC {
     private val ccastImport = q"import scalanative.native.CCast"
 
     override def analyze: Analysis = super.analyze andThen {
-      case (cls: CommonParts, data) =>
+      case (cls: TypeParts, data) =>
         // collect selectors to be emitted into companion object body
-        val selectors = cls.body.collect{
-          case DefDef(mods,name,types,args,rettype,Ident(TermName("extern"))) =>
-            genSelector(name,args)
+        val selectors = cls.body.collect {
+          case DefDef(mods, name, types, args, rettype, Ident(TermName("extern"))) =>
+//          case DefDef(mods, name, types, args, rettype, _) =>
+            genSelector(name, args)
         }
-        (cls,data + ("selectors" -> selectors))
+        (cls, data.selectors = selectors)
       case default => default
     }
 
     override def transform: Transformation = super.transform andThen {
       /* transform class */
       case cls: ClassTransformData =>
-        val transformedBody = cls.origParts.body.map {
+        val transformedBody = cls.modParts.body.map {
           case t@DefDef(mods, name, types, args, rettype, Ident(TermName(rhs))) =>
-            val selectorTerm = q"${cls.origParts.name.toTermName}.${genSelector(name,args)._2}"
-            val call = genCall(q"this",selectorTerm,args,rettype)
-            DefDef(mods,name,types,args,rettype,call)
+            val selectorTerm = q"${cls.modParts.name.toTermName}.${genSelector(name, args)._2}"
+            val call =
+              if(isObjCClass)
+                genCall(q"_cls", selectorTerm, args, rettype)
+              else
+                genCall(q"this", selectorTerm, args, rettype)
+            DefDef(mods, name, types, args, rettype, call)
           case x => x
         }
-        val toString = q"""@inline override def toString(): String = ${cls.origParts.fullName}+"("+this.cast[objc.runtime.id]+")""""
+        val toString = q"""@inline override def toString(): String = ${cls.modParts.fullName}+"("+this.cast[objc.runtime.id]+")""""
         cls.updBody(ccastImport +: transformedBody :+ toString)
 
-        /* transform companion object */
+      /* transform companion object */
       case obj: ObjectTransformData =>
         // val containing the class reference
         val objcCls =
-          q"""private lazy val _cls = _root_.objc.runtime.objc_getClass(
-              scalanative.native.CQuote(StringContext(${obj.origParts.name.toString})).c() )
-           """
+          q"""lazy val _cls = {
+              ..${obj.data.objcClassInits}
+              objc.runtime.objc_getClass(scalanative.native.CQuote(StringContext(${obj.modParts.name.toString})).c() )
+              }"""
         // collect selector definitions from class
-        val clsSelectors = obj.data("selectors").asInstanceOf[Iterable[(String,TermName)]]
+        val clsSelectors = obj.data.selectors
         // collect selector definitions and statements (transformed ObjC-calls and other statements)
         // from companion
-        val (objSelectors,objStmts) = obj.origParts.body.map{
-          case t @ DefDef(mods,name,types,args,rettype,Ident(TermName("extern"))) =>
-            val sel = genSelector(name,args)
-            val call = genCall(clsTarget,sel._2,args,rettype) //q"objc.objc_msgSend(_cls,$selectorVal,${paramNames(t)})"
-            (Some(sel),DefDef(mods,name,types,args,rettype,call))
-          case stmt => (None,stmt)
+        val (objSelectors, objStmts) = obj.modParts.body.map {
+          case t@DefDef(mods, name, types, args, rettype, Ident(TermName("extern"))) =>
+//          case t@DefDef(mods, name, types, args, rettype, _) =>
+            val sel = genSelector(name, args)
+            val call = genCall(clsTarget, sel._2, args, rettype) //q"objc.objc_msgSend(_cls,$selectorVal,${paramNames(t)})"
+            (Some(sel), DefDef(mods, name, types, args, rettype, call))
+          case stmt => (None, stmt)
         }.unzip
         // create selector definitions
-        val selectorDefs = (clsSelectors ++ objSelectors.collect{case Some(sel) => sel})
+        val selectorDefs = (clsSelectors ++ objSelectors.collect { case Some(sel) => sel })
           .toMap
-          .map( p => genSelectorDef(p._1,p._2) )
+          .map(p => genSelectorDef(p._1, p._2))
         // new body = (transformed) statements ++ selector definitions
         val transformedBody = Seq(ccastImport, objcCls) ++ objStmts ++ selectorDefs
         obj.updBody(transformedBody)
@@ -86,37 +133,20 @@ object ObjC {
 
     private val extern = q"scala.scalanative.native.extern"
 
-    private def genSelector(name: TermName, args: List[List[ValDef]]): (String,TermName) = {
-      val s = genSelectorString(name,args)
-      (s,TermName("_sel_" + s.replaceAll(":","_")))
-    }
-
-    private def genSelectorString(name: TermName, args: List[List[ValDef]]): String = args match {
-      case Nil | List(Nil) => name.toString
-      case List(args) => name.toString +:(args.tail map {
-        case ValDef(_,name,_,_) => name.toString
-      }) mkString("",":",":")
-      case x =>
-        c.error(c.enclosingPosition,"multiple parameter lists not supported for ObjC classes")
-        ???
-    }
-
-    private def genSelectorDef(selector: String, selectorTerm: TermName) =
-      q"private lazy val $selectorTerm = _root_.objc.runtime.sel_registerName(scalanative.native.CQuote(StringContext($selector)).c())"
 
     private val clsTarget = TermName("_cls")
 
     private def genCall(target: TermName, selectorVal: TermName, argsList: List[List[ValDef]], rettype: Tree): Tree =
-      genCall(q"$target",q"$selectorVal",argsList,rettype)
+      genCall(q"$target", q"$selectorVal", argsList, rettype)
 
     private def genCall(target: Tree, selectorVal: Tree, argsList: List[List[ValDef]], rettype: Tree): Tree = {
       val argnames = argsList match {
         case Nil => Nil
         case List(args) => args map {
-            case ValDef(_,name,_,_) => name
-          }
+          case ValDef(_, name, _, _) => name
+        }
         case x =>
-          c.error(c.enclosingPosition,"multiple parameter lists not supported for ObjC classes")
+          c.error(c.enclosingPosition, "multiple parameter lists not supported for ObjC classes")
           ???
       }
       // TODO: check if intermediate casting is still required
@@ -125,28 +155,45 @@ object ObjC {
           q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
         case CastMode.Object =>
           q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
-        case CastMode.Float =>
-          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).toFloat"
+        case CastMode.InstanceOf =>
+          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].asInstanceOf[$rettype]"
+//        case CastMode.InstanceOf =>
+//          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
       }
     }
 
     // As of scala-native 0.3.2, casting from unsigned (UInt, ULong, ...) to signed (CInt, CLong, ...)
     // is not supported. Hence we need to add an additional cast to Object in these cases.
-    private def castMode(rettype: Tree): CastMode.Value = getQualifiedTypeName(rettype,withMacrosDisabled = true, dealias = true) match {
-      case "Boolean" | "Int" | "Long" | "Short" |
-           "scala.scalanative.native.UShort" => CastMode.Object
-      case "Float" =>
-//        println(rettype)
-        CastMode.Float
-      case x =>
-//        println(x)
-        CastMode.Direct
+    private def castMode(rettype: Tree): CastMode.Value = try{
+      getQualifiedTypeName(rettype, withMacrosDisabled = true, dealias = true) match {
+        case "Boolean" | "Int" | "Long" | "Short" |
+             "scala.scalanative.native.UShort" => CastMode.Object
+        case "Float" | "Double" =>
+          CastMode.InstanceOf
+        case x =>
+          CastMode.Direct
+      }
+      // TODO: we shouldn't need this catch - can we avoid this Excpetion?
+    } catch {
+      case _: Throwable => CastMode.InstanceOf
     }
 
     object CastMode extends Enumeration {
       val Direct = Value
       val Object = Value
-      val Float =  Value
+      val InstanceOf = Value
     }
+
+//    private def collectObjectClassMembers(cls: TypeParts) = {
+//      val parents = cls.companion.map(_.parents).getOrElse(Nil)
+//      parents.collect {
+//        case AppliedTypeTree(tpe, args) =>
+//          val parent = c.typecheck(tpe, c.TYPEmode, withMacrosDisabled = true)
+//          parent.tpe.decls.collect {
+//            case x if x.isMethod && x.name.toString != "$init$" => x.typeSignature
+//          }
+//      }.flatten
+//    }
+
   }
 }

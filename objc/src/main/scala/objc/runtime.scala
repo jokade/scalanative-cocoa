@@ -16,7 +16,7 @@ object runtime {
   /**
    * An opaque type that represents an Objective-C class.
    */
-  type ObjCClass = Ptr[Byte]
+//  type ObjCClass = Ptr[Byte]
 
   trait ObjCObject
 
@@ -26,7 +26,7 @@ object runtime {
   /**
    * A pointer to an object or an atomic response to a message.
    */
-  type id =  CUnsignedLong //Ptr[Byte]
+  type id =  Ptr[Byte] //CUnsignedLong
 
   type SEL = Ptr[Byte]
 
@@ -62,7 +62,13 @@ object runtime {
    *      checks a second time to see whether the class is registered. [[objc_lookUpClass()]]
    *      does not call the class handler callback.
    */
-  def objc_getClass(name: CString): ObjCClass = extern
+  def objc_getClass(name: CString): id = extern
+
+  def objc_allocateClassPair(superclass: id, name: CString, extraBytes: CSize): id = extern
+
+  def objc_registerClassPair(newClass: id): Unit = extern
+
+  def class_addMethod(cls: id, name: SEL, imp: IMP, types: CString): CBool = extern
 
   /**
    * Registers amethod with the Objective-C runtime system, maps the method
@@ -81,5 +87,6 @@ object runtime {
   def objc_msgSend(self: Any, op: SEL, args: native.CVararg*): id = extern
 
 }
+
 
 

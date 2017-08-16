@@ -110,8 +110,6 @@ class NSString extends NSObject with NSCopying with NSMutableCopying with NSSecu
   @inline def precomposedStringWithCanonicalMapping(): NSString = extern
   @inline def decomposedStringWithCompatibilityMapping(): NSString = extern
   @inline def precomposedStringWithCompatibilityMapping(): NSString = extern
-  @inline def description(): NSString = extern
-//  @inline def hash(): NSUInteger = extern
   @inline def propertyList(): id = extern
 //  @inline def propertyListFromStringsFileFormat(): NSDictionary = extern
 //  @deprecated
