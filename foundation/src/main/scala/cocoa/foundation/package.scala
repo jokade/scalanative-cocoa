@@ -34,6 +34,8 @@ package object foundation {
 
   @inline def @@(int: Int): NSNumber = NSNumber(int)
   @inline def @@(double: Double): NSNumber = NSNumber(double)
+  @inline def @@(boolean: Boolean): NSNumber = NSNumber(boolean)
+
   @inline def @@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)
 //  @inline def @@@(ints: Int*): NSArray[NSNumber] = NSArray(ints.map(NSNumber.apply):_*)
 //  @inline def @@@(doubles: Double*): NSArray[NSNumber] = NSArray(doubles.map(NSNumber.apply):_*)

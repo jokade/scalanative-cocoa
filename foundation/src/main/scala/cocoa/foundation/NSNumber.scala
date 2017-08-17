@@ -70,6 +70,7 @@ abstract class NSNumberClass extends NSValueClass {
 object NSNumber extends NSNumberClass {
   override type InstanceType = NSNumber
 
+  def apply(b: Boolean): NSNumber = NSNumber.numberWithBool(b)
   def apply(i: Int): NSNumber = NSNumber.numberWithInt(i)
   def apply(d: Double): NSNumber = NSNumber.numberWithDouble(d)
 }

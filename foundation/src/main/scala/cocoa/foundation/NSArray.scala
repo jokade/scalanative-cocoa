@@ -5,17 +5,19 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import de.surfice.smacrotools.debug
-import objc.runtime.{SEL, id}
-
-import scala.language.experimental.macros
+import objc.runtime.id
 import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
+import scala.language.experimental.macros
+import scala.scalanative.native._
 
 @ObjC
-//@debug
-class NSArray[T<:NSObject] extends NSObject with NSCopying with NSMutableCopying with NSSecureCoding {//with NSFastEnumeration {
+class NSArray[T<:NSObject]
+  extends NSObject
+    with NSCopying
+    with NSMutableCopying
+    with NSSecureCoding {
+    //with NSSeqLike[T] {//with NSFastEnumeration {
   @inline def objectAtIndex(index: NSUInteger): T = extern
 //  @inline def init(): NSArray[T] = extern
 //  @inline def initWithObjects(objects: T, cnt: NSUInteger): NSArray[T] = extern
@@ -70,7 +72,6 @@ class NSArray[T<:NSObject] extends NSObject with NSCopying with NSMutableCopying
 }
 
 @ObjCClass
-@debug
 abstract class NSArrayClass extends NSObjectClass {
   @inline def array[T<:NSObject](): NSArray[T] = extern
   @inline def arrayWithObject[T<:NSObject](anObject: T): NSArray[T] = extern
@@ -81,18 +82,16 @@ abstract class NSArrayClass extends NSObjectClass {
 }
 
 object NSArray extends NSArrayClass {
-  import objc.runtime.{objc_msgSend,sel_registerName}
+  import objc.runtime.{objc_msgSend, sel_registerName}
   override type InstanceType = NSArray[_]
 
-  lazy val _sel_arrayWithObjects_count: SEL = sel_registerName(c"arrayWithObjects:count:")
+  private lazy val _sel_arrayWithObjects_count = sel_registerName(c"arrayWithObjects:count:")
 
 //  def arrayWithObjects[T<:NSObject](firstObj: CVararg*): NSArray[T] =
 //    objc_msgSend(_cls,_sel_arrayWithObject_firstObj,firstObj:_*).cast[NSArray[T]]
 
 
-//  def arrayWithObjects[T<:NSObject](objects: T*): NSArray[T] = util.withCArray(objects){ (array,count) =>
-//    objc_msgSend(_cls,_sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
-//  }
+  // TODO: use Iterable instead of Seq
   def arrayWithObjects[T<:NSObject](objects: Seq[T]): NSArray[T] = Zone { implicit z =>
     val count = objects.size
     val array = stackalloc[id]( sizeof[id] * count)
@@ -104,17 +103,4 @@ object NSArray extends NSArrayClass {
   def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)
 //  def apply[T<:NSObject](objects: Seq[T]): NSArray[T] = arrayWithObjects(objects)
 
-  implicit final class RichNSArray[T<:NSObject](val ns: NSArray[T]) extends AnyVal {
-    /**
-     * Return the number of elements in this array.
-     */
-    @inline def size: Int = ns.count().toInt
-
-    /**
-     * Returns the element at the specified index.
-     */
-    @inline def apply(idx: Int): T = ns.objectAtIndex(idx.toUInt)
-
-//    @inline def :+[T](obj: T):
-  }
 }

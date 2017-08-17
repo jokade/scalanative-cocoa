@@ -6,21 +6,23 @@ import scalanative.native._
 
 object NSArrayTest extends TestSuite {
   val tests = TestSuite {
-    'class-{
+    'class- {
       assert(NSArray.className == "NSArray")
-      'array-{
+      'array - {
         val array = NSArray.array[NSNumber]()
         assert(
           array.className == "__NSArray0",
-          array.count().toInt == 0 )
+          array.count().toInt == 0)
       }
-      'arrayWithObject-{
+      'arrayWithObject - {
         val array = NSArray.arrayWithObject(NSNumber(42))
-        assert( array.size == 1,
-          array.objectAtIndex(0.toUInt).intValue() == 42 )
+        assert(array.size == 1,
+          array.objectAtIndex(0.toUInt).intValue() == 42)
       }
-      'arrayWithObjects-{
-        val array: NSArray[NSNumber] = NSArray.arrayWithObjects(NSNumber(0),NSNumber(1),NSNumber(2))
+    }
+    'classExtensions- {
+      'arrayWithObjects - {
+        val array: NSArray[NSNumber] = NSArray.arrayWithObjects(Seq(NSNumber(0), NSNumber(1), NSNumber(2)))
         assert(
           array.size == 3,
           array.objectAtIndex(0.toUInt).intValue() == 0,
@@ -29,7 +31,7 @@ object NSArrayTest extends TestSuite {
       }
     }
     'RichNSArray-{
-      val array = NSArray.arrayWithObjects(NSNumber(42),NSNumber(Int.MinValue),NSNumber(Int.MaxValue))
+      val array = NSArray(NSNumber(42),NSNumber(Int.MinValue),NSNumber(Int.MaxValue))
       'size-{
         assert( array.size == 3 )
       }
