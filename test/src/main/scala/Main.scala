@@ -25,10 +25,9 @@ object Main {
     val dict = NSDictionary(
       ns"hello" -> ns"world"
     )
-    dict.asScala.foreach{ p =>
-      NSLog(ns"%@: %@",p._1,p._2)
-    }
-//    NSLog(ns"%@",dict)
+    val lst = dict.asScala.values.map( _.string )
+    println( lst )
+//    NSLog(ns"%@",lst)
   }
 
 }

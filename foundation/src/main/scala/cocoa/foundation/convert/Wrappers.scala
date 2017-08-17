@@ -4,16 +4,15 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation.convert
 
-import cocoa.foundation.{NSArray, NSDictionary, NSEnumerator, NSObject, nil}
+import cocoa.foundation.{NSArray, NSDictionary, NSEnumerator, NSObject, global, NSQuote}
+import global.NSLog
 import objc.runtime._
 
-import scalanative.native._
-import scala.collection.{AbstractIterator, AbstractSeq}
 import scala.collection.immutable.AbstractMap
-import scala.reflect.ClassTag
+import scala.collection.{AbstractIterator, AbstractSeq}
+import scala.scalanative.native._
 
 object Wrappers {
-//  implicit def idToObject[T](id: id): T = id.cast[T]
 
   case class NSArrayWrapper[T<:NSObject](ns: NSArray[T]) extends AbstractSeq[T] with IndexedSeq[T] {
     override def length: Int = ns.count().toInt
@@ -56,7 +55,6 @@ object Wrappers {
     private def loadNext(): Unit =
       if(_consumed) {
         _next = ns.nextObject()
-        if(_next == null)
         _consumed = false
       }
 
