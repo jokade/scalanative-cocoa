@@ -7,18 +7,33 @@ import cocoa.foundation.global._
 import de.surfice.smacrotools.debug
 import objc.runtime._
 import objc.{ObjC, ScalaDefined}
+import NSConverters._
+
 
 import scala.scalanative.native._
 
-object Main extends App {
+object Main {
 
-  def hello(self: id, cmd: SEL): Unit = println("Hello!")
+  def main(args: Array[String]): Unit = {
+//    NSApplicationMain(args.size,args.cast[Ptr[CString]])
+//    println("end")
+    f()
+//    unistd.sleep(20)
+  }
 
-  val array = @@(@@(1), @@(2), @@(3))
-  NSLog(ns"%@",array)
-  println("end")
+  def f(): Unit = {
+    val array = NSArray(@@(1),@@(2),@@(3)).asScala
+    array.foreach{e =>
+      NSLog(ns"%@",e)
+    }
+  }
+
 }
 
+@extern
+object unistd {
+  def sleep(seconds: CInt): Unit = extern
+}
 @ObjC
 @ScalaDefined
 class MyClass extends NSObject {

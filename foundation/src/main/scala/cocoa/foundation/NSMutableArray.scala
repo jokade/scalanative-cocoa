@@ -2,6 +2,7 @@
 //      Module: Foundation
 // Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
 //              Foundation/NSArray.h
+// Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
 import objc.runtime.SEL

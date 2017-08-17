@@ -2,6 +2,7 @@
 //      Module: Foundation
 // Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
 //              Foundation/NSArray.h
+// Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
 import de.surfice.smacrotools.debug
@@ -89,14 +90,19 @@ object NSArray extends NSArrayClass {
 //    objc_msgSend(_cls,_sel_arrayWithObject_firstObj,firstObj:_*).cast[NSArray[T]]
 
 
-  def arrayWithObjects[T<:NSObject](objects: T*): NSArray[T] = Zone { implicit z =>
+//  def arrayWithObjects[T<:NSObject](objects: T*): NSArray[T] = util.withCArray(objects){ (array,count) =>
+//    objc_msgSend(_cls,_sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
+//  }
+  def arrayWithObjects[T<:NSObject](objects: Seq[T]): NSArray[T] = Zone { implicit z =>
     val count = objects.size
     val array = stackalloc[id]( sizeof[id] * count)
     for(i<-0 until count)
       !(array + i) = objects(i)
     objc_msgSend(_cls,_sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
   }
-  def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects:_*)
+
+  def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)
+//  def apply[T<:NSObject](objects: Seq[T]): NSArray[T] = arrayWithObjects(objects)
 
   implicit final class RichNSArray[T<:NSObject](val ns: NSArray[T]) extends AnyVal {
     /**
