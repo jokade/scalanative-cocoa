@@ -68,7 +68,7 @@ abstract class NSDictionaryClass extends NSObjectClass {
 object NSDictionary extends NSDictionaryClass {
   import objc.runtime._
   override type InstanceType = NSDictionary[_,_]
-  private lazy val _sel_dictionaryWithObjects_forKeys_count = sel_registerName(c"dictionaryWithObjects:forKeys:count:")
+  private lazy val __sel_dictionaryWithObjects_forKeys_count = sel_registerName(c"dictionaryWithObjects:forKeys:count:")
 
   def apply[K<:NSObject, V<:NSObject](kv: (K,V)*): NSDictionary[K,V] = dictionaryWithObjects(kv)
 
@@ -81,7 +81,7 @@ object NSDictionary extends NSDictionaryClass {
       !(keyArray + i) = objects(i)._1
       !(objArray + i) = objects(i)._2
     }
-    objc_msgSend(_cls,_sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
+    objc_msgSend(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
   }
 
 

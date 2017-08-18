@@ -32,6 +32,8 @@ package object foundation {
     def ns(): NSString = macro Macros.nsquoteImpl
   }
 
+  def $super[T,R](self: T)(f: T=>R): R = macro Macros.superImpl
+
   @inline def @@(int: Int): NSNumber = NSNumber(int)
   @inline def @@(double: Double): NSNumber = NSNumber(double)
   @inline def @@(boolean: Boolean): NSNumber = NSNumber(boolean)

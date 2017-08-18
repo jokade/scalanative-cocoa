@@ -85,7 +85,7 @@ object NSArray extends NSArrayClass {
   import objc.runtime.{objc_msgSend, sel_registerName}
   override type InstanceType = NSArray[_]
 
-  private lazy val _sel_arrayWithObjects_count = sel_registerName(c"arrayWithObjects:count:")
+  private lazy val __sel_arrayWithObjects_count = sel_registerName(c"arrayWithObjects:count:")
 
 //  def arrayWithObjects[T<:NSObject](firstObj: CVararg*): NSArray[T] =
 //    objc_msgSend(_cls,_sel_arrayWithObject_firstObj,firstObj:_*).cast[NSArray[T]]
@@ -97,7 +97,7 @@ object NSArray extends NSArrayClass {
     val array = stackalloc[id]( sizeof[id] * count)
     for(i<-0 until count)
       !(array + i) = objects(i)
-    objc_msgSend(_cls,_sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
+    objc_msgSend(__cls,__sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
   }
 
   def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)

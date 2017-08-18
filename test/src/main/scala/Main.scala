@@ -6,29 +6,31 @@ import cocoa.foundation._
 import cocoa.foundation.global._
 import de.surfice.smacrotools.debug
 import objc.runtime._
-import objc.{ObjC, ScalaDefined}
+import objc._
 import NSConverters._
 
-
 import scala.scalanative.native._
+import scala.scalanative.runtime.struct
 
 object Main {
 
   def main(args: Array[String]): Unit = {
-//    NSApplicationMain(args.size,args.cast[Ptr[CString]])
-//    println("end")
     f()
-//    unistd.sleep(20)
   }
 
   def f(): Unit = {
-    val dict = NSDictionary(
-      ns"hello" -> ns"world"
-    )
-    val lst = dict.asScala.values.map( _.string )
-    println( lst )
-//    NSLog(ns"%@",lst)
+    val o = NSObject.alloc()
+    NSLog(ns"%@",o)
+    val x = XClass.alloc()
+    NSLog(ns"%@",x)
+    x.get.init()
+    NSLog(ns"%@",objc_msgSend(x,sel_registerName(c"init")))
+
+//    val parent = ObjCParent(x.cast[id])
+//    val desc = objc_msgSend(parent,sel_registerName(c"hello"))
+//    NSLog(ns"%@",parent)
   }
+
 
 }
 
@@ -36,21 +38,22 @@ object Main {
 object unistd {
   def sleep(seconds: CInt): Unit = extern
 }
-@ObjC
-@ScalaDefined
-class MyClass extends NSObject {
+
+
+@SNDefined
+@debug
+class XClass(self: ObjCProxy[XClass]) {
+//  override type InstanceType = XClass
+  var i = 42
+
+  def init(): ObjCObject = {
+    $super(self)(_.get.init())
+
+//    NSLog(ns"super_init: %@",p)
+    self
+  }
 }
-object MyClass extends NSObjectClass {
-  override type InstanceType = MyClass
-}
+object XClass extends NSObjectClass {
+  override type InstanceType = ObjCProxy[XClass]
 
-
-//object MyClass extends NSObjectClass[MyClass] {
-//  override def alloc(): MyClass = extern
-//}
-
-@extern
-object NSApplicationMain {
-  @name("NSApplicationMain")
-  def apply(argc: CInt, argv: Ptr[Byte]) = extern
 }

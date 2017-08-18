@@ -4,6 +4,7 @@
 package cocoa.foundation
 
 import de.surfice.smacrotools.BlackboxMacroTools
+import objc.internal.ObjCMacroTools
 
 import scala.reflect.macros.blackbox
 
@@ -12,7 +13,7 @@ import scala.reflect.macros.blackbox
  *
  * @param c
  */
-private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools {
+private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools with ObjCMacroTools {
   import c.universe._
 
   def nsquoteImpl()  = {
@@ -22,4 +23,19 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools {
     c.Expr(q"cocoa.foundation.NSString($expr)")
   }
 
+  def superImpl(self: Tree)(f: Tree) = {
+    println(f)
+    val t = f match {
+      case Function(_,Apply(f,args)) =>
+        val method = f.symbol.asMethod
+        val params = method.paramLists.head
+        q"""import objc.runtime._
+            import objc.helper._
+           val sel = sel_registerName(${cstring(genSelectorString(method))})
+           msgSendSuper($self,sel,..$args).cast[${method.returnType}]
+         """
+    }
+    println(t)
+    t
+  }
 }

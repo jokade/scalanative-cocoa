@@ -5,6 +5,7 @@
 //              Foundation/NSError.h
 package cocoa.foundation
 
+import de.surfice.smacrotools.debug
 import objc._
 import objc.runtime._
 
@@ -59,7 +60,7 @@ class NSObject extends ObjCObject {
 @ObjCClass
 abstract class NSObjectClass {
   type InstanceType
-  def _cls: id
+  def __cls: id
   @inline def load(): Unit = extern
   @inline def initialize(): Unit = extern
 //  @inline def `new`(): T = macro RT.clsMsgSend
@@ -84,9 +85,8 @@ abstract class NSObjectClass {
   @inline def setVersion(aVersion: NSInteger): Unit = extern
   @inline def poseAsClass(aClass: id): Unit = extern
 
-  @inline final def className: String = fromCString(object_getClassName(_cls))
+  @inline final def className: String = fromCString(object_getClassName(__cls))
 }
-
 
 object NSObject extends NSObjectClass {
   override type InstanceType = NSObject

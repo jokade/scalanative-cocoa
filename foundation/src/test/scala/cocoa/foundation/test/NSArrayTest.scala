@@ -16,7 +16,7 @@ object NSArrayTest extends TestSuite {
       }
       'arrayWithObject - {
         val array = NSArray.arrayWithObject(NSNumber(42))
-        assert(array.size == 1,
+        assert(array.count().toInt == 1,
           array.objectAtIndex(0.toUInt).intValue() == 42)
       }
     }
@@ -24,23 +24,23 @@ object NSArrayTest extends TestSuite {
       'arrayWithObjects - {
         val array: NSArray[NSNumber] = NSArray.arrayWithObjects(Seq(NSNumber(0), NSNumber(1), NSNumber(2)))
         assert(
-          array.size == 3,
+          array.count().toInt == 3,
           array.objectAtIndex(0.toUInt).intValue() == 0,
           array.objectAtIndex(1.toUInt).intValue() == 1,
           array.objectAtIndex(2.toUInt).intValue() == 2)
       }
     }
-    'RichNSArray-{
-      val array = NSArray(NSNumber(42),NSNumber(Int.MinValue),NSNumber(Int.MaxValue))
-      'size-{
-        assert( array.size == 3 )
-      }
-      'apply-{
-        assert(
-          array(0).intValue() == 42,
-          array(1).intValue() == Int.MinValue,
-          array(2).intValue() == Int.MaxValue )
-      }
-    }
+//    'RichNSArray-{
+//      val array = NSArray(NSNumber(42),NSNumber(Int.MinValue),NSNumber(Int.MaxValue))
+//      'size-{
+//        assert( array.count().toInt == 3 )
+//      }
+//      'apply-{
+//        assert(
+//          array(0).intValue() == 42,
+//          array(1).intValue() == Int.MinValue,
+//          array(2).intValue() == Int.MaxValue )
+//      }
+//    }
   }
 }
