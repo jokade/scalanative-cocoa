@@ -176,7 +176,7 @@ object ScalaObjC {
     private def genExposedMethodProxy(cls: ClassParts)(m: ExposedMember) = {
       import m._
       val call = if(hasParamList) q"o.$name(..${paramNames(params)})" else q"o.$name"
-        q"""def ${methodProxyName(m)}(self: objc.runtime.id, sel: SEL, ..$params) = {
+        q"""def ${methodProxyName(m)}(self: objc.runtime.id, sel: objc.runtime.SEL, ..$params) = {
             val o = objc.helper.getScalaInstanceIVar[${cls.name}](self)
             $call
           }
@@ -185,7 +185,7 @@ object ScalaObjC {
 
     private def genExposedVarSetterProxy(cls: ClassParts)(m: ExposedMember) = {
       import m._
-      q"""def ${methodProxyName(genSetterSelectorName(m.name))}(self: objc.runtime.id, sel: SEL, value: ${m.tpe.get}) = {
+      q"""def ${methodProxyName(genSetterSelectorName(m.name))}(self: objc.runtime.id, sel: objc.runtime.SEL, value: ${m.tpe.get}) = {
             val o = objc.helper.getScalaInstanceIVar[${cls.name}](self)
             o.$name = value
           }
