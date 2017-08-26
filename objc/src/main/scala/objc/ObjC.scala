@@ -34,8 +34,7 @@ object ObjC {
 
   private[objc] abstract class BaseMacro
     extends MacroAnnotationHandler
-    with ObjCMacroTools
-    with ScalaDefined.Handler {
+    with ObjCMacroTools {
 
     import c.universe._
 
