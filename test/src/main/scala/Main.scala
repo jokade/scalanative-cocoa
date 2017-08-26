@@ -40,8 +40,8 @@ object unistd {
 }
 
 
-@SNDefined
-@debug
+@ScalaObjC
+//@debug
 class XClass(self: ObjCProxy[XClass]) {
 //  override type InstanceType = XClass
   var i = 42

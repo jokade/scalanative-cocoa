@@ -64,40 +64,4 @@ object runtime {
   def class_getSuperclass(cls: id): id = extern
 }
 
-object helper {
-  import runtime._
-
-//  implicit def objectToId(o: ObjCObject): id = o.cast[id]
-
-  private val scalaInstanceIVar = c"s"
-  val sel_alloc: SEL = sel_registerName(c"alloc")
-
-  def msgSendSuper(self: id, op: SEL, args: CVararg*): id = {
-    val objc_super = stackalloc[objc_super]( sizeof[objc_super] )
-    val super_class = class_getSuperclass(object_getClass(self))
-    !objc_super._1 = self
-    !objc_super._2 = super_class
-    runtime.objc_msgSendSuper(objc_super,op)
-  }
-
-  @inline def addScalaInstanceIVar(cls: id): Boolean = runtime.class_addIvar(cls,scalaInstanceIVar,8,3.toUByte,null)
-
-  @inline def setScalaInstanceIVar(obj: id, instance: Object): runtime.IVar =
-    runtime.object_setInstanceVariable(obj,scalaInstanceIVar,instance.cast[Ptr[Byte]])
-
-  // TODO: can we use IVar instead of getInstanceVariable?
-  @inline def getScalaInstanceIVar[T](obj: id): T = {
-    val out = stackalloc[Ptr[Byte]]( sizeof[Ptr[Byte]] )
-    runtime.object_getInstanceVariable(obj,scalaInstanceIVar,out)
-    (!out).cast[Object].asInstanceOf[T]
-  }
-
-  def allocProxy(clsObj: id, instance: id=>Object): id = {
-    val obj = msgSendSuper(clsObj,sel_alloc)
-    setScalaInstanceIVar(obj,instance(obj))
-    obj
-  }
-}
-
-
 

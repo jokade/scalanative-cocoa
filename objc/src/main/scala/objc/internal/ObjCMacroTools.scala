@@ -68,8 +68,8 @@ trait ObjCMacroTools extends CommonMacroTools {
   protected[this] def genSelectorString(method: MethodSymbol): String = method.name.toString
 
   protected[this] def genSelectorString(name: TermName, args: List[List[ValDef]]): String = args match {
-    case Nil | List(Nil) => name.toString
-    case List(args) => name.toString +: (args.tail map {
+    case Nil | List(Nil) => selectorMethodName(name)
+    case List(args) => selectorMethodName(name) +: (args.tail map {
       case ValDef(_, name, _, _) => name.toString
     }) mkString("", ":", ":")
     case x =>
@@ -77,7 +77,16 @@ trait ObjCMacroTools extends CommonMacroTools {
       ???
   }
 
+  private def selectorMethodName(name: TermName): String = {
+    val s = name.toString
+    if(s.endsWith("$eq"))
+      "set" + s.head.toUpper + s.tail.stripSuffix("_$eq")
+    else
+      s
+  }
+
+
   protected[this] def genSelectorDef(selector: String, selectorTerm: TermName) =
-    q"lazy val $selectorTerm = _root_.objc.runtime.sel_registerName(scalanative.native.CQuote(StringContext($selector)).c())"
+    q"protected lazy val $selectorTerm = _root_.objc.runtime.sel_registerName(scalanative.native.CQuote(StringContext($selector)).c())"
 
 }
