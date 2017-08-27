@@ -35,4 +35,22 @@ package object appkit {
     val NSYearMonthDayDatePickerElementFlag     = 0x00e0.toUInt
     val NSEraDatePickerElementFlag              = 0x0100.toUInt
   }
+
+  type NSTextAlignment = NSUInteger
+  object NSTextAlignment {
+    val NSTextAlignmentLeft       = 0.toUInt   // Visually left aligned
+    val NSTextAlignmentCenter_IOS = 1.toUInt   // Visually centered (IOS)
+    val NSTextAlignmentRight_IOS  = 2.toUInt   // Visually right aligned (IOS)
+    val NSTextAlignmentRight      = 1.toUInt   // Visually right aligned
+    val NSTextAlignmentCenter     = 2.toUInt   // Visually centered
+    val NSTextAlignmentJustified  = 3.toUInt   // Fully-justified. The last line in a paragraph is natural-aligned.
+    val NSTextAlignmentNatural    = 4.toUInt   // Indicates the default alignment for script
+  }
+
+  type NSWritingDirection = NSUInteger
+  object NSWritingDirection {
+    val NSWritingDirectionNatural       = -1   // Determines direction using the Unicode Bidi Algorithm rules P2 and P3
+    val NSWritingDirectionLeftToRight   = 0    // Left to right writing direction
+    val NSWritingDirectionRightToLeft   = 1    // Right to left writing direction
+  }
 }
