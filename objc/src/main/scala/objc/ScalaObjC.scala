@@ -98,25 +98,36 @@ object ScalaObjC {
           val newCls = objc_allocateClassPair($parent.__cls,$clsName,0)
           objc.helper.addScalaInstanceIVar(newCls)
           val metaCls = object_getClass(newCls)
-          class_addMethod(metaCls,sel_alloc,CFunctionPtr.fromFunction1(__alloc),c"@:")
+          class_addMethod(metaCls,sel_allocWithZone,CFunctionPtr.fromFunction3(__allocWithZone),c"@:@")
           ..${exposedMembers map registerExposedMember}
           ..$exposedVarSetters
           objc_registerClassPair(newCls)
        """
     }
+    //class_addMethod(metaCls,sel_alloc,CFunctionPtr.fromFunction1(__alloc),c"@:")
 
-    private def allocDef(cls: ClassParts) = Seq[Tree] {
+    private def allocDef(cls: ClassParts) = {
       val clsName = cls.name
       val retType = cls.name.toTypeName // q"$clsName"
+      Seq(
       q"""def __alloc(clsObj: objc.runtime.id): objc.ObjCProxy[$retType] = {
             import objc.helper._
-            val ref = objc.helper.msgSendSuper(clsObj,sel_alloc)
+            val ref = objc.helper.msgSendSuper0(clsObj,sel_alloc)
             val proxy = ref.cast[objc.ObjCProxy[$clsName]]
             val instance = new $clsName(proxy)
             setScalaInstanceIVar(ref,instance)
             proxy
           }
-       """
+       """,
+      q"""def __allocWithZone(clsObj: objc.runtime.id, sel: objc.runtime.SEL, zone: objc.runtime.id): objc.ObjCProxy[$retType] = {
+            import objc.helper._
+            val ref = objc.helper.msgSendSuper1(clsObj,sel_allocWithZone,zone)
+            val proxy = ref.cast[objc.ObjCProxy[$clsName]]
+            val instance = new $clsName(proxy)
+            setScalaInstanceIVar(ref,instance)
+            proxy
+          }
+       """)
     }
 
     private def registerExposedMember(m: ExposedMember): Tree = {
@@ -186,6 +197,7 @@ object ScalaObjC {
     private def genExposedVarSetterProxy(cls: ClassParts)(m: ExposedMember) = {
       import m._
       q"""def ${methodProxyName(genSetterSelectorName(m.name))}(self: objc.runtime.id, sel: objc.runtime.SEL, value: ${m.tpe.get}) = {
+          println("setter")
             val o = objc.helper.getScalaInstanceIVar[${cls.name}](self)
             o.$name = value
           }

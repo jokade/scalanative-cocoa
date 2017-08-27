@@ -24,7 +24,6 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools w
   }
 
   def superImpl(self: Tree)(f: Tree) = {
-    println(f)
     val t = f match {
       case Function(_,Apply(f,args)) =>
         val method = f.symbol.asMethod
@@ -32,10 +31,9 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools w
         q"""import objc.runtime._
             import objc.helper._
            val sel = sel_registerName(${cstring(genSelectorString(method))})
-           msgSendSuper($self,sel,..$args).cast[${method.returnType}]
+           msgSendSuper0($self,sel,..$args).cast[${method.returnType}]
          """
     }
-    println(t)
     t
   }
 }

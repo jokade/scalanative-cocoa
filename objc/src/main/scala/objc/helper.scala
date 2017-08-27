@@ -5,8 +5,9 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package objc
 
-import runtime._
-import scalanative.native._
+import objc.runtime._
+
+import scala.scalanative.native._
 
 object helper {
 
@@ -14,13 +15,22 @@ object helper {
 
   private val scalaInstanceIVar = c"s"
   val sel_alloc: SEL = sel_registerName(c"alloc")
+  val sel_allocWithZone: SEL = sel_registerName(c"allocWithZone:")
 
-  def msgSendSuper(self: id, op: SEL, args: CVararg*): id = {
+  def msgSendSuper0(self: id, op: SEL): id = {
     val objc_super = stackalloc[objc_super]( sizeof[objc_super] )
     val super_class = class_getSuperclass(object_getClass(self))
     !objc_super._1 = self
     !objc_super._2 = super_class
     runtime.objc_msgSendSuper(objc_super,op)
+  }
+
+  def msgSendSuper1(self: id, op: SEL, arg1: Ptr[Byte]): id = {
+    val objc_super = stackalloc[objc_super]( sizeof[objc_super] )
+    val super_class = class_getSuperclass(object_getClass(self))
+    !objc_super._1 = self
+    !objc_super._2 = super_class
+    runtime.objc_msgSendSuper(objc_super,op, arg1)
   }
 
   @inline def addScalaInstanceIVar(cls: id): Boolean = runtime.class_addIvar(cls,scalaInstanceIVar,8,3.toUByte,null)
@@ -36,7 +46,7 @@ object helper {
   }
 
   def allocProxy(clsObj: id, instance: id=>Object): id = {
-    val obj = msgSendSuper(clsObj,sel_alloc)
+    val obj = msgSendSuper0(clsObj,sel_alloc)
     setScalaInstanceIVar(obj,instance(obj))
     obj
   }
