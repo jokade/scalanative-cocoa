@@ -8,7 +8,7 @@ import objc.runtime._
 import cocoa.foundation._
 
 @extern
-object global {
+object Foundation {
 //  def sel_getName(sel: SEL): Ptr[CSignedChar] = extern
 //  def sel_registerName(str: Ptr[CSignedChar]): SEL = extern
 //  def object_getClassName(obj: id): Ptr[CSignedChar] = extern

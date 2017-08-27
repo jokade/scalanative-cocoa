@@ -6,7 +6,7 @@ import objc.runtime.id
 import scalanative.native._
 
 @extern
-object global {
+object AppKit {
 
   type _NSModalSession = Ptr[Byte]
   type NSThreadPrivate = Ptr[Byte]
@@ -20,4 +20,7 @@ object global {
 //  def NSPerformService(itemName: NSString, pboard: NSPasteboard): BOOL = extern
   def NSRegisterServicesProvider(provider: id, name: NSString): Unit = extern
   def NSUnregisterServicesProvider(name: NSString): Unit = extern
+
+  // from NSEvent.h
+//  def NSEventMaskFromType(`type`: NSEventType): NSEventMask = extern
 }

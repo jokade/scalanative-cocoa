@@ -3,7 +3,7 @@
 // Description:
 
 import cocoa.foundation._
-import cocoa.foundation.global._
+import cocoa.foundation.Foundation._
 import de.surfice.smacrotools.debug
 import objc.runtime._
 import objc._

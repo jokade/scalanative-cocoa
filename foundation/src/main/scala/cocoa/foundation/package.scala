@@ -1,6 +1,6 @@
 //     Project: scalanative-cocoa
 //      Module: Foundation
-// Description: Contains types defined in Foundation.
+// Description: Contains types defined in Foundation and Scala-specific utilities.
 package cocoa
 
 import objc.runtime._
@@ -17,11 +17,12 @@ package object foundation {
   type NSInteger  = CLong
   type unichar    = UShort
 
-  type NSZone  = Ptr[Byte]
-  type NSRange = Ptr[CStruct2[NSUInteger,NSUInteger]]
-  type NSPoint = Ptr[CStruct2[CDouble,CDouble]]
-  type NSSize  = NSPoint
-  type NSRect  = Ptr[CStruct2[CStruct2[CDouble,CDouble],CStruct2[CDouble,CDouble]]]
+  type NSZone         = Ptr[Byte]
+  type NSRange        = Ptr[CStruct2[NSUInteger,NSUInteger]]
+  type NSPoint        = Ptr[CStruct2[CDouble,CDouble]]
+  type NSSize         = NSPoint
+  type NSRect         = Ptr[CStruct2[CStruct2[CDouble,CDouble],CStruct2[CDouble,CDouble]]]
+  type NSTimeInterval = CDouble
 
   val nil: id = 0.cast[id]
 
@@ -111,6 +112,16 @@ package object foundation {
     val NSStringEnumerationReverse: NSStringEnumerationOptions = 1.toUInt << 8
     val NSStringEnumerationSubstringNotRequired: NSStringEnumerationOptions = 1.toUInt << 9
     val NSStringEnumerationLocalized: NSStringEnumerationOptions = 1.toUInt << 10
+  }
+
+  type NSTimeZoneNameStyle = NSInteger
+  object NSTimeZoneNameStyle {
+    val NSTimeZoneNameStyleStandard = 0            // Central Standard Time
+    val NSTimeZoneNameStyleShortStandard = 1       // CST
+    val NSTimeZoneNameStyleDaylightSaving = 2      // Central Daylight Time
+    val NSTimeZoneNameStyleShortDaylightSaving = 3 // CDT
+    val NSTimeZoneNameStyleGeneric = 4             // Central Time
+    val NSTimeZoneNameStyleShortGeneric = 5        // CT
   }
 
 }

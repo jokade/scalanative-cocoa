@@ -11,7 +11,7 @@ import objc.helper._
 
 import scalanative.native._
 import cocoa.foundation._
-import cocoa.foundation.global.NSLog
+import cocoa.foundation.Foundation.NSLog
 import de.surfice.smacrotools.debug
 import utest._
 

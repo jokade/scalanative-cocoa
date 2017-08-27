@@ -106,28 +106,24 @@ object ScalaObjC {
     }
     //class_addMethod(metaCls,sel_alloc,CFunctionPtr.fromFunction1(__alloc),c"@:")
 
-    private def allocDef(cls: ClassParts) = {
+    private def allocDef(cls: ClassParts) = Seq[Tree] {
       val clsName = cls.name
       val retType = cls.name.toTypeName // q"$clsName"
-      Seq(
-      q"""def __alloc(clsObj: objc.runtime.id): objc.ObjCProxy[$retType] = {
-            import objc.helper._
-            val ref = objc.helper.msgSendSuper0(clsObj,sel_alloc)
-            val proxy = ref.cast[objc.ObjCProxy[$clsName]]
-            val instance = new $clsName(proxy)
-            setScalaInstanceIVar(ref,instance)
-            proxy
-          }
-       """,
-      q"""def __allocWithZone(clsObj: objc.runtime.id, sel: objc.runtime.SEL, zone: objc.runtime.id): objc.ObjCProxy[$retType] = {
+      val proxyType = cls.params match {
+        case List(ValDef(_,_,tpt,_)) => tpt
+        case _ =>
+          c.error(c.enclosingPosition,s"ScalaObjC classes must have exactly one constructor argument (self)")
+          ???
+      }
+      q"""def __allocWithZone(clsObj: objc.runtime.id, sel: objc.runtime.SEL, zone: objc.runtime.id): $proxyType = {
             import objc.helper._
             val ref = objc.helper.msgSendSuper1(clsObj,sel_allocWithZone,zone)
-            val proxy = ref.cast[objc.ObjCProxy[$clsName]]
+            val proxy = ref.cast[$proxyType]
             val instance = new $clsName(proxy)
             setScalaInstanceIVar(ref,instance)
             proxy
           }
-       """)
+       """
     }
 
     private def registerExposedMember(m: ExposedMember): Tree = {
@@ -197,7 +193,6 @@ object ScalaObjC {
     private def genExposedVarSetterProxy(cls: ClassParts)(m: ExposedMember) = {
       import m._
       q"""def ${methodProxyName(genSetterSelectorName(m.name))}(self: objc.runtime.id, sel: objc.runtime.SEL, value: ${m.tpe.get}) = {
-          println("setter")
             val o = objc.helper.getScalaInstanceIVar[${cls.name}](self)
             o.$name = value
           }
