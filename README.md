@@ -69,12 +69,12 @@ import objc.ScalaObjC
 // the actual Object-C proxy that will be injected when the object is created.
 @ScalaObjC
 class AppDelegate(self: AppDelegate.InstanceType) extends NSApplicationDelegate {
-  // protected and private fields are not accesible from Objective-C
+  // protected and private fields are not accessible from Objective-C
   private var _clickCount = 0
   
   // all public vars, vals, and Scala getter/setter are exposed as Objective-C properties
-  var window: NSObject = _          // outlet connected in the xib to the application window
-  var clickCountView: NSTextField   // another xib outlet
+  var window: NSObject = _             // outlet connected in the xib to the application window
+  var clickCountView: NSTextField = _  // another xib outlet
   
   // all public methods are exposed to Objective-C using the normal selector semantics
   def takeClick(id: NSObject): Unit = {  // connected in xib as action for a button
