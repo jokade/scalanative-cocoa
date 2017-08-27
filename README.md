@@ -52,3 +52,49 @@ The bindings to the Foundation framework are located under the package `cocoa.fo
 
 ### Collections
 TBD
+
+
+## Creating Objective-C Classes in Scala
+Here's an example for an `NSApplicationDelegate` defined in Scala:
+```scala
+import cocoa.foundation._
+import coco.appkit._
+import objc.ScalaObjC
+
+// @ScalaObjC is a macro annotation that generates at compile time
+// the code required to define the Objective-C class
+// (the Objective-C class is then defined dynamically at runtime).
+//
+// Important: the constructor must have exactly one argument, which is
+// the actual Object-C proxy that will be injected when the object is created.
+@ScalaObjC
+class AppDelegate(self: AppDelegate.InstanceType) extends NSApplicationDelegate {
+  // protected and private fields are not accesible from Objective-C
+  private var _clickCount = 0
+  
+  // all public vars, vals, and Scala getter/setter are exposed as Objective-C properties
+  var window: NSObject = _          // outlet connected in the xib to the application window
+  var clickCountView: NSTextField   // another xib outlet
+  
+  // all public methods are exposed to Objective-C using the normal selector semantics
+  def takeClick(id: NSObject): Unit = {  // connected in xib as action for a button
+    _clickCount += 1
+    updateView()
+  }
+  
+  override def applicationDidFinishLaunching(notification: NSNotification): Unit = {
+    updateView()
+  }
+  
+  // protected and private methods are not accessible from Objective-C
+  private def updateView(): Unit = {
+    clickCountView.setIntegerValue(_clickCount)
+  } 
+}
+
+// companion object required to store the Objective-C class definition
+object AppDelegate extends NSApplicationClass {
+  // define the type of the proxy class
+  type InstanceType = NSObject
+}
+```
