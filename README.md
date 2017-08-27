@@ -3,6 +3,11 @@ Experimental [scala-native](https://github.com/scala-native/scala-native) bridge
 
 **WARNING**: This project is in an early experimental stage. Most of the bindings to Cocoa are still missing. The API and especially the semantics for creating Objective-C classes in Scala may change any time!
 
+#### Contents:
+* [Getting Started](#getting-started)
+* [Bindings to Foundation](#bindings-to-foundation)
+* [Creating Objective-C Classes](#creating-objective-c-classes-in-scala)
+
 ## Getting Started
 
 ### sbt Settings
@@ -58,7 +63,7 @@ TBD
 Here's an example for an `NSApplicationDelegate` defined in Scala:
 ```scala
 import cocoa.foundation._
-import coco.appkit._
+import cocoa.appkit._
 import objc.ScalaObjC
 
 // @ScalaObjC is a macro annotation that generates at compile time
