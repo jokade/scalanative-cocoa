@@ -103,4 +103,7 @@ object NSArray extends NSArrayClass {
   def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)
 //  def apply[T<:NSObject](objects: Seq[T]): NSArray[T] = arrayWithObjects(objects)
 
+  implicit final class RichNSArray[T <: NSObject](val ns: NSArray[T]) extends AnyVal {
+    def apply(idx: Int): T = ns.objectAtIndex(idx.toUInt)
+  }
 }

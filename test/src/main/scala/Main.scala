@@ -19,13 +19,7 @@ object Main {
   }
 
   def f(): Unit = {
-    val o = NSObject.alloc()
-    NSLog(ns"%@",o)
-    val x = XClass.alloc()
-    NSLog(ns"%@",x)
-    x.get.init()
-    NSLog(ns"%@",objc_msgSend(x,sel_registerName(c"init")))
-
+    val dict = NSDictionary(ns"greeting" -> ns"Hello")
 //    val parent = ObjCParent(x.cast[id])
 //    val desc = objc_msgSend(parent,sel_registerName(c"hello"))
 //    NSLog(ns"%@",parent)
