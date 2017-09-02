@@ -67,8 +67,6 @@ body {
 
 
 
-
-
 .breadcrumb > .active {color: #777 !important;}
 
 /* make room for the nav bar */
@@ -590,8 +588,11 @@ a.fa.fa-envelope-o.mailto {
     font-weight: 600;
 }
 
-h3 {color: #ED1951; font-weight:normal; font-size:130%;}
+/*h3 {color: #ED1951; font-weight:normal; font-size:130%;}*/
+h3 {color: #5e5e5e !important; font-weight:normal; font-size:130%;}
 h4 {color: #808080; font-weight:normal; font-size:120%; font-style:italic;}
+
+code { color: #3e3e3e; background-color: #f3f3f3;}
 
 .alert, .callout {
     overflow: hidden;

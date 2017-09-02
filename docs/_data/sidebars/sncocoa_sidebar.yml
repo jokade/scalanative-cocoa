@@ -46,6 +46,22 @@ entries:
 #      url: /mydoc_support.html
 #      output: web, pdf
 
+  - title: Guide
+    output: web, pdf
+    folderitems:
+
+    - title: Basic Interop
+      url: /snc_basic_interop.html
+      output: web, pdf
+
+    - title: Collections
+      url: /snc_collections.html
+      output: web, pdf
+
+    - title: Creating Objective-C Bindings
+      url: /snc_create_binding.html
+      output: web, pdf
+
 #  - title: Release Notes
 #    output: web, pdf
 #    folderitems:
