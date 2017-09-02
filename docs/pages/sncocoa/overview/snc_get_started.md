@@ -22,11 +22,7 @@ This template requires Xcode to be installed.
 After you've created the project from the template, open the Xcode project located in `$PROJECT/xcode/` 
 (you might want to rename the Xcode project folder first), and build the project (*Product* -> *Build*).
 
-After the Xcode build is finished, run `sbt nativeLink`. this should create the application bundle in
-`PROJECT/target/scala-2.11/`. To run the application in the terminal, execute
-
-```
-target/scala-2.11/$APPNAME.app/Contents/MacOS/$APPNAME
-```
+After the Xcode build is finished, execute `sbt run` to run the application, or use `sbt prepareBundle` to create
+the application bundle under `target/scala-2.11/`.
 
 {% include links.html %}

@@ -37,6 +37,8 @@ if there is a [binding](snc_create_binding.html) defined for that class, e.g.:
 SNCocoa provides bindings for the *Foundation* and *AppKit* frameworks, located in the packages `cocoa.foundation`
 and `cocoa.appkit`, respectively.
 
+{% include callout.html content='Methods with varargs are currently not supported' type="warning" %}
+
 ## Objective-C Functions
 Bindings to global Objective-C functions are provided as functions in an object named after the framework to which they belong.
 `NSLog()` for example is provided by `cocoa.foundation.Foundation`
@@ -45,8 +47,6 @@ import cocoa.foundation._
 
 Foundation.NSLog(ns"Hello world!")
 ```  
-
-{% include callout.html content='Methods and functions with varargs are currently not supported' type="warning" %}
 
 ## Strings and Numbers
 ### Literals

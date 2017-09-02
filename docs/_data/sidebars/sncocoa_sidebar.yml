@@ -58,6 +58,10 @@ entries:
       url: /snc_collections.html
       output: web, pdf
 
+    - title: Memory Management
+      url: /snc_memory_management.html
+      output: web, pdf
+
     - title: Creating Objective-C Bindings
       url: /snc_create_binding.html
       output: web, pdf
