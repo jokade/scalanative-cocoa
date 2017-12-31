@@ -6,6 +6,7 @@ package objc
 
 import de.surfice.smacrotools.MacroAnnotationHandler
 import objc.internal.ObjCMacroTools
+import objc.runtime.ObjCObject
 
 import scala.annotation.{StaticAnnotation, compileTimeOnly}
 import scala.language.experimental.macros
@@ -84,8 +85,13 @@ object ScalaObjC {
     // generate code to define the ObjC proxy class
     private def objcClassDef(cls: ClassParts, exposedMembers: Seq[ExposedMember]) = Seq[Tree] {
       val clsName = cstring(cls.name.toString)
-      // TODO: use actual parent instead of NSObject!
-      val parent = q"cocoa.foundation.NSObject"
+      val parent = c.typecheck(cls.parents.head,c.TYPEmode).tpe match {
+        case p if p =:= weakTypeOf[Object] => q"cocoa.foundation.NSObject"
+        case p if p <:< weakTypeOf[ObjCObject] => q"${p.typeSymbol.companion}"
+        case _ =>
+          error("@ScalaObjC class must be a descendant of ObjCObject")
+          ???
+      }
 
       val exposedVarSetters = exposedMembers
         .filter(_.provideSetter)
