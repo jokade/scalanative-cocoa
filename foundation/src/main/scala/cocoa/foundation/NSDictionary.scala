@@ -9,10 +9,11 @@ import objc.runtime.{SEL, id}
 import objc.{ObjC, ObjCClass}
 
 import scala.language.experimental.macros
+import scala.reflect.ClassTag
 import scala.scalanative.native._
 
 @ObjC
-class NSDictionary[K<:NSObject, V<:NSObject]
+class NSDictionary[K<:NSObject:ClassTag, V<:NSObject:ClassTag]
   extends NSObject
     with NSCopying
     with NSMutableCopying
@@ -54,26 +55,27 @@ class NSDictionary[K<:NSObject, V<:NSObject]
 
 @ObjCClass
 abstract class NSDictionaryClass extends NSObjectClass {
-  @inline def dictionary[K<:NSObject, V<:NSObject](): NSDictionary[K, V] = extern
-  @inline def dictionaryWithObject[K<:NSObject, V<:NSObject](`object`: V, forKey: K): NSDictionary[K, V] = extern
-  @inline def dictionaryWithObjects[K<:NSObject, V<:NSObject](objects: V, keys: K, cnt: NSUInteger): NSDictionary[K, V] = extern
-//  @inline def dictionaryWithObjectsAndKeys[K<:NSObject, V<:NSObject](firstObject: id): NSDictionary[K, V] = extern
-  @inline def dictionaryWithDictionary[K<:NSObject, V<:NSObject](dict: V): NSDictionary[K, V] = extern
-//  @inline def dictionaryWithObjects[K<:NSObject, V<:NSObject](objects: V, keys: K): NSDictionary[K, V] = extern
-  @inline def dictionaryWithContentsOfFile[K<:NSObject, V<:NSObject](path: NSString): NSDictionary[K, V] = extern
-  @inline def dictionaryWithContentsOfURL[K<:NSObject, V<:NSObject](url: NSURL): NSDictionary[K, V] = extern
+  @inline def dictionary[K<:NSObject:ClassTag, V<:NSObject:ClassTag](): NSDictionary[K, V] = extern
+  @inline def dictionaryWithObject[K<:NSObject:ClassTag, V<:NSObject:ClassTag](`object`: V, forKey: K): NSDictionary[K, V] = extern
+  @inline def dictionaryWithObjects[K<:NSObject:ClassTag, V<:NSObject:ClassTag](objects: V, keys: K, cnt: NSUInteger): NSDictionary[K, V] = extern
+//  @inline def dictionaryWithObjectsAndKeys[K<:NSObject:ClassTag, V<:NSObject:ClassTag](firstObject: id): NSDictionary[K, V] = extern
+  @inline def dictionaryWithDictionary[K<:NSObject:ClassTag, V<:NSObject:ClassTag](dict: V): NSDictionary[K, V] = extern
+//  @inline def dictionaryWithObjects[K<:NSObject:ClassTag, V<:NSObject:ClassTag](objects: V, keys: K): NSDictionary[K, V] = extern
+  @inline def dictionaryWithContentsOfFile[K<:NSObject:ClassTag, V<:NSObject:ClassTag](path: NSString): NSDictionary[K, V] = extern
+  @inline def dictionaryWithContentsOfURL[K<:NSObject:ClassTag, V<:NSObject:ClassTag](url: NSURL): NSDictionary[K, V] = extern
   //  @inline def sharedKeySetForKeys(keys: K): id = extern
 }
 
 object NSDictionary extends NSDictionaryClass {
   import objc.runtime._
+  import objc.helper._
   override type InstanceType = NSDictionary[_,_]
   private lazy val __sel_dictionaryWithObjects_forKeys_count = sel_registerName(c"dictionaryWithObjects:forKeys:count:")
 
-  def apply[K<:NSObject, V<:NSObject](kv: (K,V)*): NSDictionary[K,V] = dictionaryWithObjects(kv)
+  def apply[K<:NSObject:ClassTag, V<:NSObject:ClassTag](kv: (K,V)*): NSDictionary[K,V] = dictionaryWithObjects(kv)
 
   // TODO: use Iterable instead of Seq?
-  def dictionaryWithObjects[K<:NSObject, V<:NSObject](objects: Seq[(K,V)]): NSDictionary[K,V] = Zone { implicit z =>
+  def dictionaryWithObjects[K<:NSObject:ClassTag, V<:NSObject:ClassTag](objects: Seq[(K,V)]): NSDictionary[K,V] = Zone { implicit z =>
     val count = objects.size
     val objArray = stackalloc[id]( sizeof[id] * count)
     val keyArray = stackalloc[id]( sizeof[id] * count )
@@ -81,7 +83,7 @@ object NSDictionary extends NSDictionaryClass {
       !(keyArray + i) = objects(i)._1
       !(objArray + i) = objects(i)._2
     }
-    objc_msgSend(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
+    objc_msgSend3(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
   }
 
 

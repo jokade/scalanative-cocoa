@@ -34,6 +34,8 @@ object runtime {
 
   type IVar = Ptr[Byte]
 
+  type objc_property_attribute_t = CStruct2[CString,CString]
+
 
   def object_isClass(obj: id): CBool = extern
 
@@ -49,7 +51,17 @@ object runtime {
 
   def sel_registerName(str: CString): SEL = extern
 
-  def objc_msgSend(self: Any, op: SEL, args: native.CVararg*): id = extern
+  /**
+   * This is just a dummy definition of `objc_msgSend`, which needs to be cast to the correct signature
+   * using [[scalanative.native.CFunctionPtr]] before it is called. The reason for this is message dispatch
+   * on iOS / arm64, which does not work properly if we call `objc_msgSend` directly with varargs.
+   *
+   * You can use [[objc.helper.objc_msgSend1()]], etc., for convenience.
+   *
+   * @see [[https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaTouch64BitGuide/ConvertingYourAppto64-Bit/ConvertingYourAppto64-Bit.html#//apple_ref/doc/uid/TP40013501-CH3-SW26]]
+   */
+  def objc_msgSend(): Unit = extern
+
 
   def objc_msgSendSuper(objc_super: Ptr[objc_super], op: SEL, args: native.CVararg*): id = extern
 
@@ -62,6 +74,8 @@ object runtime {
   def object_getClass(obj: id): id = extern
 
   def class_getSuperclass(cls: id): id = extern
+
+  def class_addProperty(cls: id, name: CString, attributes: Ptr[objc_property_attribute_t], attributeCount: UInt): CBool = extern
 }
 
 

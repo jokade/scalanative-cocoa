@@ -18,6 +18,7 @@ trait UIApplicationDelegate extends NSObject {
   @inline def application(application: UIApplication, url: NSURL): BOOL = extern
   @inline def application(application: UIApplication, url: NSURL, sourceApplication: NSString, annotation: id): BOOL = extern
   @inline def application(app: UIApplication, url: NSURL, options: id): BOOL = extern
+  @inline def application(application: UIApplication, didFinishLaunchingWithOptions: NSDictionary[NSObject,NSObject]): BOOL = extern
   @inline def applicationDidReceiveMemoryWarning(application: UIApplication): Unit = extern
   @inline def applicationWillTerminate(application: UIApplication): Unit = extern
   @inline def applicationSignificantTimeChange(application: UIApplication): Unit = extern

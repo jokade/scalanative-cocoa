@@ -12,7 +12,7 @@ import scalanative.native._
 
 @ObjC
 @debug
-class UIViewController extends NSObject { //UIResponder with NSCoding with UIAppearanceContainer with UITraitEnvironment with UIContentContainer with UIFocusEnvironment {
+class UIViewController extends UIResponder with NSCoding { //with UIAppearanceContainer with UITraitEnvironment with UIContentContainer with UIFocusEnvironment {
 //  @inline def initWithNibName(nibNameOrNil: NSString, nibBundleOrNil: NSBundle): UIViewController = extern
   @inline def initWithCoder(aDecoder: NSCoder): UIViewController = extern
   @inline def loadView(): Unit = extern
@@ -144,7 +144,8 @@ class UIViewController extends NSObject { //UIResponder with NSCoding with UIApp
 }
 
 @ObjCClass
-abstract class UIViewControllerClass extends NSObjectClass { //extends UIResponder with NSCoding with UIAppearanceContainer with UITraitEnvironment with UIContentContainer with UIFocusEnvironment {
+abstract class UIViewControllerClass extends UIResponderClass { //extends UIResponder with NSCoding with UIAppearanceContainer with UITraitEnvironment with UIContentContainer with UIFocusEnvironment {
+  @inline def attemptRotationToDeviceOrientation(): Unit = extern
 }
 
 object UIViewController extends UIViewControllerClass {

@@ -16,14 +16,14 @@ object ObjCParent {
 
   private lazy val cls = {
     def init(self: id, sel: SEL, ref: id): id = {
-      val proxy = objc_msgSend(self,sel_alloc)
+      val proxy = objc_msgSend0(self,sel_alloc)
       setScalaInstanceIVar(proxy,ref)
       println("Initializing Proxy!")
       proxy
     }
     def methodSignature(self: id, sel: SEL, selForSignature: SEL): id = {
       val ref = getScalaInstanceIVar[Object](self).cast[id]
-      objc_msgSend(ref,sel_methodSignatureForSelector,selForSignature)
+      objc_msgSendPtr.cast[CFunctionPtr3[id,SEL,SEL,id]].apply(ref,sel_methodSignatureForSelector,selForSignature)
     }
     def forwardInvocation(self: id, sel: SEL, invocation: id): id = {
       val ref = getScalaInstanceIVar[Object](self).cast[id]
@@ -41,7 +41,7 @@ object ObjCParent {
   }
 
   def apply(ref: id): id = {
-    val proxy = objc_msgSend(cls,sel_initWithRef,ref)
+    val proxy = objc_msgSendPtr.cast[CFunctionPtr3[id,SEL,id,id]].apply(cls,sel_initWithRef,ref)
     proxy
   }
 }

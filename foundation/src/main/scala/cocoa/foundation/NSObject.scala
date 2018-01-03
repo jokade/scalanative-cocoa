@@ -13,6 +13,7 @@ import scala.language.experimental.macros
 import scala.scalanative.native._
 
 @ObjC
+//@debug
 class NSObject extends ObjCObject {
   @inline def isEqual(`object`: id): BOOL = extern
   @inline def `class`(): id = extern

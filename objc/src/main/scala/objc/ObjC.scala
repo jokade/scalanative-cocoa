@@ -10,6 +10,7 @@ import objc.runtime.id
 import scala.language.experimental.macros
 import scala.annotation.{StaticAnnotation, compileTimeOnly}
 import scala.reflect.macros.{TypecheckException, whitebox}
+import scala.scalanative.native.CFunctionPtr3
 
 @compileTimeOnly("enable macro paradise to expand macro annotations")
 class ObjC() extends StaticAnnotation {
@@ -46,6 +47,9 @@ object ObjC {
     override val supportsObjects: Boolean = true
     override val createCompanion: Boolean = true
 
+//    val tAny = weakTypeOf[Any]
+//    val tPtrByte = weakTypeOf[scalanative.native.Ptr[Byte]]
+//    val msgSendPtr = q"_root_.objc.helper.objc_msgSendPtr"
 
     override def analyze: Analysis = super.analyze andThen {
       case (cls: TypeParts, data) =>
@@ -130,7 +134,7 @@ object ObjC {
     private def genCall(target: Tree, selectorVal: Tree, argsList: List[List[ValDef]], rettype: Tree): Tree = {
       val argnames = argsList match {
         case Nil => Nil
-        case List(args) => args map {
+        case FirstArgList(args,_) => args map {
           case t@ValDef(_, name, tpe, _) =>
             // TODO: do we really need this casting? without, the NIR compiler complains about a missing type tag
             castMode(tpe) match {
@@ -140,17 +144,53 @@ object ObjC {
             }
         }
         case x =>
+          println(x)
           c.error(c.enclosingPosition, "multiple parameter lists not supported for ObjC classes")
           ???
       }
+
+      val call = argsList match {
+        case Nil => q"_root_.objc.helper.objc_msgSend0($target,$selectorVal)"
+        case FirstArgList(args,_) =>
+          val (names,types) = (args map {case ValDef(_, name, tpe, _) => (name,tpe)}).unzip
+          args.size match {
+
+            case 0  => q"_root_.objc.helper.objc_msgSend0($target,$selectorVal)"
+            case 1  => q"_root_.objc.helper.objc_msgSend1[..$types]($target,$selectorVal,..$names)"
+            case 2  => q"_root_.objc.helper.objc_msgSend2[..$types]($target,$selectorVal,..$names)"
+            case 3  => q"_root_.objc.helper.objc_msgSend3[..$types]($target,$selectorVal,..$names)"
+            case 4  => q"_root_.objc.helper.objc_msgSend4[..$types]($target,$selectorVal,..$names)"
+            case 5  => q"_root_.objc.helper.objc_msgSend5[..$types]($target,$selectorVal,..$names)"
+            case 6  => q"_root_.objc.helper.objc_msgSend6[..$types]($target,$selectorVal,..$names)"
+            case 7  => q"_root_.objc.helper.objc_msgSend7[..$types]($target,$selectorVal,..$names)"
+            case 8  => q"_root_.objc.helper.objc_msgSend8[..$types]($target,$selectorVal,..$names)"
+            case 9  => q"_root_.objc.helper.objc_msgSend9[..$types]($target,$selectorVal,..$names)"
+            case 10 => q"_root_.objc.helper.objc_msgSend10[..$types]($target,$selectorVal,..$names)"
+            case n => error(s"unsupported number of arguments: $n"); ???
+          }
+      }
+//      val call = q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames)"
+//        argnames.size match {
+//        case 0 => q"_root_.objc.runtime.objc_msgSend($target,$selectorVal)"
+//        case 1 => q"_root_.objc.runtime.objc_msgSend1($target,$selectorVal,..$argnames)"
+//        case 2 => q"_root_.objc.runtime.objc_msgSend2($target,$selectorVal,..$argnames)"
+//        case 3 => q"_root_.objc.runtime.objc_msgSend3($target,$selectorVal,..$argnames)"
+//        case 4 => q"_root_.objc.runtime.objc_msgSend4($target,$selectorVal,..$argnames)"
+//        case 5 => q"_root_.objc.runtime.objc_msgSend5($target,$selectorVal,..$argnames)"
+//        case 6 => q"_root_.objc.runtime.objc_msgSend6($target,$selectorVal,..$argnames)"
+//        case 7 => q"_root_.objc.runtime.objc_msgSend7($target,$selectorVal,..$argnames)"
+//        case 8 => q"_root_.objc.runtime.objc_msgSend8($target,$selectorVal,..$argnames)"
+//        case 9 => q"_root_.objc.runtime.objc_msgSend9($target,$selectorVal,..$argnames)"
+//        case 10 => q"_root_.objc.runtime.objc_msgSend10($target,$selectorVal,..$argnames)"
+//      }
       // TODO: check if intermediate casting is still required
       castMode(rettype) match {
         case CastMode.Direct =>
-          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[$rettype]"
+          q"$call.cast[$rettype]"
         case CastMode.Object =>
-          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].cast[$rettype]"
+          q"$call.cast[Object].cast[$rettype]"
         case CastMode.InstanceOf | CastMode.TypeArg =>
-          q"_root_.objc.runtime.objc_msgSend($target,$selectorVal,..$argnames).cast[Object].asInstanceOf[$rettype]"
+          q"$call.cast[Object].asInstanceOf[$rettype]"
       }
     }
 

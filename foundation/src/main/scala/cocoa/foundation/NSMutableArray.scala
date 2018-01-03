@@ -10,10 +10,11 @@ import objc.runtime.SEL
 import scala.language.experimental.macros
 import objc.{ObjC, ObjCClass}
 
+import scala.reflect.ClassTag
 import scalanative.native._
 
 @ObjC
-class NSMutableArray[T<:NSObject] extends NSArray[T] {
+class NSMutableArray[T<:NSObject:ClassTag] extends NSArray[T] {
   @inline def addObject(anObject: T): Unit = extern
   @inline def insertObject(anObject: T, index: NSUInteger): Unit = extern
   @inline def removeLastObject(): Unit = extern
@@ -49,11 +50,11 @@ class NSMutableArray[T<:NSObject] extends NSArray[T] {
 
 @ObjCClass
 abstract class NSMutableArrayClass extends NSArrayClass {
-  @inline override def array[T<:NSObject](): NSMutableArray[T] = extern
-  @inline override def arrayWithObject[T<:NSObject](anObject: T): NSMutableArray[T] = extern
-  @inline def arrayWithCapacity[T<:NSObject](numItems: NSUInteger): NSMutableArray[T] = extern
-  @inline def arrayWithContentsOfFile[T<:NSObject](path: NSString): NSMutableArray[T] = extern
-  @inline def arrayWithContentsOfURL[T<:NSObject](url: NSURL): NSMutableArray[T] = extern
+  @inline override def array[T<:NSObject:ClassTag](): NSMutableArray[T] = extern
+  @inline override def arrayWithObject[T<:NSObject:ClassTag](anObject: T): NSMutableArray[T] = extern
+  @inline def arrayWithCapacity[T<:NSObject:ClassTag](numItems: NSUInteger): NSMutableArray[T] = extern
+  @inline def arrayWithContentsOfFile[T<:NSObject:ClassTag](path: NSString): NSMutableArray[T] = extern
+  @inline def arrayWithContentsOfURL[T<:NSObject:ClassTag](url: NSURL): NSMutableArray[T] = extern
 }
 
 object NSMutableArray extends NSMutableArrayClass {

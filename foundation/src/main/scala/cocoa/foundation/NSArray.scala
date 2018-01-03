@@ -5,14 +5,17 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
+import de.surfice.smacrotools.debug
 import objc.runtime.id
 import objc.{ObjC, ObjCClass}
 
 import scala.language.experimental.macros
+import scala.reflect.ClassTag
 import scala.scalanative.native._
 
 @ObjC
-class NSArray[T<:NSObject]
+@debug
+class NSArray[T<:NSObject:ClassTag]
   extends NSObject
     with NSCopying
     with NSMutableCopying
@@ -21,7 +24,7 @@ class NSArray[T<:NSObject]
   @inline def objectAtIndex(index: NSUInteger): T = extern
 //  @inline def init(): NSArray[T] = extern
 //  @inline def initWithObjects(objects: T, cnt: NSUInteger): NSArray[T] = extern
-  @inline def initWithCoder(aDecoder: NSCoder): NSArray[T] = extern
+//  @inline def initWithCoder(aDecoder: NSCoder): NSArray[T] = extern
   @inline def count(): NSUInteger = extern
   @inline def arrayByAddingObject(anObject: T): NSArray[T] = extern
 //  @inline def arrayByAddingObjectsFromArray(otherArray: T): NSArray[T] = extern
@@ -73,8 +76,8 @@ class NSArray[T<:NSObject]
 
 @ObjCClass
 abstract class NSArrayClass extends NSObjectClass {
-  @inline def array[T<:NSObject](): NSArray[T] = extern
-  @inline def arrayWithObject[T<:NSObject](anObject: T): NSArray[T] = extern
+  @inline def array[T<:NSObject:ClassTag](): NSArray[T] = extern
+  @inline def arrayWithObject[T<:NSObject:ClassTag](anObject: T): NSArray[T] = extern
 //  @inline def arrayWithObjects[T<:NSObject](firstObj: T*): NSArray[T] = extern
 //  @inline def arrayWithArray[T](array: T): NSArray[T] = extern
 //  @inline def arrayWithContentsOfFile[T](path: NSString): NSArray[T] = extern
@@ -82,7 +85,8 @@ abstract class NSArrayClass extends NSObjectClass {
 }
 
 object NSArray extends NSArrayClass {
-  import objc.runtime.{objc_msgSend, sel_registerName}
+  import objc.runtime.sel_registerName
+  import objc.helper.objc_msgSend2
   override type InstanceType = NSArray[_]
 
   private lazy val __sel_arrayWithObjects_count = sel_registerName(c"arrayWithObjects:count:")
@@ -97,7 +101,7 @@ object NSArray extends NSArrayClass {
     val array = stackalloc[id]( sizeof[id] * count)
     for(i<-0 until count)
       !(array + i) = objects(i)
-    objc_msgSend(__cls,__sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
+    objc_msgSend2(__cls,__sel_arrayWithObjects_count,array,count).cast[NSArray[T]]
   }
 
   def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)

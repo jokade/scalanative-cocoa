@@ -2,7 +2,7 @@ organization in ThisBuild := "de.surfice"
 
 version in ThisBuild := "0.0.1-SNAPSHOT"
 
-scalaVersion in ThisBuild := "2.11.11"
+scalaVersion in ThisBuild := "2.11.12"
 
 val Version = new {
   val config      = "1.3.1"
@@ -15,8 +15,10 @@ val Version = new {
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-deprecation","-unchecked","-feature","-language:implicitConversions","-Xlint"),
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
-  libraryDependencies += "com.lihaoyi" %%% "utest" % Version.utest % "test",
-  testFrameworks += new TestFramework("utest.runner.Framework")
+  libraryDependencies ++= Seq(
+//    "com.lihaoyi" %%% "utest" % Version.utest % "test"
+    )
+//  testFrameworks += new TestFramework("utest.runner.Framework")
   )
 
 lazy val nativeSettings = Seq(
@@ -24,8 +26,8 @@ lazy val nativeSettings = Seq(
   nativeLinkingOptions ++= Seq("-framework","Cocoa")
 )
 
-lazy val root = project.in(file("."))
-  .aggregate(objc,foundation,appkit)
+lazy val cocoa = project.in(file("."))
+  .aggregate(objc,foundation,appkit,uikit)
   .settings(dontPublish:_*)
   .settings(
     name := "scalanative-cocoa"
@@ -57,6 +59,13 @@ lazy val appkit = project
     name := "scalanative-cocoa-appkit"
   )
 
+lazy val uikit = project
+  .enablePlugins(ScalaNativePlugin)
+  .dependsOn(foundation)
+  .settings(commonSettings ++ nativeSettings:_*)
+  .settings(
+    name := "scalanative-cocoa-uikit"
+  )
 
 lazy val test = project
   .enablePlugins(ScalaNativePlugin)
