@@ -6,7 +6,6 @@
 package cocoa.foundation
 
 import scala.scalanative.native._
-import objc.runtime.id
 
 import scala.language.experimental.macros
 

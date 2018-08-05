@@ -6,7 +6,6 @@
 package cocoa.foundation
 
 import scalanative.native._
-import objc.runtime.SEL
 
 import scala.language.experimental.macros
 

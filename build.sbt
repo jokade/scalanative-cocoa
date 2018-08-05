@@ -6,7 +6,7 @@ scalaVersion in ThisBuild := "2.11.12"
 
 val Version = new {
   val slogging    = "0.5.3"
-  val objc        = "0.0.4"
+  val objc        = "0.0.5-SNAPSHOT"
   val utest       = "0.6.3"
 }
 
