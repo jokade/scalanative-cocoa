@@ -32,16 +32,6 @@ lazy val cocoa = project.in(file("."))
     name := "scalanative-cocoa"
     )
 
-//lazy val objc = project
-//  .enablePlugins(ScalaNativePlugin)
-//  .settings(commonSettings ++ nativeSettings:_*)
-//  .settings(
-//    name := "scalanative-objc",
-//    libraryDependencies ++= Seq(
-//      "de.surfice" %% "smacrotools" % Version.smacrotools
-//    )
-//  )
-
 lazy val foundation = project
   .enablePlugins(ScalaNativePlugin)
   .settings(commonSettings ++ nativeSettings:_*)
