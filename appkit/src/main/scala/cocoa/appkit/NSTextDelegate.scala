@@ -1,12 +1,11 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSNotification, NSObject}
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 trait NSTextDelegate extends NSObject {

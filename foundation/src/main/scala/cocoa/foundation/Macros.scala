@@ -4,7 +4,7 @@
 package cocoa.foundation
 
 import de.surfice.smacrotools.BlackboxMacroTools
-import objc.internal.ObjCMacroTools
+import scalanative.native.objc.ObjCMacroTools
 
 import scala.reflect.macros.blackbox
 

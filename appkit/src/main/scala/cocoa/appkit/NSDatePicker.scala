@@ -1,12 +1,11 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSDate, NSLocale, NSTimeInterval, NSTimeZone}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSDatePicker extends NSControl {

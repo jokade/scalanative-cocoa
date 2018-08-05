@@ -7,7 +7,6 @@ package cocoa.foundation
 import de.surfice.smacrotools.debug
 
 import scala.scalanative.native._
-import objc.{ObjC, ObjCClass, selector}
 import objc.runtime._
 
 @ObjC

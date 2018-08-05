@@ -1,13 +1,12 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObject, NSRange, NSString}
 import objc.runtime.{SEL, id}
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 trait NSControlTextEditingDelegate extends NSObject {

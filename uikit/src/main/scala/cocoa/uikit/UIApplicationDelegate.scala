@@ -1,12 +1,9 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.uikit
 
-import cocoa.foundation.{BOOL, NSArray, NSCoder, NSData, NSDictionary, NSError, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL}
-import objc.runtime.id
+import cocoa.foundation.{BOOL, NSArray, NSCoder, NSData, NSDictionary, NSError, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL, id}
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
-
 import scalanative.native._
 
 @ObjC

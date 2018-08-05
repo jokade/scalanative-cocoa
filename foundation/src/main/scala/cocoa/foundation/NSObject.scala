@@ -5,12 +5,11 @@
 //              Foundation/NSError.h
 package cocoa.foundation
 
-import de.surfice.smacrotools.debug
+import scala.scalanative.native._
 import objc._
 import objc.runtime._
 
 import scala.language.experimental.macros
-import scala.scalanative.native._
 
 @ObjC
 class NSObject extends ObjCObject {
@@ -34,7 +33,7 @@ class NSObject extends ObjCObject {
   @inline def superclass(): id = extern
   @inline def description(): NSString = extern
   @inline def debugDescription(): NSString = extern
-  @inline def init(): this.type = extern
+  @inline def init(): NSObject = extern
   @inline def dealloc(): Unit = extern
   @inline override def `finalize`(): Unit = extern
   @inline def copy(): id = extern

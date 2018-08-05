@@ -1,14 +1,11 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSArray, NSCoder, NSDictionary, NSInteger, NSObject, NSObjectClass, NSPoint, NSRange, NSRect, NSSize, NSString, NSUInteger, NSValue}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
-
-import scalanative.native._
-
 
 @ObjC
 class NSTextView extends NSText { //with NSUserInterfaceValidations with NSTextInputClient with NSTextLayoutOrientationProvider with NSDraggingSource with NSTextInput with NSAccessibilityNavigableStaticText {

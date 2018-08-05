@@ -1,12 +1,11 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSCoder, NSInteger, NSRect, NSSize, NSString, NSUInteger}
 import objc.runtime.{SEL, id}
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSControl extends NSView {

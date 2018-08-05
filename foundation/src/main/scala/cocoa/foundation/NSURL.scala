@@ -4,12 +4,10 @@
 //              Foundation/NSURL.h
 package cocoa.foundation
 
-import objc.runtime.id
+import scalanative.native._
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSURL extends NSObject with NSSecureCoding with NSCopying {//with NSURLHandleClient {

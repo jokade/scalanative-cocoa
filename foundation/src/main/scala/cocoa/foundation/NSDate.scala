@@ -1,11 +1,9 @@
 package cocoa.foundation
 
-import objc.runtime.id
+import scalanative.native._
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSDate extends NSObject with NSCopying with NSSecureCoding {

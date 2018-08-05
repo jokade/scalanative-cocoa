@@ -4,8 +4,6 @@
 //              Foundation/NSValue.h
 package cocoa.foundation
 
-import objc.{ObjC, ObjCClass}
-import objc.runtime.id
 import scala.scalanative.native._
 
 @ObjC

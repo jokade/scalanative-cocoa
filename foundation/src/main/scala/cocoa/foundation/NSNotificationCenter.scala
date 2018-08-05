@@ -1,11 +1,9 @@
 package cocoa.foundation
 
-import objc.runtime.{SEL, id}
+import scalanative.native._
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSNotificationCenter extends NSObject {

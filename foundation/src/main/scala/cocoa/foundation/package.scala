@@ -3,16 +3,17 @@
 // Description: Contains types defined in Foundation and Scala-specific utilities.
 package cocoa
 
-import objc.runtime._
-
 import scala.language.experimental.macros
 import scala.scalanative.native._
+import objc.runtime._
 
 package object foundation {
 //  type objc_class = Ptr[Byte]
 //  type objc_object = Ptr[Byte]
 //  type objc_selector = Ptr[Byte]
-  type BOOL       = CBool
+  type id         = objc.runtime.id
+  type SEL        = objc.runtime.SEL
+  type BOOL       = objc.runtime.BOOL
   type NSUInteger = CUnsignedLong
   type NSInteger  = CLong
   type unichar    = UShort
@@ -24,7 +25,7 @@ package object foundation {
   type NSRect         = Ptr[CStruct2[CStruct2[CDouble,CDouble],CStruct2[CDouble,CDouble]]]
   type NSTimeInterval = CDouble
 
-  val nil: id = 0.cast[id]
+//  val nil: id = 0.cast[id]
 
   implicit def objectToId(o: ObjCObject): id = o.cast[id]
 

@@ -1,10 +1,8 @@
 package cocoa.foundation
 
-import objc.runtime.{SEL, id}
-import objc.{ObjC, ObjCClass}
+import scala.scalanative.native._
 
 import scala.language.experimental.macros
-import scala.scalanative.native._
 
 @ObjC
 class NSInvocation extends NSObject {

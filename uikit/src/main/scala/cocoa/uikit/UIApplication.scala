@@ -1,8 +1,6 @@
 package cocoa.uikit
 
-import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL}
-import objc.{ObjC, ObjCClass}
-import objc.runtime.id
+import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL, id}
 
 import scalanative.native._
 

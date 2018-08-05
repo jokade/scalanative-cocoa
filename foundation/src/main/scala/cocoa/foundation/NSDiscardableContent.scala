@@ -4,7 +4,6 @@
 //              objc/objc.h, objc/NSObject.h, objc/Protocol.h, Foundation/NSObject.h
 package cocoa.foundation
 
-import objc.ObjC
 import scalanative.native._
 
 @ObjC

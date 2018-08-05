@@ -1,9 +1,9 @@
 package cocoa.appkit
 
 import cocoa.foundation.{BOOL, NSInteger, NSString}
+import scalanative.native._
 import objc.runtime.id
 
-import scalanative.native._
 
 @extern
 object AppKit {

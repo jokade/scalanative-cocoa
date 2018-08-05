@@ -3,7 +3,7 @@
 // Description:
 package cocoa.foundation
 
-import objc.ObjC
+import scalanative.native._
 
 @ObjC
 class Protocol extends NSObject

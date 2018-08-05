@@ -5,7 +5,6 @@
 package cocoa.foundation
 
 import scalanative.native._
-import objc.{ObjC, ObjCClass}
 import cocoa.foundation._
 
 

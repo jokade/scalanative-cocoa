@@ -1,11 +1,9 @@
 package cocoa.foundation
 
+import scalanative.native._
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
-
-import scalanative.native._
 
 
 @ObjC

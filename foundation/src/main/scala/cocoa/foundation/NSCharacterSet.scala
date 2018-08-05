@@ -4,11 +4,10 @@
 //              Foundation/NSCharacterSet.h Foundation/NSURL.h
 package cocoa.foundation
 
+import scalanative.native._
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
 import scala.scalanative.posix.inttypes.uint8_t
-import scalanative.native._
 
 @ObjC
 class NSCharacterSet extends NSObject with NSCopying with NSMutableCopying with NSCoding {

@@ -4,10 +4,8 @@
 //              Foundation/NSError.h
 package cocoa.foundation
 
-import objc.runtime.id
-import objc.{ObjC, ObjCClass}
-
 import scalanative.native._
+
 
 @ObjC
 class NSError extends NSObject with NSCopying with NSSecureCoding {

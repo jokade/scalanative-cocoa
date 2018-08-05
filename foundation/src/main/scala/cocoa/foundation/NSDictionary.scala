@@ -5,11 +5,9 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import objc.runtime.{SEL, id}
-import objc.{ObjC, ObjCClass}
+import scala.scalanative.native._
 
 import scala.language.experimental.macros
-import scala.scalanative.native._
 
 @ObjC
 class NSDictionary[K<:NSObject, V<:NSObject]

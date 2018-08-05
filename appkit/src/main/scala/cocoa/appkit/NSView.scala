@@ -1,12 +1,11 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSArray, NSCoder, NSComparisonResult, NSData, NSInteger, NSObjectClass, NSPoint, NSRect, NSSize, NSString}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 class NSView extends NSResponder { //with NSAnimatablePropertyContainer with NSUserInterfaceItemIdentification with NSDraggingDestination with NSAppearanceCustomization with NSAccessibilityElement with NSAccessibility {

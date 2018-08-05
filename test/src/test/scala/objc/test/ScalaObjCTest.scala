@@ -3,7 +3,7 @@
 // Description: Tests for Scala-defined ObjC classes
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package objc.test
-
+/*
 import cocoa.foundation.NSObjectClass
 import objc.{ObjCProxy, ScalaObjC}
 import objc.runtime._
@@ -85,3 +85,4 @@ object ScalaObjCTest extends TestSuite {
     override type InstanceType = ObjCProxy[Foo]
   }
 }
+*/

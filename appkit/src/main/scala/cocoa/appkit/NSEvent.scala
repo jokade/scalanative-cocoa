@@ -1,12 +1,11 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSCoding, NSCopying, NSInteger, NSObject, NSObjectClass, NSPoint, NSString, NSUInteger}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 
 @ObjC

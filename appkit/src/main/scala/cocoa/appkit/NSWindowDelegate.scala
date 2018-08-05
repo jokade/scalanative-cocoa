@@ -1,13 +1,10 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSArray, NSCoder, NSNotification, NSObject, NSPoint, NSRect, NSSize}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
-
-import scalanative.native._
-
 
 @ObjC
 trait NSWindowDelegate extends NSObject {

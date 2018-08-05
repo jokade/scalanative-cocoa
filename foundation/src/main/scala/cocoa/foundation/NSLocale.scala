@@ -1,13 +1,11 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import objc.runtime.id
+import scalanative.native._
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
 import scala.scalanative.posix.inttypes.uint32_t
-import scalanative.native._
 
 @ObjC
 class NSLocale extends NSObject with NSCopying with NSSecureCoding {

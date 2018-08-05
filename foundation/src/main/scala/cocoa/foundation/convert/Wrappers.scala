@@ -4,13 +4,13 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation.convert
 
+import scala.scalanative.native._
 import cocoa.foundation.{NSArray, NSDictionary, NSEnumerator, NSObject, Foundation, NSQuote}
 import Foundation.NSLog
 import objc.runtime._
 
 import scala.collection.immutable.AbstractMap
 import scala.collection.{AbstractIterator, AbstractSeq}
-import scala.scalanative.native._
 
 object Wrappers {
 

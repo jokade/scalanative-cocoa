@@ -5,11 +5,10 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
+import scala.scalanative.native._
 import objc.runtime.id
-import objc.{ObjC, ObjCClass}
 
 import scala.language.experimental.macros
-import scala.scalanative.native._
 
 @ObjC
 class NSArray[T<:NSObject]

@@ -1,13 +1,10 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSInteger, NSNotification, NSObjectClass, NSString}
 import objc.runtime.id
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
-
-import scalanative.native._
-
 
 @ObjC
 class NSTextField extends NSControl { //with NSUserInterfaceValidations with NSAccessibilityNavigableStaticText {

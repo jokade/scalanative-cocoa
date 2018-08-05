@@ -1,12 +1,11 @@
 package cocoa.appkit
 
+import scalanative.native._
 import cocoa.foundation.{BOOL, NSArray, NSDictionary, NSInteger, NSNotification, NSObject, NSRange, NSRect, NSString, NSUInteger, NSURL, NSValue}
 import objc.runtime.{SEL, id}
 
 import scala.language.experimental.macros
-import objc.{ObjC, ObjCClass}
 
-import scalanative.native._
 
 @ObjC
 trait NSTextViewDelegate { //extends NSTextDelegate {

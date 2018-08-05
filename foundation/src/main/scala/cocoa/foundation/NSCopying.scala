@@ -4,8 +4,6 @@
 //              objc/objc.h, objc/NSObject.h, objc/Protocol.h, Foundation/NSObject.h
 package cocoa.foundation
 
-import objc.ObjC
-import objc.runtime.id
 import scalanative.native._
 
 @ObjC

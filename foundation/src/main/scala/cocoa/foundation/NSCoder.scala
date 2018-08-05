@@ -4,12 +4,11 @@
 //              Foundation/NSCoder.h
 package cocoa.foundation
 
-import scala.language.experimental.macros
-import objc.runtime._
-import objc.{ObjC, ObjCClass}
-
 import scala.scalanative.posix.inttypes.uint8_t
 import scalanative.native._
+import scala.language.experimental.macros
+import objc.runtime._
+
 
 @ObjC
 abstract class NSCoder extends NSObject {
