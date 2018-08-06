@@ -1,12 +1,12 @@
 organization in ThisBuild := "de.surfice"
 
-version in ThisBuild := "0.0.1-SNAPSHOT"
+version in ThisBuild := "0.0.1"
 
 scalaVersion in ThisBuild := "2.11.12"
 
 val Version = new {
   val slogging    = "0.5.3"
-  val objc        = "0.0.5-SNAPSHOT"
+  val objc        = "0.0.4"
   val utest       = "0.6.3"
 }
 
@@ -34,7 +34,7 @@ lazy val cocoa = project.in(file("."))
 
 lazy val foundation = project
   .enablePlugins(ScalaNativePlugin)
-  .settings(commonSettings ++ nativeSettings:_*)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-foundation"
   )
@@ -42,7 +42,7 @@ lazy val foundation = project
 lazy val appkit = project
   .enablePlugins(ScalaNativePlugin)
   .dependsOn(foundation)
-  .settings(commonSettings ++ nativeSettings:_*)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-appkit"
   )
@@ -50,7 +50,7 @@ lazy val appkit = project
 lazy val uikit = project
   .enablePlugins(ScalaNativePlugin)
   .dependsOn(foundation)
-  .settings(commonSettings ++ nativeSettings:_*)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-uikit"
   )
@@ -75,3 +75,35 @@ lazy val dontPublish = Seq(
   publishArtifact := false,
   publishTo := Some(Resolver.file("Unused transient repository",file("target/unusedrepo")))
 )
+
+lazy val publishingSettings = Seq(
+  publishMavenStyle := true,
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+  pomExtra := (
+    <url>https://github.com/jokade/scalantive-cocoa</url>
+    <licenses>
+      <license>
+        <name>MIT License</name>
+        <url>http://www.opensource.org/licenses/mit-license.php</url>
+      </license>
+    </licenses>
+    <scm>
+      <url>git@github.com:jokade/scalantive-cocoa</url>
+      <connection>scm:git:git@github.com:jokade/scalantive-cocoa.git</connection>
+    </scm>
+    <developers>
+      <developer>
+        <id>jokade</id>
+        <name>Johannes Kastner</name>
+        <email>jokade@karchedon.de</email>
+      </developer>
+    </developers>
+  )
+)
+
