@@ -74,6 +74,9 @@ entries:
       url: /snc_status_foundation.html
       output: web, pdf
 
+    - title: AppKit
+      url: /snc_status_appkit.html
+      output: web, pdf
 
 #  - title: Release Notes
 #    output: web, pdf

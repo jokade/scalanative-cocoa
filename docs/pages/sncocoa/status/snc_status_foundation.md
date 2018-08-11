@@ -98,7 +98,7 @@ they although work on iOS (for supported features).
 | NSMetadataAttributes.h                 | {{page.missing}}  |               |       | 
 | NSMethodSignature.h                    | {{page.missing}}  |               |       | 
 | NSNetServices.h                        | {{page.missing}}  |               |       | 
-| NSNotification.h                       | {{page.missing}}  |               |       | 
+| NSNotification.h                       | {{page.ok}} {{test_needed}}  | NSNotification, NSNotificationCenter |       | 
 | NSNotificationQueue.h                  | {{page.missing}}  |               |       | 
 | NSNull.h                               | {{page.missing}}  |               |       | 
 | NSNumberFormatter.h                    | {{page.missing}}  |               |       | 

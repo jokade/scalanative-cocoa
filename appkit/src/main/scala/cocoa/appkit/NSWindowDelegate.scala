@@ -1,61 +1,63 @@
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
 import scalanative.native._
-import cocoa.foundation.{BOOL, NSArray, NSCoder, NSNotification, NSObject, NSPoint, NSRect, NSSize}
-import objc.runtime.id
+import objc._
+import cocoa.foundation.{BOOL, NSArray, NSCoder, NSNotification, NSObject, NSPoint, NSRect, NSSize, NSTimeInterval}
 
+import objc.runtime.id
 import scala.language.experimental.macros
 
 @ObjC
 trait NSWindowDelegate extends NSObject {
-  @inline def windowShouldClose(sender: id): BOOL = extern
-  @inline def windowWillReturnFieldEditor(sender: NSWindow, client: id): id = extern
-  @inline def windowWillResize(sender: NSWindow, frameSize: NSSize): NSSize = extern
-  @inline def windowWillUseStandardFrame(window: NSWindow, newFrame: NSRect): NSRect = extern
-  @inline def windowShouldZoom(window: NSWindow, newFrame: NSRect): BOOL = extern
-//  @inline def windowWillReturnUndoManager(window: NSWindow): NSUndoManager = extern
-  @inline def window(window: NSWindow, sheet: NSWindow, rect: NSRect): NSRect = extern
-//  @inline def window(window: NSWindow, menu: NSMenu): BOOL = extern
-//  @inline def window(window: NSWindow, event: NSEvent, dragImageLocation: NSPoint, pasteboard: NSPasteboard): BOOL = extern
-  @inline def window(window: NSWindow, proposedSize: NSSize): NSSize = extern
-//  @inline def window(window: NSWindow, proposedOptions: NSApplicationPresentationOptions): NSApplicationPresentationOptions = extern
-  @inline def customWindowsToEnterFullScreenForWindow(window: NSWindow): NSArray[NSWindow] = extern
-//  @inline def window(window: NSWindow, duration: NSTimeInterval): Unit = extern
-  @inline def windowDidFailToEnterFullScreen(window: NSWindow): Unit = extern
-  @inline def customWindowsToExitFullScreenForWindow(window: NSWindow): NSArray[NSWindow] = extern
-//  @inline def window(window: NSWindow, duration: NSTimeInterval): Unit = extern
-//  @inline def customWindowsToEnterFullScreenForWindow(window: NSWindow, screen: NSScreen): NSArray[NSWindow] = extern
-//  @inline def window(window: NSWindow, screen: NSScreen, duration: NSTimeInterval): Unit = extern
-  @inline def windowDidFailToExitFullScreen(window: NSWindow): Unit = extern
-  @inline def window(window: NSWindow, maxPreferredFrameSize: NSSize, maxAllowedFrameSize: NSSize): NSSize = extern
-  @inline def window(window: NSWindow, state: NSCoder): Unit = extern
-  @inline def windowDidResize(notification: NSNotification): Unit = extern
-  @inline def windowDidExpose(notification: NSNotification): Unit = extern
-  @inline def windowWillMove(notification: NSNotification): Unit = extern
-  @inline def windowDidMove(notification: NSNotification): Unit = extern
-  @inline def windowDidBecomeKey(notification: NSNotification): Unit = extern
-  @inline def windowDidResignKey(notification: NSNotification): Unit = extern
-  @inline def windowDidBecomeMain(notification: NSNotification): Unit = extern
-  @inline def windowDidResignMain(notification: NSNotification): Unit = extern
-  @inline def windowWillClose(notification: NSNotification): Unit = extern
-  @inline def windowWillMiniaturize(notification: NSNotification): Unit = extern
-  @inline def windowDidMiniaturize(notification: NSNotification): Unit = extern
-  @inline def windowDidDeminiaturize(notification: NSNotification): Unit = extern
-  @inline def windowDidUpdate(notification: NSNotification): Unit = extern
-  @inline def windowDidChangeScreen(notification: NSNotification): Unit = extern
-  @inline def windowDidChangeScreenProfile(notification: NSNotification): Unit = extern
-  @inline def windowDidChangeBackingProperties(notification: NSNotification): Unit = extern
-  @inline def windowWillBeginSheet(notification: NSNotification): Unit = extern
-  @inline def windowDidEndSheet(notification: NSNotification): Unit = extern
-  @inline def windowWillStartLiveResize(notification: NSNotification): Unit = extern
-  @inline def windowDidEndLiveResize(notification: NSNotification): Unit = extern
-  @inline def windowWillEnterFullScreen(notification: NSNotification): Unit = extern
-  @inline def windowDidEnterFullScreen(notification: NSNotification): Unit = extern
-  @inline def windowWillExitFullScreen(notification: NSNotification): Unit = extern
-  @inline def windowDidExitFullScreen(notification: NSNotification): Unit = extern
-  @inline def windowWillEnterVersionBrowser(notification: NSNotification): Unit = extern
-  @inline def windowDidEnterVersionBrowser(notification: NSNotification): Unit = extern
-  @inline def windowWillExitVersionBrowser(notification: NSNotification): Unit = extern
-  @inline def windowDidExitVersionBrowser(notification: NSNotification): Unit = extern
-  @inline def windowDidChangeOcclusionState(notification: NSNotification): Unit = extern
+  @inline def windowShouldClose_(sender: NSWindow): BOOL = extern
+  @inline def windowWillReturnFieldEditor_client_(sender: NSWindow, client: id): id = extern
+  @inline def windowWillResize_frameSize_(sender: NSWindow, frameSize: NSSize): NSSize = extern
+  @inline def windowWillUseStandardFrame_newFrame_(window: NSWindow, newFrame: NSRect): NSRect = extern
+  @inline def windowShouldZoom_newFrame_(window: NSWindow, newFrame: NSRect): BOOL = extern
+//  @inline def windowWillReturnUndoManager_(window: NSWindow): NSUndoManager = extern
+  @inline def window_sheet_rect_(window: NSWindow, sheet: NSWindow, rect: NSRect): NSRect = extern
+//  @inline def window_menu_(window: NSWindow, menu: NSMenu): BOOL = extern
+//  @inline def window_event_dragImageLocation_pasteboard_(window: NSWindow, event: NSEvent, dragImageLocation: NSPoint, pasteboard: NSPasteboard): BOOL = extern
+  @inline def window_proposedSize_(window: NSWindow, proposedSize: NSSize): NSSize = extern
+  @inline def window_proposedOptions_(window: NSWindow, proposedOptions: NSApplicationPresentationOptions): NSApplicationPresentationOptions = extern
+  @inline def customWindowsToEnterFullScreenForWindow_(window: NSWindow): NSArray[NSWindow] = extern
+  @inline def windowDidFailToEnterFullScreen_(window: NSWindow): Unit = extern
+  @inline def customWindowsToExitFullScreenForWindow_(window: NSWindow): NSArray[NSWindow] = extern
+  @inline def window_duration_(window: NSWindow, duration: NSTimeInterval): Unit = extern
+//  @inline def customWindowsToEnterFullScreenForWindow_screen_(window: NSWindow, screen: NSScreen): NSArray[NSWindow] = extern
+//  @inline def window_screen_duration_(window: NSWindow, screen: NSScreen, duration: NSTimeInterval): Unit = extern
+  @inline def windowDidFailToExitFullScreen_(window: NSWindow): Unit = extern
+  @inline def window_maxPreferredFrameSize_maxAllowedFrameSize_(window: NSWindow, maxPreferredFrameSize: NSSize, maxAllowedFrameSize: NSSize): NSSize = extern
+  @inline def window_state_(window: NSWindow, state: NSCoder): Unit = extern
+  @inline def windowDidResize_(notification: NSNotification): Unit = extern
+  @inline def windowDidExpose_(notification: NSNotification): Unit = extern
+  @inline def windowWillMove_(notification: NSNotification): Unit = extern
+  @inline def windowDidMove_(notification: NSNotification): Unit = extern
+  @inline def windowDidBecomeKey_(notification: NSNotification): Unit = extern
+  @inline def windowDidResignKey_(notification: NSNotification): Unit = extern
+  @inline def windowDidBecomeMain_(notification: NSNotification): Unit = extern
+  @inline def windowDidResignMain_(notification: NSNotification): Unit = extern
+  @inline def windowWillClose_(notification: NSNotification): Unit = extern
+  @inline def windowWillMiniaturize_(notification: NSNotification): Unit = extern
+  @inline def windowDidMiniaturize_(notification: NSNotification): Unit = extern
+  @inline def windowDidDeminiaturize_(notification: NSNotification): Unit = extern
+  @inline def windowDidUpdate_(notification: NSNotification): Unit = extern
+  @inline def windowDidChangeScreen_(notification: NSNotification): Unit = extern
+  @inline def windowDidChangeScreenProfile_(notification: NSNotification): Unit = extern
+  @inline def windowDidChangeBackingProperties_(notification: NSNotification): Unit = extern
+  @inline def windowWillBeginSheet_(notification: NSNotification): Unit = extern
+  @inline def windowDidEndSheet_(notification: NSNotification): Unit = extern
+  @inline def windowWillStartLiveResize_(notification: NSNotification): Unit = extern
+  @inline def windowDidEndLiveResize_(notification: NSNotification): Unit = extern
+  @inline def windowWillEnterFullScreen_(notification: NSNotification): Unit = extern
+  @inline def windowDidEnterFullScreen_(notification: NSNotification): Unit = extern
+  @inline def windowWillExitFullScreen_(notification: NSNotification): Unit = extern
+  @inline def windowDidExitFullScreen_(notification: NSNotification): Unit = extern
+  @inline def windowWillEnterVersionBrowser_(notification: NSNotification): Unit = extern
+  @inline def windowDidEnterVersionBrowser_(notification: NSNotification): Unit = extern
+  @inline def windowWillExitVersionBrowser_(notification: NSNotification): Unit = extern
+  @inline def windowDidExitVersionBrowser_(notification: NSNotification): Unit = extern
+  @inline def windowDidChangeOcclusionState_(notification: NSNotification): Unit = extern
 }
+

@@ -25,6 +25,7 @@ package object foundation {
   type NSSize         = NSPoint
   type NSRect         = Ptr[CStruct2[CStruct2[CDouble,CDouble],CStruct2[CDouble,CDouble]]]
   type NSTimeInterval = CDouble
+  type NSNotificationName = NSString
 
 //  val nil: id = 0.cast[id]
 
