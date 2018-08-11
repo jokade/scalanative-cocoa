@@ -66,6 +66,15 @@ entries:
       url: /snc_create_binding.html
       output: web, pdf
 
+  - title: Status
+    output: web, pdf
+    folderitems:
+
+    - title: Foundation
+      url: /snc_status_foundation.html
+      output: web, pdf
+
+
 #  - title: Release Notes
 #    output: web, pdf
 #    folderitems:

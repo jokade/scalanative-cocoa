@@ -1,21 +1,18 @@
-//     Project: scalanative-cocoa
-//      Module: Foundation
-// Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
-//              Foundation/NSCharacterSet.h Foundation/NSURL.h
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import scalanative.native._
 import scala.language.experimental.macros
+import scalanative.native._
+import objc._
 
 import scala.scalanative.posix.inttypes.uint8_t
 
 @ObjC
 class NSCharacterSet extends NSObject with NSCopying with NSMutableCopying with NSCoding {
-  @inline def initWithCoder(aDecoder: NSCoder): NSCharacterSet = extern
-  @inline def characterIsMember(aCharacter: unichar): BOOL = extern
-  @inline def longCharacterIsMember(theLongChar: CChar32): BOOL = extern
-  @inline def isSupersetOfSet(theOtherSet: NSCharacterSet): BOOL = extern
-  @inline def hasMemberInPlane(thePlane: uint8_t): BOOL = extern
+  @inline def characterIsMember_(aCharacter: unichar): BOOL = extern
+  @inline def longCharacterIsMember_(theLongChar: CChar32): BOOL = extern
+  @inline def isSupersetOfSet_(theOtherSet: NSCharacterSet): BOOL = extern
+  @inline def hasMemberInPlane_(thePlane: uint8_t): BOOL = extern
   @inline def bitmapRepresentation(): NSData = extern
   @inline def invertedSet(): NSCharacterSet = extern
 }
@@ -37,10 +34,12 @@ abstract class NSCharacterSetClass extends NSObjectClass {
   @inline def capitalizedLetterCharacterSet(): NSCharacterSet = extern
   @inline def symbolCharacterSet(): NSCharacterSet = extern
   @inline def newlineCharacterSet(): NSCharacterSet = extern
-  @inline def characterSetWithRange(aRange: NSRange): NSCharacterSet = extern
-  @inline def characterSetWithCharactersInString(aString: NSString): NSCharacterSet = extern
-  @inline def characterSetWithBitmapRepresentation(data: NSData): NSCharacterSet = extern
-  @inline def characterSetWithContentsOfFile(fName: NSString): NSCharacterSet = extern
+  @inline def characterSetWithRange_(aRange: NSRange): NSCharacterSet = extern
+  @inline def characterSetWithCharactersInString_(aString: NSString): NSCharacterSet = extern
+  @inline def characterSetWithBitmapRepresentation_(data: NSData): NSCharacterSet = extern
+  @inline def characterSetWithContentsOfFile_(fName: NSString): NSCharacterSet = extern
+
+  // from NSURL.h
   @inline def URLUserAllowedCharacterSet(): NSCharacterSet = extern
   @inline def URLPasswordAllowedCharacterSet(): NSCharacterSet = extern
   @inline def URLHostAllowedCharacterSet(): NSCharacterSet = extern

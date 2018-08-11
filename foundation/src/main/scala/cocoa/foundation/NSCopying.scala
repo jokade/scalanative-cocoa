@@ -5,9 +5,10 @@
 package cocoa.foundation
 
 import scalanative.native._
+import objc._
 
 @ObjC
 trait NSCopying {
-  @inline def copyWithZone(zone: NSZone): id = extern
+  @inline def copyWithZone_(zone: NSZone): id = extern
 }
 

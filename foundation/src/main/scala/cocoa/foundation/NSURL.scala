@@ -1,39 +1,35 @@
-//     Project: scalanative-cocoa
-//      Module: Foundation
-// Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
-//              Foundation/NSURL.h
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import scalanative.native._
-
 import scala.language.experimental.macros
-
+import scalanative.native._
+import objc._
 
 @ObjC
-class NSURL extends NSObject with NSSecureCoding with NSCopying {//with NSURLHandleClient {
-  @inline def initWithScheme(scheme: NSString, host: NSString, path: NSString): NSURL = extern
-  @inline def initFileURLWithPath(path: NSString, isDir: BOOL, baseURL: NSURL): NSURL = extern
-  @inline def initFileURLWithPath(path: NSString, baseURL: NSURL): NSURL = extern
-  @inline def initFileURLWithPath(path: NSString, isDir: BOOL): NSURL = extern
-  @inline def initFileURLWithPath(path: NSString): NSURL = extern
-  @inline def initFileURLWithFileSystemRepresentation(path: Ptr[CSignedChar], isDir: BOOL, baseURL: NSURL): NSURL = extern
-  @inline def initWithString(URLString: NSString): NSURL = extern
-  @inline def initWithString(URLString: NSString, baseURL: NSURL): NSURL = extern
-  @inline def initWithDataRepresentation(data: NSData, baseURL: NSURL): NSURL = extern
-  @inline def initAbsoluteURLWithDataRepresentation(data: NSData, baseURL: NSURL): NSURL = extern
-  @inline def getFileSystemRepresentation(buffer: Ptr[CSignedChar], maxBufferLength: NSUInteger): BOOL = extern
-  @inline def checkResourceIsReachableAndReturnError(error: NSError): BOOL = extern
+class NSURL extends NSObject with NSSecureCoding with NSCopying { //with NSURLHandleClient {
+  @inline def initWithScheme_host_path_(scheme: NSString, host: NSString, path: NSString): NSURL = extern
+  @inline def initFileURLWithPath_isDir_baseURL_(path: NSString, isDir: BOOL, baseURL: NSURL): NSURL = extern
+  @inline def initFileURLWithPath_baseURL_(path: NSString, baseURL: NSURL): NSURL = extern
+  @inline def initFileURLWithPath_isDir_(path: NSString, isDir: BOOL): NSURL = extern
+  @inline def initFileURLWithPath_(path: NSString): NSURL = extern
+  @inline def initFileURLWithFileSystemRepresentation_isDir_baseURL_(path: Ptr[CSignedChar], isDir: BOOL, baseURL: NSURL): NSURL = extern
+  @inline def initWithString_(URLString: NSString): NSURL = extern
+  @inline def initWithString_baseURL_(URLString: NSString, baseURL: NSURL): NSURL = extern
+  @inline def initWithDataRepresentation_baseURL_(data: NSData, baseURL: NSURL): NSURL = extern
+  @inline def initAbsoluteURLWithDataRepresentation_baseURL_(data: NSData, baseURL: NSURL): NSURL = extern
+  @inline def getFileSystemRepresentation_maxBufferLength_(buffer: Ptr[CSignedChar], maxBufferLength: NSUInteger): BOOL = extern
+  @inline def checkResourceIsReachableAndReturnError_(error: NSError): BOOL = extern
   @inline def isFileReferenceURL(): BOOL = extern
   @inline def fileReferenceURL(): NSURL = extern
-  @inline def getResourceValue(value: id, key: NSString, error: NSError): BOOL = extern
-//  @inline def resourceValuesForKeys(keys: NSString, error: NSError): NSDictionary[NSString, id] = extern
-  @inline def setResourceValue(value: id, key: NSString, error: NSError): BOOL = extern
-  @inline def setResourceValues(keyedValues: id, error: NSError): BOOL = extern
-  @inline def removeCachedResourceValueForKey(key: NSString): Unit = extern
+  @inline def getResourceValue_key_error_(value: id, key: NSString, error: NSError): BOOL = extern
+  @inline def resourceValuesForKeys_error_(keys: NSString, error: NSError): NSDictionary[NSString, NSObject] = extern
+  @inline def setResourceValue_key_error_(value: id, key: NSString, error: NSError): BOOL = extern
+  @inline def setResourceValues_error_(keyedValues: id, error: NSError): BOOL = extern
+  @inline def removeCachedResourceValueForKey_(key: NSString): Unit = extern
   @inline def removeAllCachedResourceValues(): Unit = extern
-  @inline def setTemporaryResourceValue(value: id, key: NSString): Unit = extern
-//  @inline def bookmarkDataWithOptions(options: NSURLBookmarkCreationOptions, keys: NSString, relativeURL: NSURL, error: NSError): NSData = extern
-//  @inline def initByResolvingBookmarkData(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL, isStale: BOOL, error: NSError): NSURL = extern
+  @inline def setTemporaryResourceValue_key_(value: id, key: NSString): Unit = extern
+  @inline def bookmarkDataWithOptions_keys_relativeURL_error_(options: NSURLBookmarkCreationOptions, keys: NSString, relativeURL: NSURL, error: NSError): NSData = extern
+  @inline def initByResolvingBookmarkData_options_relativeURL_isStale_error_(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL, isStale: BOOL, error: NSError): NSURL = extern
   @inline def startAccessingSecurityScopedResource(): BOOL = extern
   @inline def stopAccessingSecurityScopedResource(): Unit = extern
   @inline def dataRepresentation(): NSData = extern
@@ -57,44 +53,45 @@ class NSURL extends NSObject with NSSecureCoding with NSCopying {//with NSURLHan
   @inline def isFileURL(): BOOL = extern
   @inline def standardizedURL(): NSURL = extern
   @inline def filePathURL(): NSURL = extern
-  @inline def getPromisedItemResourceValue(value: id, key: NSString, error: NSError): BOOL = extern
-//  @inline def promisedItemResourceValuesForKeys(keys: NSString, error: NSError): NSDictionary[NSString, id] = extern
-  @inline def checkPromisedItemIsReachableAndReturnError(error: NSError): BOOL = extern
-  @inline def URLByAppendingPathComponent(pathComponent: NSString): NSURL = extern
-  @inline def URLByAppendingPathComponent(pathComponent: NSString, isDirectory: BOOL): NSURL = extern
-  @inline def URLByAppendingPathExtension(pathExtension: NSString): NSURL = extern
-//  @inline def pathComponents(): NSArray[NSString] = extern
+  @inline def getPromisedItemResourceValue_key_error_(value: id, key: NSString, error: NSError): BOOL = extern
+  @inline def promisedItemResourceValuesForKeys_error_(keys: NSString, error: NSError): NSDictionary[NSString, NSObject] = extern
+  @inline def checkPromisedItemIsReachableAndReturnError_(error: NSError): BOOL = extern
+  @inline def URLByAppendingPathComponent_(pathComponent: NSString): NSURL = extern
+  @inline def URLByAppendingPathComponent_isDirectory_(pathComponent: NSString, isDirectory: BOOL): NSURL = extern
+  @inline def URLByAppendingPathExtension_(pathExtension: NSString): NSURL = extern
+  @inline def pathComponents(): NSArray[NSString] = extern
   @inline def lastPathComponent(): NSString = extern
   @inline def pathExtension(): NSString = extern
   @inline def URLByDeletingLastPathComponent(): NSURL = extern
   @inline def URLByDeletingPathExtension(): NSURL = extern
   @inline def URLByStandardizingPath(): NSURL = extern
   @inline def URLByResolvingSymlinksInPath(): NSURL = extern
-  @inline def resourceDataUsingCache(shouldUseCache: BOOL): NSData = extern
-  @inline def loadResourceDataNotifyingClient(client: id, shouldUseCache: BOOL): Unit = extern
-  @inline def propertyForKey(propertyKey: NSString): id = extern
-  @inline def setResourceData(data: NSData): BOOL = extern
-  @inline def setProperty(property: id, propertyKey: NSString): BOOL = extern
-//  @inline def URLHandleUsingCache(shouldUseCache: BOOL): NSURLHandle = extern
+  @inline def resourceDataUsingCache_(shouldUseCache: BOOL): NSData = extern
+  @inline def loadResourceDataNotifyingClient_shouldUseCache_(client: id, shouldUseCache: BOOL): Unit = extern
+  @inline def propertyForKey_(propertyKey: NSString): id = extern
+  @inline def setResourceData_(data: NSData): BOOL = extern
+  @inline def setProperty_propertyKey_(property: id, propertyKey: NSString): BOOL = extern
+//  @inline def URLHandleUsingCache_(shouldUseCache: BOOL): NSURLHandle = extern
 }
+
 
 @ObjCClass
 abstract class NSURLClass extends NSObjectClass {
-  @inline def fileURLWithPath(path: NSString, isDir: BOOL, baseURL: NSURL): NSURL = extern
-  @inline def fileURLWithPath(path: NSString, baseURL: NSURL): NSURL = extern
-  @inline def fileURLWithPath(path: NSString, isDir: BOOL): NSURL = extern
-  @inline def fileURLWithPath(path: NSString): NSURL = extern
-  @inline def fileURLWithFileSystemRepresentation(path: Ptr[CSignedChar], isDir: BOOL, baseURL: NSURL): NSURL = extern
-  @inline def URLWithString(URLString: NSString): NSURL = extern
-  @inline def URLWithString(URLString: NSString, baseURL: NSURL): NSURL = extern
-  @inline def URLWithDataRepresentation(data: NSData, baseURL: NSURL): NSURL = extern
-  @inline def absoluteURLWithDataRepresentation(data: NSData, baseURL: NSURL): NSURL = extern
-//  @inline def URLByResolvingBookmarkData(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL, isStale: BOOL, error: NSError): NSURL = extern
-//  @inline def resourceValuesForKeys(keys: NSString, bookmarkData: NSData): NSDictionary[NSString, id] = extern
-//  @inline def writeBookmarkData(bookmarkData: NSData, bookmarkFileURL: NSURL, options: NSURLBookmarkFileCreationOptions, error: NSError): BOOL = extern
-  @inline def bookmarkDataWithContentsOfURL(bookmarkFileURL: NSURL, error: NSError): NSData = extern
-//  @inline def URLByResolvingAliasFileAtURL(url: NSURL, options: NSURLBookmarkResolutionOptions, error: NSError): NSURL = extern
-  @inline def fileURLWithPathComponents(components: NSString): NSURL = extern
+  @inline def fileURLWithPath_isDir_baseURL_(path: NSString, isDir: BOOL, baseURL: NSURL): NSURL = extern
+  @inline def fileURLWithPath_baseURL_(path: NSString, baseURL: NSURL): NSURL = extern
+  @inline def fileURLWithPath_isDir_(path: NSString, isDir: BOOL): NSURL = extern
+  @inline def fileURLWithPath_(path: NSString): NSURL = extern
+  @inline def fileURLWithFileSystemRepresentation_isDir_baseURL_(path: Ptr[CSignedChar], isDir: BOOL, baseURL: NSURL): NSURL = extern
+  @inline def URLWithString_(URLString: NSString): NSURL = extern
+  @inline def URLWithString_baseURL_(URLString: NSString, baseURL: NSURL): NSURL = extern
+  @inline def URLWithDataRepresentation_baseURL_(data: NSData, baseURL: NSURL): NSURL = extern
+  @inline def absoluteURLWithDataRepresentation_baseURL_(data: NSData, baseURL: NSURL): NSURL = extern
+  @inline def URLByResolvingBookmarkData_options_relativeURL_isStale_error_(bookmarkData: NSData, options: NSURLBookmarkResolutionOptions, relativeURL: NSURL, isStale: BOOL, error: NSError): NSURL = extern
+  @inline def resourceValuesForKeys_bookmarkData_(keys: NSString, bookmarkData: NSData): NSDictionary[NSString, NSObject] = extern
+//  @inline def writeBookmarkData_bookmarkFileURL_options_error_(bookmarkData: NSData, bookmarkFileURL: NSURL, options: NSURLBookmarkFileCreationOptions, error: NSError): BOOL = extern
+  @inline def bookmarkDataWithContentsOfURL_error_(bookmarkFileURL: NSURL, error: NSError): NSData = extern
+  @inline def URLByResolvingAliasFileAtURL_options_error_(url: NSURL, options: NSURLBookmarkResolutionOptions, error: NSError): NSURL = extern
+  @inline def fileURLWithPathComponents_(components: NSString): NSURL = extern
 }
 
 object NSURL extends NSURLClass {

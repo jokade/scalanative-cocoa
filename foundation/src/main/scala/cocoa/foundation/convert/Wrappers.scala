@@ -16,7 +16,7 @@ object Wrappers {
 
   case class NSArrayWrapper[T<:NSObject](ns: NSArray[T]) extends AbstractSeq[T] with IndexedSeq[T] {
     override def length: Int = ns.count().toInt
-    override def apply(idx: Int): T = ns.objectAtIndex(idx.toUInt)
+    override def apply(idx: Int): T = ns.objectAtIndex_(idx.toUInt)
   }
 
   case class NSDictionaryWrapper[K<:NSObject, V<:NSObject](ns: NSDictionary[K,V]) extends AbstractMap[K,V] {
@@ -24,7 +24,7 @@ object Wrappers {
 
     override def +[B1 >: V](kv: (K, B1)): Map[K, B1] = ???
 
-    override def get(key: K): Option[V] = ns.objectForKey(key) match {
+    override def get(key: K): Option[V] = ns.objectForKey_(key) match {
       case null => None
       case x => Some(x)
     }
@@ -44,7 +44,7 @@ object Wrappers {
     }
     override def next(): (K, V) = {
       val key = keyIterator.next()
-      (key,dict.objectForKey(key))
+      (key,dict.objectForKey_(key))
     }
   }
 

@@ -8,9 +8,11 @@ import cocoa.foundation.NSValue
 import scalanative.native._
 
 object NSValueTest extends TestSuite {
-  val tests = TestSuite {
+  val tests = Tests {
+    /*
     'class-{
       assert( NSValue.className == "NSValue" )
     }
+    */
   }
 }

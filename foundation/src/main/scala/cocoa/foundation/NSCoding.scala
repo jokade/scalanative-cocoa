@@ -5,11 +5,12 @@
 package cocoa.foundation
 
 import scalanative.native._
+import objc._
 
 import scala.scalanative.native.extern
 
 @ObjC
 trait NSCoding {
-//  @inline def encodeWithCoder(aCoder: NSCoder): Unit = extern
-//  @inline def initWithCoder(aDecoder: NSCoder): NSCoding = extern
+  @inline def encodeWithCoder_(aCoder: NSCoder): Unit = extern
+  @inline def initWithCoder_(aDecoder: NSCoder): this.type = extern
 }
