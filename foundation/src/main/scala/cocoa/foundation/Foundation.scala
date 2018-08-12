@@ -19,16 +19,16 @@ object Foundation {
 //  def object_getIndexedIvars_(obj: id): Ptr[Byte] = extern
 //  def sel_isMapped_(sel: SEL): BOOL = extern
 //  def sel_getUid_(str: Ptr[CSignedChar]): SEL = extern
-  def NSAllocateObject_extraBytes_zone_(aClass: id, extraBytes: NSUInteger, zone: NSZone): id = extern
+  def NSAllocateObject_extraBytes_zone(aClass: id, extraBytes: NSUInteger, zone: NSZone): id = extern
   def NSDeallocateObject_(`object`: id): Unit = extern
-  def NSCopyObject_extraBytes_zone_(`object`: id, extraBytes: NSUInteger, zone: NSZone): id = extern
-  def NSShouldRetainWithZone_requestedZone_(anObject: id, requestedZone: NSZone): BOOL = extern
-  def NSIncrementExtraRefCount_(`object`: id): Unit = extern
-  def NSDecrementExtraRefCountWasZero_(`object`: id): BOOL = extern
-  def NSExtraRefCount_(`object`: id): NSUInteger = extern
+  def NSCopyObject_extraBytes_zone(`object`: id, extraBytes: NSUInteger, zone: NSZone): id = extern
+  def NSShouldRetainWithZone_requestedZone(anObject: id, requestedZone: NSZone): BOOL = extern
+  def NSIncrementExtraRefCount(`object`: id): Unit = extern
+  def NSDecrementExtraRefCountWasZero(`object`: id): BOOL = extern
+  def NSExtraRefCount(`object`: id): NSUInteger = extern
 //  def CFBridgingRetain_(X: id): CFTypeRef = extern
 //  def CFBridgingRelease_(X: CFTypeRef): id = extern
 
   def NSLog(format: NSString, args: CVararg*): Unit = extern
-  def NXReadNSObjectFromCoder_(decoder: NSCoder): NSObject = extern
+  def NXReadNSObjectFromCoder(decoder: NSCoder): NSObject = extern
 }

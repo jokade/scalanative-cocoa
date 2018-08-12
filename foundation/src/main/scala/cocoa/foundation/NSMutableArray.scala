@@ -42,10 +42,32 @@ class NSMutableArray[T<:NSObject] extends NSArray[T] {
 @ObjCClass
 abstract class NSMutableArrayClass extends NSArrayClass {
   @inline def arrayWithCapacity_[T<:NSObject](numItems: NSUInteger): NSMutableArray[T] = extern
+//  @inline override def arrayWithContentsOfFile_[T<:NSObject](path: NSString): NSMutableArray[T] = extern
+//  @inline override def arrayWithContentsOfURL_[T<:NSObject](url: NSURL): NSMutableArray[T] = extern
+  @inline override def array[T<:NSObject](): NSMutableArray[T] = extern
+  @inline override def arrayWithObject_[T<:NSObject](anObject: T): NSMutableArray[T] = extern
+  @inline override def arrayWithObjects_count_[T<:NSObject](objects: Ptr[id], cnt: NSUInteger): NSMutableArray[T] = extern
+  @inline override def arrayWithObjects_[T<:NSObject](firstObj: T): NSMutableArray[T] = extern
+  @inline override def arrayWithArray_[T<:NSObject](array: T): NSMutableArray[T] = extern
   @inline override def arrayWithContentsOfFile_[T<:NSObject](path: NSString): NSMutableArray[T] = extern
   @inline override def arrayWithContentsOfURL_[T<:NSObject](url: NSURL): NSMutableArray[T] = extern
 }
 
 object NSMutableArray extends NSMutableArrayClass {
   override type InstanceType = NSMutableArray[_]
+
+  // TODO: use Iterable instead of Seq
+  def arrayWithObjects[T<:NSObject](objects: Seq[T]): NSMutableArray[T] = Zone { implicit z =>
+    val count = objects.size
+    val array = stackalloc[id]( sizeof[id] * count)
+    for(i<-0 until count)
+      !(array + i) = objects(i).toPtr
+    arrayWithObjects_count_(array,count.toULong)
+  }
+
+  def apply[T<:NSObject](objects: T*): NSMutableArray[T] = arrayWithObjects(objects)
+
+  implicit final class RichNSMutableArray[T <: NSObject](val ns: NSArray[T]) extends AnyVal {
+    def apply(idx: Int): T = ns.objectAtIndex_(idx.toUInt)
+  }
 }

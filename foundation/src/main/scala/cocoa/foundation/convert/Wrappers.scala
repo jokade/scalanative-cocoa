@@ -54,7 +54,7 @@ object Wrappers {
 
     private def loadNext(): Unit =
       if(_consumed) {
-        _next = ns.nextObject()
+        _next = ns.nextObject().toPtr
         _consumed = false
       }
 

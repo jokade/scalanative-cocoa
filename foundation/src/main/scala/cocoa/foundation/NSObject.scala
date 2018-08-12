@@ -10,7 +10,7 @@ import scala.scalanative.native.objc.runtime.{IMP, ObjCObject}
 class NSObject extends ObjCObject {
   @inline def isEqual_(`object`: id): BOOL = extern
   @inline def `class`(): id = extern
-  @inline def self(): NSObject = extern
+  @inline def self(): this.type = extern
   @inline def performSelector_(aSelector: SEL): id = extern
   @inline def performSelector_object_(aSelector: SEL, `object`: id): id = extern
   @inline def performSelector_object1_object2_(aSelector: SEL, object1: id, object2: id): id = extern
@@ -19,9 +19,9 @@ class NSObject extends ObjCObject {
   @inline def isMemberOfClass_(aClass: id): BOOL = extern
   @inline def conformsToProtocol_(aProtocol: Protocol): BOOL = extern
   @inline def respondsToSelector_(aSelector: SEL): BOOL = extern
-  @inline def retain(): NSObject = extern
+  @inline def retain(): this.type = extern
   @inline def release(): Unit = extern
-  @inline def autorelease(): NSObject = extern
+  @inline def autorelease(): this.type = extern
   @inline def retainCount(): NSUInteger = extern
   @inline def zone(): NSZone = extern
   @inline def hash(): NSUInteger = extern
@@ -56,8 +56,8 @@ abstract class NSObjectClass extends ObjCObject {
   @inline def load(): Unit = extern
   @inline def initialize(): Unit = extern
   @inline def `new`(): NSObject = extern
-  @inline def allocWithZone_(zone: NSZone): NSObject = extern
-  @inline def alloc(): NSObject = extern
+  @inline def allocWithZone_(zone: NSZone): InstanceType = extern
+  @inline def alloc(): InstanceType = extern
   @inline def copyWithZone_(zone: NSZone): id = extern
   @inline def mutableCopyWithZone_(zone: NSZone): id = extern
   @inline def instancesRespondToSelector_(aSelector: SEL): BOOL = extern

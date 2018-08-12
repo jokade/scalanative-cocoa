@@ -114,9 +114,9 @@ class NSString extends NSObject with NSCopying with NSMutableCopying with NSSecu
   @inline def writeToURL_atomically_(url: NSURL, atomically: BOOL): BOOL = extern
   @inline def initWithContentsOfFile_(path: NSString): id = extern
   @inline def initWithContentsOfURL_(url: NSURL): id = extern
-  @inline def initWithCStringNoCopy_length_freeBuffer_(bytes: Ptr[CSignedChar], length: NSUInteger, freeBuffer: BOOL): id = extern
-  @inline def initWithCString_length_(bytes: Ptr[CSignedChar], length: NSUInteger): id = extern
-  @inline def initWithCString_(bytes: Ptr[CSignedChar]): id = extern
+  @inline def initWithCStringNoCopy_length_freeBuffer_(bytes: Ptr[CSignedChar], length: NSUInteger, freeBuffer: BOOL): NSString = extern
+  @inline def initWithCString_length_(bytes: Ptr[CSignedChar], length: NSUInteger): NSString = extern
+  @inline def initWithCString_(bytes: Ptr[CSignedChar]): NSString = extern
   @inline def getCharacters_(buffer: unichar): Unit = extern
 
   // from NSURL.h
@@ -137,9 +137,9 @@ abstract class NSStringClass extends NSObjectClass {
   @inline def stringWithUTF8String_(nullTerminatedCString: Ptr[CSignedChar]): NSString = extern
   @inline def stringWithFormat_(format: NSString): NSString = extern
   @inline def localizedStringWithFormat_(format: NSString): NSString = extern
-  @inline def stringWithCString_enc_(cString: Ptr[CSignedChar], enc: NSStringEncoding): NSString = extern
-  @inline def stringWithContentsOfURL_enc_error_(url: NSURL, enc: NSStringEncoding, error: NSError): NSString = extern
-  @inline def stringWithContentsOfFile_enc_error_(path: NSString, enc: NSStringEncoding, error: NSError): NSString = extern
+  @inline def stringWithCString_encoding_(cString: Ptr[CSignedChar], enc: NSStringEncoding): NSString = extern
+  @inline def stringWithContentsOfURL_encoding_error_(url: NSURL, enc: NSStringEncoding, error: NSError): NSString = extern
+  @inline def stringWithContentsOfFile_encoding_error_(path: NSString, enc: NSStringEncoding, error: NSError): NSString = extern
   @inline def stringEncodingForData_opts_string_usedLossyConversion_(data: NSData, opts: id, string: NSString, usedLossyConversion: BOOL): NSStringEncoding = extern
   @inline def stringWithContentsOfFile_(path: NSString): id = extern
   @inline def stringWithContentsOfURL_(url: NSURL): id = extern
@@ -149,4 +149,27 @@ abstract class NSStringClass extends NSObjectClass {
 
 object NSString extends NSStringClass {
   override type InstanceType = NSString
+
+  /**
+   * Convenience Method for creating UTF8 encoded NSStrings from scala-native CStrings.
+   * @param cstring
+   * @return
+   */
+  def apply(cstring: CString): NSString = stringWithCString_encoding_(cstring,NSStringEncoding.NSUTF8StringEncoding)
+
+  def apply(string: String): NSString = Zone{ implicit z =>
+    stringWithCString_encoding_(toCString(string),NSStringEncoding.NSUTF8StringEncoding)
+  }
+
+  implicit final class RichNSString(val ns: NSString) extends AnyVal {
+    /**
+     * Returns the CString representation of this NSString.
+     */
+    @inline def cstring: CString = ns.UTF8String()
+
+    /**
+     * Returns the Scala String representation of this NSString
+     */
+    @inline def string: String = fromCString(ns.UTF8String())
+  }
 }

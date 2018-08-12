@@ -29,7 +29,10 @@ package object foundation {
 
 //  val nil: id = 0.cast[id]
 
-  implicit def objectToId(o: ObjCObject): id = o.cast[id]
+  //implicit def objectToId(o: ObjCObject): id = o.cast[id]
+  implicit final class RichObjCObject(val o: ObjCObject) {
+    def toPtr: id = o.cast[id]
+  }
 
   /** NSString literal. */
   implicit class NSQuote(val ctx: StringContext) {

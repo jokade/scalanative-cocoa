@@ -44,10 +44,10 @@ class NSDictionary[K<:NSObject,V<:NSObject] extends NSObject with NSCopying with
 abstract class NSDictionaryClass extends NSObjectClass {
   @inline def dictionary[K<:NSObject,V<:NSObject](): NSDictionary[K, V] = extern
   @inline def dictionaryWithObject_key_[K<:NSObject,V<:NSObject](`object`: V, key: K): NSDictionary[K, V] = extern
-  @inline def dictionaryWithObjects_keys_cnt_[K<:NSObject,V<:NSObject](objects: V, keys: K, cnt: NSUInteger): NSDictionary[K, V] = extern
+  @inline def dictionaryWithObjects_forKeys_count_[K<:NSObject,V<:NSObject](objects: Ptr[id], keys: Ptr[id], cnt: NSUInteger): NSDictionary[K, V] = extern
   @inline def dictionaryWithObjectsAndKeys_[K<:NSObject,V<:NSObject](firstObject: id): NSDictionary[K, V] = extern
   @inline def dictionaryWithDictionary_[K<:NSObject,V<:NSObject](dict: V): NSDictionary[K, V] = extern
-  @inline def dictionaryWithObjects_keys_[K<:NSObject,V<:NSObject](objects: V, keys: K): NSDictionary[K, V] = extern
+  @inline def dictionaryWithObjects_forKeys_[K<:NSObject,V<:NSObject](objects: Ptr[id], keys: Ptr[id]): NSDictionary[K, V] = extern
   @inline def dictionaryWithContentsOfFile_[K<:NSObject,V<:NSObject](path: NSString): NSDictionary[K, V] = extern
   @inline def dictionaryWithContentsOfURL_[K<:NSObject,V<:NSObject](url: NSURL): NSDictionary[K, V] = extern
   @inline def sharedKeySetForKeys_[K<:NSObject](keys: K): id = extern
@@ -56,7 +56,7 @@ abstract class NSDictionaryClass extends NSObjectClass {
 object NSDictionary extends NSDictionaryClass {
   import runtime._
   override type InstanceType = NSDictionary[_,_]
-  private lazy val __sel_dictionaryWithObjects_forKeys_count = sel_registerName(c"dictionaryWithObjects:forKeys:count:")
+//  private lazy val __sel_dictionaryWithObjects_forKeys_count = sel_registerName(c"dictionaryWithObjects:forKeys:count:")
 
   def apply[K<:NSObject, V<:NSObject](kv: (K,V)*): NSDictionary[K,V] = dictionaryWithObjects(kv)
 
@@ -66,10 +66,11 @@ object NSDictionary extends NSDictionaryClass {
     val objArray = stackalloc[id]( sizeof[id] * count)
     val keyArray = stackalloc[id]( sizeof[id] * count )
     for(i<-0 until count) {
-      !(keyArray + i) = objects(i)._1
-      !(objArray + i) = objects(i)._2
+      !(keyArray + i) = objects(i)._1.toPtr
+      !(objArray + i) = objects(i)._2.toPtr
     }
-    objc_msgSend(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
+    dictionaryWithObjects_forKeys_count_(objArray,keyArray,count.toULong)
+    //objc_msgSend(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
   }
 
 

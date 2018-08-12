@@ -66,7 +66,7 @@ class NSArray[T<:NSObject] extends NSObject with NSCopying with NSMutableCopying
 abstract class NSArrayClass extends NSObjectClass {
   @inline def array[T<:NSObject](): NSArray[T] = extern
   @inline def arrayWithObject_[T<:NSObject](anObject: T): NSArray[T] = extern
-  @inline def arrayWithObjects_cnt_[T<:NSObject](objects: Ptr[id], cnt: NSUInteger): NSArray[T] = extern
+  @inline def arrayWithObjects_count_[T<:NSObject](objects: Ptr[id], cnt: NSUInteger): NSArray[T] = extern
   @inline def arrayWithObjects_[T<:NSObject](firstObj: T): NSArray[T] = extern
   @inline def arrayWithArray_[T<:NSObject](array: T): NSArray[T] = extern
   @inline def arrayWithContentsOfFile_[T<:NSObject](path: NSString): NSArray[T] = extern
@@ -82,15 +82,15 @@ object NSArray extends NSArrayClass {
     val count = objects.size
     val array = stackalloc[id]( sizeof[id] * count)
     for(i<-0 until count)
-      !(array + i) = objects(i)
-    arrayWithObjects_cnt_(array,count.toULong)
+      !(array + i) = objects(i).toPtr
+    arrayWithObjects_count_(array,count.toULong)
     //objc_msgSend(__cls,__sel_arrayWithObjects_cnt_,array,count).cast[NSArray[T]]
   }
 
   def apply[T<:NSObject](objects: T*): NSArray[T] = arrayWithObjects(objects)
-/*
+
   implicit final class RichNSArray[T <: NSObject](val ns: NSArray[T]) extends AnyVal {
-    def apply(idx: Int): T = ns.objectAtIndex(idx.toUInt)
+    def apply(idx: Int): T = ns.objectAtIndex_(idx.toUInt)
   }
-  */
+
 }
