@@ -13,7 +13,7 @@ class NSMutableDictionary[K<:NSObject,V<:NSObject] extends NSDictionary[K,V] {
   @inline def removeAllObjects(): Unit = extern
   @inline def removeObjectsForKeys_(keyArray: K): Unit = extern
   @inline def setDictionary_(otherDictionary: V): Unit = extern
-  @inline def setObject_key_(obj: V, key: K): Unit = extern
+  @inline def setObject_forKey_(obj: V, key: K): Unit = extern
   @inline override def initWithContentsOfFile_(path: NSString): NSMutableDictionary[K, V] = extern
   @inline override def initWithContentsOfURL_(url: NSURL): NSMutableDictionary[K, V] = extern
 }
