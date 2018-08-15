@@ -49,4 +49,36 @@ abstract class NSAlertClass extends NSObjectClass {
 
 object NSAlert extends NSAlertClass {
   override type InstanceType = NSAlert
+
+  def apply(messageText: String,
+            defaultButton: String,
+            alternateButton: String = "",
+            informativeText: String = "",
+            otherButton: String = "",
+            alertStyle: NSAlertStyle = NSAlertStyle.Informational): NSAlert = apply(
+    NSString(messageText),
+    NSString(defaultButton),
+    if( alternateButton != "") NSString(alternateButton) else null,
+    if( informativeText != "") NSString(informativeText) else null,
+    if( otherButton != "") NSString(otherButton) else null,
+    alertStyle)
+
+  def apply(messageText: NSString,
+            defaultButton: NSString,
+            alternateButton: NSString,
+            informativeText: NSString,
+            otherButton: NSString,
+            alertStyle: NSAlertStyle): NSAlert = {
+    val alert = NSAlert.alloc().init()
+    alert.setMessageText_(messageText)
+    alert.addButtonWithTitle_(defaultButton)
+    if( alternateButton != null )
+      alert.addButtonWithTitle_(alternateButton)
+    if( otherButton != null )
+      alert.addButtonWithTitle_(otherButton)
+    if( informativeText != null )
+      alert.setInformativeText_(informativeText)
+    alert.setAlertStyle_(alertStyle)
+    alert
+  }
 }

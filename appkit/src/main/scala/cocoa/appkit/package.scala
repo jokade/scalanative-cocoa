@@ -494,9 +494,9 @@ package object appkit {
 
   type NSAlertStyle = NSUInteger
   object NSAlertStyle {
-    val NSAlertStyleWarning       :NSAlertStyle = 0.toULong
-    val NSAlertStyleInformational :NSAlertStyle = 1.toULong
-    val NSAlertStyleCritical      :NSAlertStyle = 2.toULong
+    val Warning       :NSAlertStyle = 0.toULong
+    val Informational :NSAlertStyle = 1.toULong
+    val Critical      :NSAlertStyle = 2.toULong
   }
 
   type NSImageLoadStatus = NSUInteger
@@ -538,4 +538,9 @@ package object appkit {
   }
 
   type NSModalResponse = NSInteger
+  object NSModalResponse {
+    val NSAlertFirstButtonReturn  :NSModalResponse = 1000
+    val NSAlertSecondButtonReturn :NSModalResponse = 1001
+    val NSAlertThirdButtonReturn  :NSModalResponse = 1002
+  }
 }
