@@ -5,7 +5,7 @@
 // Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
 package cocoa
 
-import cocoa.foundation.{NSInteger, NSUInteger}
+import cocoa.foundation.{NSInteger, NSString, NSUInteger}
 
 import scalanative.native._
 
@@ -14,6 +14,14 @@ package object appkit {
   type CGFloat = CDouble
 
   type NSEventType = NSUInteger
+
+  type NSImageName = NSString
+  type NSHelpAnchorName = NSString
+  type NSColorSpaceName = NSString
+  type NSColorListName = NSString
+  type NSColorName = NSString
+
+
   object NSEventType {
     val LeftMouseDown             :NSEventType = 1.toULong
     val LeftMouseUp               :NSEventType = 2.toULong
@@ -483,4 +491,51 @@ package object appkit {
      */
     val Gap :NSTableViewDraggingDestinationFeedbackStyle = 2
   }
+
+  type NSAlertStyle = NSUInteger
+  object NSAlertStyle {
+    val NSAlertStyleWarning       :NSAlertStyle = 0.toULong
+    val NSAlertStyleInformational :NSAlertStyle = 1.toULong
+    val NSAlertStyleCritical      :NSAlertStyle = 2.toULong
+  }
+
+  type NSImageLoadStatus = NSUInteger
+  object NSImageLoadStatus {
+    val Completed :NSImageLoadStatus = 0.toULong
+    val Cancelled :NSImageLoadStatus = 1.toULong
+    val InvalidData :NSImageLoadStatus = 2.toULong
+    val UnexpectedEOF :NSImageLoadStatus = 3.toULong
+    val ReadError: NSImageLoadStatus = 4.toULong
+  }
+
+  type NSImageCacheMode = NSUInteger
+  object NSImageCacheMode {
+    val Default :NSImageCacheMode = 0.toULong    // unspecified. use image rep's default
+    val Always  :NSImageCacheMode = 1.toULong     // always generate a cache when drawing
+    val BySize  :NSImageCacheMode = 2.toULong     // cache if cache size is smaller than original data
+    val Never   :NSImageCacheMode = 3.toULong      // never cache, always draw direct
+  }
+
+  type NSImageResizingMode = NSInteger
+  object NSImageResizingMode {
+    val Stretch :NSImageResizingMode = 0
+    val Tile :NSImageResizingMode = 1
+  }
+
+  type NSImageLayoutDirection = NSInteger
+  object NSImageLayoutDirection {
+    val NSImageLayoutDirectionUnspecified :NSImageLayoutDirection = -1
+    val NSImageLayoutDirectionLeftToRight :NSImageLayoutDirection = 2
+    val NSImageLayoutDirectionRightToLeft :NSImageLayoutDirection = 3
+  }
+
+
+  type NSColorType = NSInteger
+  object NSColorType {
+    val NSColorTypeComponentBased :NSColorType = 0  // Colors with colorSpace, and floating point color components
+    val NSColorTypePattern        :NSColorType = 1  // Colors with patternImage
+    val NSColorTypeCatalog        :NSColorType = 2  // Colors with catalogNameComponent and colorNameComponent; these colors may have device and appearance specific representations
+  }
+
+  type NSModalResponse = NSInteger
 }

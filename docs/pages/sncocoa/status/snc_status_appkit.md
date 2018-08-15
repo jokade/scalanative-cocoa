@@ -1,5 +1,5 @@
 ---
-title: Status of Foundation bindings
+title: Status of AppKit bindings
 keywords:
 summary:
 sidebar: sncocoa_sidebar
@@ -29,7 +29,7 @@ and their support status in SNCocoa.
 | NSAccessibilityProtocols.h             | {{page.missing}}  |               |       | 
 | NSActionCell.h                         | {{page.missing}}  |               |       | 
 | NSAffineTransform.h                    | {{page.missing}}  |               |       | 
-| NSAlert.h                              | {{page.missing}}  |               |       | 
+| NSAlert.h                              | {{page.partial}} {{page.test_needed}}  | NSAlert, NSAlertDelegate              |       | 
 | NSAlignmentFeedbackFilter.h            | {{page.missing}}  |               |       | 
 | NSAnimation.h                          | {{page.missing}}  |               |       | 
 | NSAnimationContext.h                   | {{page.missing}}  |               |       | 
@@ -37,14 +37,14 @@ and their support status in SNCocoa.
 | NSAppleScriptExtensions.h              | {{page.missing}}  |               |       | 
 | NSApplication.h                        | {{page.partial}} {{page.test_needed}}  | NSApplication, NSApplicationDelegate  |       | 
 | NSApplicationScripting.h               | {{page.missing}}  |               |       | 
-| NSArrayController.h                    | {{page.missing}}  |               |       | 
+| NSArrayController.h                    | {{page.partial}} {{page.test_needed}} | NSArrayController              |       | 
 | NSAttributedString.h                   | {{page.missing}}  |               |       | 
 | NSBezierPath.h                         | {{page.missing}}  |               |       | 
 | NSBitmapImageRep.h                     | {{page.missing}}  |               |       | 
 | NSBox.h                                | {{page.missing}}  |               |       | 
 | NSBrowser.h                            | {{page.missing}}  |               |       | 
 | NSBrowserCell.h                        | {{page.missing}}  |               |       | 
-| NSButton.h                             | {{page.missing}}  |               |       | 
+| NSButton.h                             | {{page.partial}} {{page.test_needed}} | NSButton              |       | 
 | NSButtonCell.h                         | {{page.missing}}  |               |       | 
 | NSCIImageRep.h                         | {{page.missing}}  |               |       | 
 | NSCachedImageRep.h                     | {{page.missing}}  |               |       | 
@@ -57,7 +57,7 @@ and their support status in SNCocoa.
 | NSCollectionViewGridLayout.h           | {{page.missing}}  |               |       | 
 | NSCollectionViewLayout.h               | {{page.missing}}  |               |       | 
 | NSCollectionViewTransitionLayout.h     | {{page.missing}}  |               |       | 
-| NSColor.h                              | {{page.missing}}  |               |       | 
+| NSColor.h                              | {{page.partial}} {{page.test_needed}} | NSColor  |       | 
 | NSColorList.h                          | {{page.missing}}  |               |       | 
 | NSColorPanel.h                         | {{page.missing}}  |               |       | 
 | NSColorPicker.h                        | {{page.missing}}  |               |       | 
@@ -68,7 +68,7 @@ and their support status in SNCocoa.
 | NSComboBox.h                           | {{page.missing}}  |               |       | 
 | NSComboBoxCell.h                       | {{page.missing}}  |               |       | 
 | NSControl.h                            | {{page.partial}} {{page.test_needed}} | NSControl, NSControlTextEditingDelegate   |       | 
-| NSController.h                         | {{page.missing}}  |               |       | 
+| NSController.h                         | {{page.ok}} {{page.test_needed}} | NSController              |       | 
 | NSCursor.h                             | {{page.missing}}  |               |       | 
 | NSCustomImageRep.h                     | {{page.missing}}  |               |       | 
 | NSCustomTouchBarItem.h                 | {{page.missing}}  |               |       | 
@@ -109,9 +109,9 @@ and their support status in SNCocoa.
 | NSGroupTouchBarItem.h                  | {{page.missing}}  |               |       | 
 | NSHapticFeedback.h                     | {{page.missing}}  |               |       | 
 | NSHelpManager.h                        | {{page.missing}}  |               |       | 
-| NSImage.h                              | {{page.missing}}  |               |       | 
+| NSImage.h                              | {{page.partial}} {{page.test_needed}} | NSImage, NSImageDelegate   |       | 
 | NSImageCell.h                          | {{page.missing}}  |               |       | 
-| NSImageRep.h                           | {{page.missing}}  |               |       | 
+| NSImageRep.h                           | {{page.partial}} {{page.test_needed}} | NSImageRep              |       | 
 | NSImageView.h                          | {{page.missing}}  |               |       | 
 | NSInputManager.h                       | {{page.missing}}  |               |       | 
 | NSInputServer.h                        | {{page.missing}}  |               |       | 
@@ -139,7 +139,7 @@ and their support status in SNCocoa.
 | NSNibDeclarations.h                    | {{page.missing}}  |               |       | 
 | NSNibLoading.h                         | {{page.missing}}  |               |       | 
 | NSNibOutletConnector.h                 | {{page.missing}}  |               |       | 
-| NSObjectController.h                   | {{page.missing}}  |               |       | 
+| NSObjectController.h                   | {{page.partial}} {{page.test_needed}} | NSObjectController  |       | 
 | NSOpenGL.h                             | {{page.missing}}  |               |       | 
 | NSOpenGLLayer.h                        | {{page.missing}}  |               |       | 
 | NSOpenGLView.h                         | {{page.missing}}  |               |       | 

@@ -27,10 +27,10 @@ lazy val nativeSettings = Seq(
 )
 
 lazy val cocoa = project.in(file("."))
-  .aggregate(foundation,appkit,uikit)
+  .aggregate(foundation,appkit,coredata)
   .settings(dontPublish:_*)
   .settings(
-    name := "scalanative-cocoa"
+    name := "sncocoa"
     )
 
 lazy val foundation = project
@@ -56,6 +56,13 @@ lazy val uikit = project
     name := "scalanative-cocoa-uikit"
   )
 
+lazy val coredata = project
+  .enablePlugins(ScalaNativePlugin)
+  .dependsOn(foundation)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
+  .settings(
+    name := "scalanative-cocoa-coredata"
+  )
 
 lazy val test = project
   .enablePlugins(ScalaNativePlugin)
