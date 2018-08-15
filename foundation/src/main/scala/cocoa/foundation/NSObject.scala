@@ -46,6 +46,7 @@ class NSObject extends ObjCObject {
   @inline def autoContentAccessingProxy(): id = extern
   @inline def attemptRecoveryFromError_recoveryOptionIndex_delegate_didRecoverSelector_contextInfo_(error: NSError, recoveryOptionIndex: NSUInteger, delegate: id, didRecoverSelector: SEL, contextInfo: Ptr[Byte]): Unit = extern
   @inline def attemptRecoveryFromError_recoveryOptionIndex_(error: NSError, recoveryOptionIndex: NSUInteger): BOOL = extern
+  @inline def addObserver_forKeyPath_options_context_(observer: NSObject, forKeyPath: NSString, options: NSKeyValueObservingOptions, context: id): Unit = extern
 }
 
 

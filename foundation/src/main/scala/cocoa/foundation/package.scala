@@ -219,4 +219,13 @@ package object foundation {
     val NSURLBookmarkResolutionWithoutMounting   :NSURLBookmarkResolutionOptions = 1.toULong << 9  /* don't mount a volume during bookmark resolution */
     val NSURLBookmarkResolutionWithSecurityScope :NSURLBookmarkResolutionOptions = 1.toULong << 10 /* use the secure information included at creation time to provide the ability to access the resource in a sandboxed process */
   }
+
+  type NSKeyValueObservingOptions = NSUInteger
+  object NSKeyValueObservingOptions {
+    val None    :NSUInteger = 0.toULong
+    val New     :NSUInteger = 0x01.toULong
+    val Old     :NSUInteger = 0x02.toULong
+    val Initial :NSUInteger = 0x04.toULong
+    val Prior   :NSUInteger = 0x08.toULong
+  }
 }

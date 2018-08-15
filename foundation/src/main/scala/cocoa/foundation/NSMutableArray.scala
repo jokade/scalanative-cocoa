@@ -70,4 +70,6 @@ object NSMutableArray extends NSMutableArrayClass {
   implicit final class RichNSMutableArray[T <: NSObject](val ns: NSArray[T]) extends AnyVal {
     def apply(idx: Int): T = ns.objectAtIndex_(idx.toUInt)
   }
+
+  def empty[V<:NSObject]: NSMutableArray[V] = alloc().init().asInstanceOf[NSMutableArray[V]]
 }

@@ -51,4 +51,5 @@ object NSMutableDictionary extends NSMutableDictionaryClass {
     //objc_msgSend(__cls,__sel_dictionaryWithObjects_forKeys_count,objArray,keyArray,count).cast[NSDictionary[K,V]]
   }
 
+  def empty[K<:NSObject,V<:NSObject]: NSMutableDictionary[K,V] = alloc().init().asInstanceOf[NSMutableDictionary[K,V]]
 }

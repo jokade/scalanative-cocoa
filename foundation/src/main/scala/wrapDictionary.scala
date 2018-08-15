@@ -80,7 +80,7 @@ object wrapDictionary {
      private def genKeyDef(prop: ValDef) = {
        val name = genKeyValName(prop)
        val key = Literal(Constant(prop.name.toString))
-       q"""private val $name = cocoa.foundation.NSQuote(StringContext($key)).ns()"""
+       q"""private val $name = cocoa.foundation.NSQuote(StringContext($key)).ns().retain()"""
      }
 
      private def genKeyValName(prop: ValDef): TermName = TermName("__key_"+prop.name)
@@ -91,7 +91,7 @@ object wrapDictionary {
        val tpe = c.typecheck(prop.tpt,c.TYPEmode).tpe
        val setterName = TermName(name.toString+"_$eq")
        val getter = q"def $name: $tpe = o.objectForKey_($key).asInstanceOf[$tpe]"
-       val setter = q"def ${setterName}(value: $tpe) = o.setObject_forKey_(value,$key)"
+       val setter = q"def ${setterName}(value: $tpe): Unit = o.setObject_forKey_(value,$key)"
        Seq(getter,setter)
      }
 
