@@ -5,10 +5,11 @@ import cocoa.foundation.{BOOL, NSArray, NSCoder, NSData, NSDictionary, NSError, 
 
 import scala.language.experimental.macros
 import scalanative.native._
+import objc._
 
 @ObjC
 trait UIApplicationDelegate extends NSObject {
-  @inline def applicationDidFinishLaunching(application: UIApplication): Unit = extern
+  @inline def applicationDidFinishLaunching_(application: UIApplication): Unit = extern
 //  @inline def application(application: UIApplication, launchOptions: NSDictionary): BOOL = extern
   @inline def applicationDidBecomeActive(application: UIApplication): Unit = extern
   @inline def applicationWillResignActive(application: UIApplication): Unit = extern

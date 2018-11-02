@@ -29,8 +29,8 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools w
         val method = f.symbol.asMethod
         val params = method.paramLists.head
         val callSuper = args.size match {
-          case 0 => q"msgSendSuper0($self,sel)"
-          case 1 => q"msgSendSuper1($self,sel,${args(0)})"
+          case 0 => q"msgSendSuper0($self.cast[Ptr[Byte]],sel)"
+          case 1 => q"msgSendSuper1($self.cast[Ptr[Byte]],sel,${args(0)})"
         }
         q"""import objc.runtime._
             import objc.helper._

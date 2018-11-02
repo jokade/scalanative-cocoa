@@ -18,7 +18,7 @@ class NSObjectController[T<:NSObject] extends NSController {
   @inline def validateUserInterfaceItem_(item: id): BOOL = extern
   @inline def content(): id = extern
   @inline def setContent_(content: id): Unit = extern
-  @inline def selection(): id = extern
+  @inline def selection(): T = extern
   @inline def selectedObjects(): NSArray[T] = extern
   @inline def automaticallyPreparesContent(): BOOL = extern
   @inline def setAutomaticallyPreparesContent_(automaticallyPreparesContent: BOOL): Unit = extern

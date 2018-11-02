@@ -20,6 +20,7 @@ package object appkit {
   type NSColorSpaceName = NSString
   type NSColorListName = NSString
   type NSColorName = NSString
+  type NSNibName = NSString
 
 
   object NSEventType {
@@ -542,5 +543,18 @@ package object appkit {
     val NSAlertFirstButtonReturn  :NSModalResponse = 1000
     val NSAlertSecondButtonReturn :NSModalResponse = 1001
     val NSAlertThirdButtonReturn  :NSModalResponse = 1002
+  }
+
+  type NSViewControllerTransitionOptions = NSUInteger
+  object NSViewControllerTransitionOptions {
+    val None                  : NSViewControllerTransitionOptions =    0x0.toUInt
+    val Crossfade             : NSViewControllerTransitionOptions =    0x1.toUInt   // Fades the new view in and the old view out.
+    val SlideUp               : NSViewControllerTransitionOptions =   0x10.toUInt   // Animates by sliding the old view up while the new view comes from the bottom.
+    val SlideDown             : NSViewControllerTransitionOptions =   0x20.toUInt   // Animates by sliding the old view down while the new view comes from the top.
+    val SlideLeft             : NSViewControllerTransitionOptions =   0x40.toUInt   // Animates by sliding the old view to the left while the new view comes in from the right (both views move left).
+    val SlideRight            : NSViewControllerTransitionOptions =   0x80.toUInt   // Animates by sliding the old view to the right while the new view comes in from the left (both views move right).
+    val SlideForward          : NSViewControllerTransitionOptions =  0x140.toUInt   // Same as "Left", but automatically flips to be "Right" when NSApp.userInterfaceLayoutDirection is Right-to-Left.
+    val SlideBackward         : NSViewControllerTransitionOptions =  0x180.toUInt   // Same as "Right", but automatically flips to be "Left" when NSApp.userInterfaceLayoutDirection is Right-to-Left.
+    val AllowUserInteraction  : NSViewControllerTransitionOptions = 0x1000.toUInt   // Allow user interaction during the transaction; normally it is prevented for the parent view controller while the transition is happening.
   }
 }

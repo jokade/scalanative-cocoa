@@ -6,6 +6,7 @@ import de.surfice.smacrotools.debug
 
 import scala.language.experimental.macros
 import scalanative.native._
+import objc._
 
 @ObjC
 @debug

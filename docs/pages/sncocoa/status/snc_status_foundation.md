@@ -25,11 +25,11 @@ they although work on iOS (for supported features).
 | NSAppleEventManager.h                  | {{page.missing}}  |               |       | 
 | NSAppleScript.h                        | {{page.missing}}  |               |       | 
 | NSArchiver.h                           | {{page.missing}}  |               |       | 
-| NSArray.h                              | {{page.partial}} {{page.test_needed}} | NSArray, NSMutableArray              |       | 
+| NSArray.h                              | {{page.partial}} {{page.test_needed}} | NSArray, NSMutableArray  |       | 
 | NSAttributedString.h                   | {{page.missing}}  |               |       | 
 | NSAutoreleasePool.h                    | {{page.missing}}  |               |       | 
 | NSBackgroundActivityScheduler.h        | {{page.missing}}  |               |       | 
-| NSBundle.h                             | {{page.missing}}  |               |       | 
+| NSBundle.h                             | {{page.partial}} {{page.test_needed}} | NSBundle, NSBundleResourceRequest |       | 
 | NSByteCountFormatter.h                 | {{page.missing}}  |               |       | 
 | NSByteOrder.h                          | {{page.missing}}  |               |       | 
 | NSCache.h                              | {{page.missing}}  |               |       | 

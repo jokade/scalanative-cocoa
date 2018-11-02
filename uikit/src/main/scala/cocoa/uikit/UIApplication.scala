@@ -3,6 +3,7 @@ package cocoa.uikit
 import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL, id}
 
 import scalanative.native._
+import objc._
 
 @ObjC
 class UIApplication extends NSObject { //extends UIResponder {

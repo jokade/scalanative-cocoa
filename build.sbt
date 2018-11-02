@@ -6,7 +6,7 @@ scalaVersion in ThisBuild := "2.11.12"
 
 val Version = new {
   val slogging    = "0.5.3"
-  val objc        = "0.0.5-SNAPSHOT"
+  val objc        = "0.0.6-SNAPSHOT"
   val utest       = "0.6.3"
 }
 
@@ -15,8 +15,8 @@ lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-deprecation","-unchecked","-feature","-language:implicitConversions","-Xlint"),
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
   libraryDependencies ++= Seq(
-    "de.surfice" %%% "scalanative-interop-objc" % Version.objc,
-    "com.lihaoyi" %%% "utest" % Version.utest % "test"
+    "de.surfice" %%% "scalanative-interop-objc" % Version.objc
+    //"com.lihaoyi" %%% "utest" % Version.utest % "test"
     ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
@@ -27,7 +27,7 @@ lazy val nativeSettings = Seq(
 )
 
 lazy val cocoa = project.in(file("."))
-  .aggregate(foundation,appkit,coredata)
+  .aggregate(foundation,appkit,coredata,uikit,scenekit_macos)
   .settings(dontPublish:_*)
   .settings(
     name := "sncocoa"
@@ -62,6 +62,15 @@ lazy val coredata = project
   .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-coredata"
+  )
+
+lazy val scenekit_macos = project
+  .enablePlugins(ScalaNativePlugin)
+  .dependsOn(appkit)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
+  .settings(
+    name := "scalanative-cocoa-scenekit-macos",
+    unmanagedSourceDirectories in Compile += baseDirectory.value / ".." / "scenekit" / "src" / "main" / "scala"
   )
 
 lazy val test = project

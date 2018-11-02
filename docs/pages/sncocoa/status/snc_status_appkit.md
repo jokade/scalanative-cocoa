@@ -264,7 +264,7 @@ and their support status in SNCocoa.
 | NSUserInterfaceLayout.h                | {{page.missing}}  |               |       | 
 | NSUserInterfaceValidation.h            | {{page.missing}}  |               |       | 
 | NSView.h                               | {{page.partial}} {{page.test_needed}} | NSView     |       | 
-| NSViewController.h                     | {{page.missing}}  |               |       | 
+| NSViewController.h                     | {{page.partial}} {{page.test_needed}} | NSViewController              |       | 
 | NSVisualEffectView.h                   | {{page.missing}}  |               |       | 
 | NSWindow.h                             | {{page.partial}} {{page.test_needed}} | NSWindow, NSWindowDelegate  |       | 
 | NSWindowController.h                   | {{page.missing}}  |               |       | 
