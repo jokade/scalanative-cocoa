@@ -1,9 +1,10 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import objc._
 import cocoa.foundation._
+
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC

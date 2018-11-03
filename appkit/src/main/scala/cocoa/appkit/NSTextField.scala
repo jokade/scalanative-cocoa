@@ -1,10 +1,10 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
 import cocoa.foundation.{BOOL, NSInteger, NSNotification, NSObjectClass, NSString, id}
 
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSTextField extends NSControl { //with NSUserInterfaceValidations with NSAccessibilityNavigableStaticText {
@@ -32,7 +32,7 @@ class NSTextField extends NSControl { //with NSUserInterfaceValidations with NSA
   @inline def setEditable_(editable: BOOL): Unit = extern
   @inline def isSelectable(): BOOL = extern
   @inline def setSelectable_(selectable: BOOL): Unit = extern
-  @inline def delegate(): NSTextFieldDelegate = extern
+  @inline def delegate(): id = extern
   @inline def setDelegate_(delegate: NSTextFieldDelegate): Unit = extern
 //  @inline def bezelStyle(): NSTextFieldBezelStyle = extern
 //  @inline def setBezelStyle_(bezelStyle: NSTextFieldBezelStyle): Unit = extern

@@ -1,9 +1,10 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import objc._
-import cocoa.foundation.{BOOL, NSArray, NSCoder, NSData, NSDictionary, NSInteger, NSNumber, NSObject, NSObjectClass, NSPoint, NSRect, NSSize, NSString, NSTimeInterval, NSUInteger, NSURL, SEL, id}
+import cocoa.foundation.{BOOL, NSArray, NSData, NSInteger, NSNumber, NSObjectClass, NSPoint, NSRect, NSSize, NSString, NSTimeInterval, NSURL, id}
+
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC
@@ -121,7 +122,7 @@ class NSWindow extends NSResponder { // with NSAnimatablePropertyContainer with 
   @inline def setExcludedFromWindowsMenu_(excludedFromWindowsMenu: BOOL): Unit = extern
   @inline def contentView(): NSView = extern
   @inline def setContentView_(contentView: NSView): Unit = extern
-  @inline def delegate(): NSWindowDelegate = extern
+  @inline def delegate(): id = extern
   @inline def setDelegate_(delegate: NSWindowDelegate): Unit = extern
   @inline def windowNumber(): NSInteger = extern
   @inline def styleMask(): NSWindowStyleMask = extern
@@ -176,7 +177,7 @@ class NSWindow extends NSResponder { // with NSAnimatablePropertyContainer with 
   @inline def worksWhenModal(): BOOL = extern
   @inline def preventsApplicationTerminationWhenModal(): BOOL = extern
   @inline def setPreventsApplicationTerminationWhenModal_(preventsApplicationTerminationWhenModal: BOOL): Unit = extern
-  @inline def backingScaleFactor(): CGFloat = extern
+//  @inline def backingScaleFactor(): CGFloat = extern
   @inline def isOneShot(): BOOL = extern
   @inline def setOneShot_(oneShot: BOOL): Unit = extern
   @inline def allowsToolTipsWhenApplicationIsInactive(): BOOL = extern
@@ -192,7 +193,7 @@ class NSWindow extends NSResponder { // with NSAnimatablePropertyContainer with 
 //  @inline def deepestScreen(): NSScreen = extern
   @inline def hasShadow(): BOOL = extern
   @inline def setHasShadow_(hasShadow: BOOL): Unit = extern
-  @inline def alphaValue(): CGFloat = extern
+//  @inline def alphaValue(): CGFloat = extern
   @inline def setAlphaValue_(alphaValue: CGFloat): Unit = extern
   @inline def isOpaque(): BOOL = extern
   @inline def setOpaque_(opaque: BOOL): Unit = extern
@@ -290,7 +291,7 @@ class NSWindow extends NSResponder { // with NSAnimatablePropertyContainer with 
   @inline def gState(): NSInteger = extern
   @inline def convertBaseToScreen_(point: NSPoint): NSPoint = extern
   @inline def convertScreenToBase_(point: NSPoint): NSPoint = extern
-  @inline def userSpaceScaleFactor(): CGFloat = extern
+//  @inline def userSpaceScaleFactor(): CGFloat = extern
   @inline def useOptimizedDrawing_(flag: BOOL): Unit = extern
   @inline def canStoreColor(): BOOL = extern
 }
@@ -300,7 +301,7 @@ class NSWindow extends NSResponder { // with NSAnimatablePropertyContainer with 
 abstract class NSWindowClass extends NSObjectClass {
   @inline def frameRectForContentRect_style_(cRect: NSRect, style: NSWindowStyleMask): NSRect = extern
   @inline def contentRectForFrameRect_style_(fRect: NSRect, style: NSWindowStyleMask): NSRect = extern
-  @inline def minFrameWidthWithTitle_style_(title: NSString, style: NSWindowStyleMask): CGFloat = extern
+//  @inline def minFrameWidthWithTitle_style_(title: NSString, style: NSWindowStyleMask): CGFloat = extern
 //  @inline def removeFrameUsingName_(name: NSWindowFrameAutosaveName): Unit = extern
 //  @inline def standardWindowButton_styleMask_(b: NSWindowButton, styleMask: NSWindowStyleMask): NSButton = extern
   @inline def windowNumbersWithOptions_(options: NSWindowNumberListOptions): NSArray[NSNumber] = extern

@@ -1,11 +1,10 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scala.language.experimental.macros
+import cocoa.foundation.{NSInteger, NSObject, NSRect}
+
 import scalanative.native._
 import objc._
-import cocoa.foundation._
-
 
 @ObjC
 trait NSImageDelegate extends NSObject {

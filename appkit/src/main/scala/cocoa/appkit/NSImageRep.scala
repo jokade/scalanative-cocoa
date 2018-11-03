@@ -4,8 +4,8 @@ package cocoa.appkit
 import cocoa.foundation._
 
 import scala.language.experimental.macros
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC

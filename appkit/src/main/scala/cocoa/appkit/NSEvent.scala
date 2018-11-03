@@ -1,11 +1,11 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
 import cocoa.foundation.{BOOL, NSCoding, NSCopying, NSInteger, NSObject, NSObjectClass, NSPoint, NSString, NSUInteger, id}
 
-import objc._
 import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC
@@ -68,7 +68,7 @@ class NSEvent extends NSObject with NSCopying with NSCoding {
   @inline def isEnteringProximity(): BOOL = extern
   @inline def phase(): NSEventPhase = extern
   @inline def stage(): NSInteger = extern
-  @inline def stageTransition(): CGFloat = extern
+//  @inline def stageTransition(): CGFloat = extern
   @inline def associatedEventsMask(): NSEventMask = extern
   @inline def pressureBehavior(): NSPressureBehavior = extern
 }

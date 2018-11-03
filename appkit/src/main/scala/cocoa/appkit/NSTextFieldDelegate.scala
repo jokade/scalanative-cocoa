@@ -1,12 +1,8 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import cocoa.foundation.{BOOL, NSUInteger}
-
-import scala.language.experimental.macros
 import scalanative.native._
 import objc._
-
 
 @ObjC
 trait NSTextFieldDelegate extends NSControlTextEditingDelegate {

@@ -1,10 +1,11 @@
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import cocoa.foundation.{NSArray, NSBundle, NSCoder, NSCoding, NSInteger, NSPoint, NSRect, NSSize, NSString}
+import cocoa.foundation.{NSArray, NSBundle, NSCoding, NSInteger, NSPoint, NSSize, NSString}
 
-import scalanative.native._
-import objc._
-import runtime._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
+import scala.scalanative.native.objc.runtime._
 
 @ObjC
 class NSViewController extends NSResponder with NSCoding {
@@ -27,7 +28,8 @@ class NSViewController extends NSResponder with NSCoding {
   @inline def setRepresentedObject_(representedObject: id): Unit = extern
   @inline def title(): NSString = extern
   @inline def setTitle_(title: NSString): Unit = extern
-  @inline def view(): NSView = extern
+  @inline def view(): id = extern
+  def viewAs[T<:NSView](implicit wrapper: ObjCWrapper[T]): T = wrapper.__wrap(view())
   @inline def setView_(view: NSView): Unit = extern
   @inline def isViewLoaded(): BOOL = extern
   @inline def preferredContentSize(): NSSize = extern

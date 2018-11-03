@@ -1,13 +1,8 @@
-//     Project: scalanative-cocoa
-//      Module: Foundation
-// Description: Generated with scala-obj-bindgen (with manual postprocessing) from:
-//              Foundation/NSData.h
 package cocoa.foundation
 
-import scalanative.native._
-import objc._
-
 import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSData extends NSObject with NSCopying with NSMutableCopying with NSSecureCoding {

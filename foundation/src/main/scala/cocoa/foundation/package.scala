@@ -27,25 +27,35 @@ package object foundation {
   type NSTimeInterval = CDouble
   type NSNotificationName = NSString
 
+  def registerClass(classes: NSObjectClass*): Unit = classes.foreach(_.__cls)
+
+  private val _objFormat = NSString("%@")
+  @inline def NSLog(obj: NSObject): Unit = NSLog(_objFormat,obj)
+  @inline def NSLog(str: NSString): Unit = Foundation.NSLog(str.__ptr)
+
+  @inline def NSLog(format: NSString, arg1: ObjCObject): Unit = Foundation.NSLog(format.__ptr,arg1.__ptr)
+  @inline def NSLog(format: NSString, arg1: CInt): Unit = Foundation.NSLog(format.__ptr,arg1)
+  @inline def NSLog(format: NSString, arg1: NSUInteger): Unit = Foundation.NSLog(format.__ptr,arg1)
+
+  @inline def NSLog(format: NSString, arg1: ObjCObject, arg2: ObjCObject): Unit = Foundation.NSLog(format.__ptr,arg1.__ptr,arg2.__ptr)
+  @inline def NSLog(format: NSString, arg1: ObjCObject, arg2: ObjCObject, arg3: ObjCObject): Unit = Foundation.NSLog(format.__ptr,arg1.__ptr,arg2.__ptr,arg3.__ptr)
 //  val nil: id = 0.cast[id]
 
   //implicit def objectToId(o: ObjCObject): id = o.cast[id]
-  implicit final class RichObjCObject(val o: ObjCObject) {
-    def toPtr: id = o.cast[id]
-  }
+//  implicit final class RichObjCObject(val o: ObjCObject) {
+//    def toPtr: id = o.cast[id]
+//  }
 
   /** NSString literal. */
   implicit class NSQuote(val ctx: StringContext) {
     def ns(): NSString = macro Macros.nsquoteImpl
   }
 
-//  def $super[T,R](self: T)(f: T=>R): R = macro Macros.superImpl
-
   @inline def @@(int: Int): NSNumber = NSNumber(int)
   @inline def @@(double: Double): NSNumber = NSNumber(double)
   @inline def @@(boolean: Boolean): NSNumber = NSNumber(boolean)
 
-  @inline def @@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)
+//  @inline def @@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)
 //  @inline def @@@(ints: Int*): NSArray[NSNumber] = NSArray(ints.map(NSNumber.apply):_*)
 //  @inline def @@@(doubles: Double*): NSArray[NSNumber] = NSArray(doubles.map(NSNumber.apply):_*)
 //  @inline def @@@(objects: NSObject*): NSArray[NSObject] = NSArray(objects:_*)

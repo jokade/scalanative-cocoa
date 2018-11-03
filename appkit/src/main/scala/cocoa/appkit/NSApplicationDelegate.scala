@@ -2,10 +2,8 @@
 package cocoa.appkit
 
 import scalanative.native._
-import cocoa.foundation.{BOOL, NSCoder, NSData, NSError, NSNotification, NSObject, NSString, NSURL, id}
-
 import objc._
-
+import cocoa.foundation._
 
 @ObjC
 trait NSApplicationDelegate extends NSObject {
@@ -45,4 +43,3 @@ trait NSApplicationDelegate extends NSObject {
   @inline def applicationDidChangeScreenParameters_(notification: NSNotification): Unit = extern
   @inline def applicationDidChangeOcclusionState_(notification: NSNotification): Unit = extern
 }
-

@@ -146,6 +146,7 @@ abstract class SCNNodeClass extends NSObjectClass {
 }
 
 object SCNNode extends SCNNodeClass {
+
   override type InstanceType = SCNNode
 }
 

@@ -3,10 +3,7 @@ package cocoa.appkit
 
 import scalanative.native._
 import objc._
-import cocoa.foundation.{BOOL, NSArray, NSCoder, NSNotification, NSObject, NSPoint, NSRect, NSSize, NSTimeInterval}
-
-import objc.runtime.id
-import scala.language.experimental.macros
+import cocoa.foundation._
 
 @ObjC
 trait NSWindowDelegate extends NSObject {
@@ -60,4 +57,3 @@ trait NSWindowDelegate extends NSObject {
   @inline def windowDidExitVersionBrowser_(notification: NSNotification): Unit = extern
   @inline def windowDidChangeOcclusionState_(notification: NSNotification): Unit = extern
 }
-

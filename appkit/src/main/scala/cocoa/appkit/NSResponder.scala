@@ -1,14 +1,14 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import cocoa.foundation.{BOOL, NSCoder, NSCoding, NSError, NSObject, NSString, SEL, id}
+import cocoa.foundation.{BOOL, NSCoding, NSError, NSObject, NSString, SEL, id}
 
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC
-abstract class NSResponder extends NSObject with NSCoding {
+class NSResponder extends NSObject with NSCoding {
   @inline def tryToPerform_object_(action: SEL, `object`: id): BOOL = extern
   @inline def performKeyEquivalent_(event: NSEvent): BOOL = extern
 //  @inline def validRequestorForSendType_returnType_(sendType: NSPasteboardType, returnType: NSPasteboardType): id = extern

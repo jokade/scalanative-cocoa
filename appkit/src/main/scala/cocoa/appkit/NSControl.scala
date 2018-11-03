@@ -1,11 +1,11 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import cocoa.foundation.{BOOL, NSCoder, NSInteger, NSRect, NSSize, NSString, NSUInteger, SEL, id}
+import cocoa.foundation.{BOOL, NSInteger, NSRect, NSSize, NSString, NSUInteger, SEL, id}
 
-import objc._
 import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC

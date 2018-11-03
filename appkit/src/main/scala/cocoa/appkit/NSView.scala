@@ -1,14 +1,15 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import cocoa.foundation.{BOOL, NSArray, NSCoder, NSComparisonResult, NSData, NSInteger, NSObjectClass, NSPoint, NSRangePointer, NSRect, NSSize, NSString, id}
+import cocoa.foundation.{BOOL, NSArray, NSComparisonResult, NSData, NSInteger, NSObjectClass, NSPoint, NSRangePointer, NSRect, NSSize, NSString, id}
 
-import scalanative.native._
-import objc._
 import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSView extends NSResponder { //with NSAnimatablePropertyContainer with NSUserInterfaceItemIdentification with NSDraggingDestination with NSAppearanceCustomization with NSAccessibilityElement with NSAccessibility {
+
   @inline def initWithFrame_(frameRect: NSRect): NSView = extern
   @inline def isDescendantOf_(view: NSView): BOOL = extern
   @inline def ancestorSharedWithView_(view: NSView): NSView = extern
@@ -124,11 +125,11 @@ class NSView extends NSResponder { //with NSAnimatablePropertyContainer with NSU
   @inline def setAutoresizingMask_(autoresizingMask: NSAutoresizingMaskOptions): Unit = extern
   @inline def frame(): NSRect = extern
   @inline def setFrame_(frame: NSRect): Unit = extern
-  @inline def frameRotation(): CGFloat = extern
+//  @inline def frameRotation(): CGFloat = extern
   @inline def setFrameRotation_(frameRotation: CGFloat): Unit = extern
-  @inline def frameCenterRotation(): CGFloat = extern
+//  @inline def frameCenterRotation(): CGFloat = extern
   @inline def setFrameCenterRotation_(frameCenterRotation: CGFloat): Unit = extern
-  @inline def boundsRotation(): CGFloat = extern
+//  @inline def boundsRotation(): CGFloat = extern
   @inline def setBoundsRotation_(boundsRotation: CGFloat): Unit = extern
   @inline def bounds(): NSRect = extern
   @inline def setBounds_(bounds: NSRect): Unit = extern
@@ -215,8 +216,8 @@ class NSView extends NSResponder { //with NSAnimatablePropertyContainer with NSU
   @inline def endDocument(): Unit = extern
   @inline def beginPageInRect_location_(rect: NSRect, location: NSPoint): Unit = extern
   @inline def endPage(): Unit = extern
-  @inline def heightAdjustLimit(): CGFloat = extern
-  @inline def widthAdjustLimit(): CGFloat = extern
+////  @inline def heightAdjustLimit(): CGFloat = extern
+//  @inline def widthAdjustLimit(): CGFloat = extern
 //  @inline def pageHeader(): NSAttributedString = extern
 //  @inline def pageFooter(): NSAttributedString = extern
   @inline def printJobTitle(): NSString = extern

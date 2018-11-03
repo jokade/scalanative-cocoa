@@ -1,12 +1,12 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSNotification extends NSObject with NSCopying with NSCoding {
-  @inline def initWithName_object_userInfo_(name: NSNotificationName, `object`: id, userInfo: NSDictionary[NSObject,NSObject]): NSNotification = extern
+//  @inline def initWithName_object_userInfo_(name: NSNotificationName, `object`: id, userInfo: NSDictionary[NSObject,NSObject]): NSNotification = extern
   @inline def name(): NSNotificationName = extern
   @inline def `object`(): id = extern
   @inline def userInfo(): NSDictionary[NSObject,NSObject] = extern

@@ -2,14 +2,14 @@
 package cocoa.foundation
 
 import scala.language.experimental.macros
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 import scala.scalanative.native.objc.runtime.{int32_t, int64_t}
 import scala.scalanative.posix.inttypes.uint8_t
 
 
 @ObjC
-abstract class NSCoder extends NSObject {
+trait NSCoder extends NSObject {
   @inline def encodeValueOfObjCType_addr_(`type`: Ptr[CSignedChar], addr: Ptr[Byte]): Unit = extern
   @inline def encodeDataObject_(data: NSData): Unit = extern
   @inline def decodeValueOfObjCType_data_(`type`: Ptr[CSignedChar], data: Ptr[Byte]): Unit = extern

@@ -2,8 +2,8 @@
 package cocoa.foundation
 
 import scala.language.experimental.macros
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSIndexSet extends NSObject with NSCopying with NSMutableCopying with NSSecureCoding {

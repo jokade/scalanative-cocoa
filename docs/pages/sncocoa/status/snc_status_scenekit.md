@@ -18,7 +18,7 @@ The following table lists all headers from the SceneKit framework, and their sup
 | Header                                 | Status            | Scala modules | Notes |
 |----------------------------------------|-------------------|---------------|-------|
 | ModelIO.h                              | {{page.missing}}  |               |       | 
-| SCNAction.h                            | {{page.missing}}  |               |       | 
+| SCNAction.h                            | {{page.partial}} {{page.test_needed}}  | SCNAction, SCNActionable |       | 
 | SCNAnimation.h                         | {{page.missing}}  |               |       | 
 | SCNAudioSource.h                       | {{page.missing}}  |               |       | 
 | SCNBoundingVolume.h                    | {{page.missing}}  |               |       | 
@@ -31,7 +31,7 @@ The following table lists all headers from the SceneKit framework, and their sup
 | SCNJavascript.h                        | {{page.missing}}  |               |       | 
 | SCNLayer.h                             | {{page.missing}}  |               |       | 
 | SCNLevelOfDetail.h                     | {{page.missing}}  |               |       | 
-| SCNLight.h                             | {{page.missing}}  |               |       | 
+| SCNLight.h                             | {{page.partial}} {{page.test_needed}}  | SCNLight              |       | 
 | SCNMaterial.h                          | {{page.missing}}  |               |       | 
 | SCNMaterialProperty.h                  | {{page.missing}}  |               |       | 
 | SCNMorpher.h                           | {{page.missing}}  |               |       | 
@@ -53,8 +53,7 @@ The following table lists all headers from the SceneKit framework, and their sup
 | SCNSkinner.h                           | {{page.missing}}  |               |       | 
 | SCNTechnique.h                         | {{page.missing}}  |               |       | 
 | SCNTransaction.h                       | {{page.missing}}  |               |       | 
-| SCNView.h                              | {{page.missing}}  |               |       | 
-| SceneKit.apinotes                      | {{page.missing}}  |               |       | 
+| SCNView.h                              | {{page.partial}} {{page.test_needed}} | SCNView |       | 
 | SceneKit.h                             | {{page.missing}}  |               |       | 
 | SceneKitTypes.h                        | {{page.missing}}  |               |       | 
 

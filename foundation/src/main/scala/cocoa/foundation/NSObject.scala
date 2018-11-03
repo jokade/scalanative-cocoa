@@ -1,6 +1,8 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
+import de.surfice.smacrotools.debug
+
 import scala.language.experimental.macros
 import scalanative.native._
 import objc._
@@ -10,7 +12,7 @@ import scala.scalanative.native.objc.runtime.{IMP, ObjCObject}
 class NSObject extends ObjCObject {
   @inline def isEqual_(`object`: id): BOOL = extern
   @inline def `class`(): id = extern
-  @inline def self(): this.type = extern
+  @inline def self(): id = extern
   @inline def performSelector_(aSelector: SEL): id = extern
   @inline def performSelector_object_(aSelector: SEL, `object`: id): id = extern
   @inline def performSelector_object1_object2_(aSelector: SEL, object1: id, object2: id): id = extern
@@ -19,8 +21,10 @@ class NSObject extends ObjCObject {
   @inline def isMemberOfClass_(aClass: id): BOOL = extern
   @inline def conformsToProtocol_(aProtocol: Protocol): BOOL = extern
   @inline def respondsToSelector_(aSelector: SEL): BOOL = extern
+  @returnsThis
   @inline def retain(): this.type = extern
   @inline def release(): Unit = extern
+  @returnsThis
   @inline def autorelease(): this.type = extern
   @inline def retainCount(): NSUInteger = extern
   @inline def zone(): NSZone = extern
@@ -28,6 +32,7 @@ class NSObject extends ObjCObject {
   @inline def superclass(): id = extern
   @inline def description(): NSString = extern
   @inline def debugDescription(): NSString = extern
+  @returnsThis
   @inline def init(): this.type = extern
   @inline def dealloc(): Unit = extern
 //  override @inline def `finalize`(): Unit = extern
@@ -40,13 +45,13 @@ class NSObject extends ObjCObject {
 //  @inline def methodSignatureForSelector_(aSelector: SEL): NSMethodSignature = extern
   @inline def allowsWeakReference(): BOOL = extern
   @inline def retainWeakReference(): BOOL = extern
-  @inline def replacementObjectForCoder_(aCoder: NSCoder): id = extern
-  @inline def awakeAfterUsingCoder_(aDecoder: NSCoder): id = extern
+//  @inline def replacementObjectForCoder_(aCoder: NSCoder): id = extern
+//  @inline def awakeAfterUsingCoder_(aDecoder: NSCoder): id = extern
   @inline def classForCoder(): id = extern
   @inline def autoContentAccessingProxy(): id = extern
-  @inline def attemptRecoveryFromError_recoveryOptionIndex_delegate_didRecoverSelector_contextInfo_(error: NSError, recoveryOptionIndex: NSUInteger, delegate: id, didRecoverSelector: SEL, contextInfo: Ptr[Byte]): Unit = extern
-  @inline def attemptRecoveryFromError_recoveryOptionIndex_(error: NSError, recoveryOptionIndex: NSUInteger): BOOL = extern
-  @inline def addObserver_forKeyPath_options_context_(observer: NSObject, forKeyPath: NSString, options: NSKeyValueObservingOptions, context: id): Unit = extern
+//  @inline def attemptRecoveryFromError_recoveryOptionIndex_delegate_didRecoverSelector_contextInfo_(error: NSError, recoveryOptionIndex: NSUInteger, delegate: id, didRecoverSelector: SEL, contextInfo: Ptr[Byte]): Unit = extern
+//  @inline def attemptRecoveryFromError_recoveryOptionIndex_(error: NSError, recoveryOptionIndex: NSUInteger): BOOL = extern
+//  @inline def addObserver_forKeyPath_options_context_(observer: NSObject, forKeyPath: NSString, options: NSKeyValueObservingOptions, context: id): Unit = extern
 }
 
 
@@ -54,13 +59,18 @@ class NSObject extends ObjCObject {
 abstract class NSObjectClass extends ObjCObject {
   type InstanceType
   def __cls: id
+  def __wrapper: ObjCWrapper[InstanceType]
   @inline def load(): Unit = extern
   @inline def initialize(): Unit = extern
   @inline def `new`(): NSObject = extern
+  @useWrapper
   @inline def allocWithZone_(zone: NSZone): InstanceType = extern
+  @useWrapper
   @inline def alloc(): InstanceType = extern
-  @inline def copyWithZone_(zone: NSZone): id = extern
-  @inline def mutableCopyWithZone_(zone: NSZone): id = extern
+  @useWrapper
+  @inline def copyWithZone_(zone: NSZone): InstanceType = extern
+  @useWrapper
+  @inline def mutableCopyWithZone_(zone: NSZone): InstanceType = extern
   @inline def instancesRespondToSelector_(aSelector: SEL): BOOL = extern
   @inline def conformsToProtocol_(protocol: Protocol): BOOL = extern
   @inline def instanceMethodForSelector_(aSelector: SEL): IMP = extern

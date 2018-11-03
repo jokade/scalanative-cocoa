@@ -1,23 +1,18 @@
-// Copyright (c) 2017 - 2018. Distributed under the MIT License (see included LICENSE file).
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
-import cocoa.foundation.NSFastEnumeration.NSFastEnumerationState
-
 import scala.language.experimental.macros
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
+import scala.scalanative.native.objc.runtime.ObjCObject
 
 @ObjC
-trait NSFastEnumeration {
-  @inline def countByEnumeratingWithState_buffer_len_(state: NSFastEnumerationState, buffer: id, len: NSUInteger): NSUInteger = extern
-}
-
-object NSFastEnumeration {
-  type NSFastEnumerationState = Ptr[Byte]
+trait NSFastEnumeration extends ObjCObject {
+  @inline def countByEnumeratingWithState_buffer_len_(state: Ptr[Byte], buffer: id, len: NSUInteger): NSUInteger = extern
 }
 
 @ObjC
-abstract class NSEnumerator[T<:NSObject] extends NSObject with NSFastEnumeration {
-  @inline def nextObject(): T = extern
+trait NSEnumerator[T<:NSObject] extends NSObject with NSFastEnumeration {
+  @inline def nextObject(): id = extern
   @inline def allObjects(): NSArray[T] = extern
 }

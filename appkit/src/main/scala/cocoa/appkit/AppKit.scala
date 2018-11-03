@@ -1,9 +1,8 @@
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import cocoa.foundation.{BOOL, NSInteger, NSString}
 import scalanative.native._
-import objc.runtime.id
-
+import cocoa.foundation._
 
 @extern
 object AppKit {

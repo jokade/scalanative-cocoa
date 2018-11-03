@@ -70,14 +70,16 @@ lazy val scenekit_macos = project
   .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-scenekit-macos",
-    unmanagedSourceDirectories in Compile += baseDirectory.value / ".." / "scenekit" / "src" / "main" / "scala"
+    unmanagedSourceDirectories in Compile += baseDirectory.value / ".." / "scenekit" / "src" / "main" / "scala",
+    unmanagedResourceDirectories in Compile += baseDirectory.value / ".." / "scenekit" / "src" / "main" / "resources"
   )
 
 lazy val test = project
-  .enablePlugins(ScalaNativePlugin)
-  .dependsOn(appkit)
+  .enablePlugins(ScalaNativePlugin,NBHMakePlugin)
+  .dependsOn(appkit,scenekit_macos)
   .settings(commonSettings ++ nativeSettings ++ dontPublish:_*)
   .settings(
+    pconfPlatform := PConfPlatform.MacOS,
     nativeLinkingOptions ++= Seq(
       "-framework", "Foundation",
       "/Volumes/JKDATA/dev/scala-native/cocoa/util.o"

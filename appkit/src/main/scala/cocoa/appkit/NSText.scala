@@ -1,14 +1,14 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import cocoa.foundation.{BOOL, NSCoder, NSData, NSObjectClass, NSRange, NSRect, NSSize, NSString, id}
+import cocoa.foundation.{BOOL, NSData, NSRange, NSSize, NSString, id}
 
-import objc._
 import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
-abstract class NSText extends NSView { //with NSChangeSpelling with NSIgnoreMisspelledWords {
+class NSText extends NSView { //with NSChangeSpelling with NSIgnoreMisspelledWords {
   @inline def replaceCharactersInRange_string_(range: NSRange, string: NSString): Unit = extern
   @inline def replaceCharactersInRange_rtfData_(range: NSRange, rtfData: NSData): Unit = extern
   @inline def replaceCharactersInRange_rtfdData_(range: NSRange, rtfdData: NSData): Unit = extern
@@ -41,7 +41,7 @@ abstract class NSText extends NSView { //with NSChangeSpelling with NSIgnoreMiss
   @inline def toggleRuler_(sender: id): Unit = extern
   @inline def string(): NSString = extern
   @inline def setString_(string: NSString): Unit = extern
-  @inline def delegate(): NSTextDelegate = extern
+  @inline def delegate(): id = extern
   @inline def setDelegate_(delegate: NSTextDelegate): Unit = extern
   @inline def isEditable(): BOOL = extern
   @inline def setEditable_(editable: BOOL): Unit = extern

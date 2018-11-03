@@ -1,9 +1,10 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scalanative.native._
-import objc._
-import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObject, NSObjectClass, NSString, NSUInteger, SEL, id}
+import cocoa.foundation.{BOOL, NSArray, NSInteger, NSObjectClass, NSString, SEL, id}
+
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC
@@ -39,7 +40,7 @@ class NSApplication extends NSResponder { //with NSUserInterfaceValidations with
   @inline def replyToApplicationShouldTerminate_(shouldTerminate: BOOL): Unit = extern
   @inline def replyToOpenOrPrint_(reply: NSApplicationDelegateReply): Unit = extern
   @inline def orderFrontCharacterPalette_(sender: id): Unit = extern
-  @inline def delegate(): NSApplicationDelegate = extern
+  @inline def delegate(): id = extern
   @inline def setDelegate_(delegate: NSApplicationDelegate): Unit = extern
   @inline def mainWindow(): NSWindow = extern
   @inline def keyWindow(): NSWindow = extern

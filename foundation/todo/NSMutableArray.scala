@@ -5,6 +5,7 @@ import scala.language.experimental.macros
 import scalanative.native._
 import objc._
 
+/*
 @ObjC
 class NSMutableArray[T<:NSObject] extends NSArray[T] {
   @inline def addObject_(anObject: T): Unit = extern
@@ -73,3 +74,4 @@ object NSMutableArray extends NSMutableArrayClass {
 
   def empty[V<:NSObject]: NSMutableArray[V] = alloc().init().asInstanceOf[NSMutableArray[V]]
 }
+*/

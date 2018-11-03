@@ -6,10 +6,10 @@ import objc._
 
 @ObjC
 class NSError extends NSObject with NSCopying with NSSecureCoding {
-  @inline def initWithDomain_code_dict_(domain: NSString, code: NSInteger, dict: NSDictionary[NSErrorUserInfoKey,NSObject]): NSError = extern
+//  @inline def initWithDomain_code_dict_(domain: NSString, code: NSInteger, dict: NSDictionary[NSErrorUserInfoKey,NSObject]): NSError = extern
   @inline def domain(): NSString = extern
   @inline def code(): NSInteger = extern
-  @inline def userInfo(): NSDictionary[NSErrorUserInfoKey,NSObject] = extern
+//  @inline def userInfo(): NSDictionary[NSErrorUserInfoKey,NSObject] = extern
   @inline def localizedDescription(): NSString = extern
   @inline def localizedFailureReason(): NSString = extern
   @inline def localizedRecoverySuggestion(): NSString = extern
@@ -21,7 +21,7 @@ class NSError extends NSObject with NSCopying with NSSecureCoding {
 
 @ObjCClass
 abstract class NSErrorClass extends NSObjectClass {
-  @inline def errorWithDomain_code_dict_(domain: NSString, code: NSInteger, dict: NSDictionary[NSErrorUserInfoKey,NSObject]): NSError = extern
+//  @inline def errorWithDomain_code_dict_(domain: NSString, code: NSInteger, dict: NSDictionary[NSErrorUserInfoKey,NSObject]): NSError = extern
   @inline def setUserInfoValueProviderForDomain_provider_(errorDomain: NSString, provider: id): Unit = extern
   @inline def userInfoValueProviderForDomain_userInfoKey_errorDomain_(err: NSError, userInfoKey: NSErrorUserInfoKey, errorDomain: NSString): Ptr[Byte] = extern
 }

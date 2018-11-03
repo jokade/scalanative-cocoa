@@ -3,6 +3,7 @@ package cocoa
 import cocoa.appkit.CGFloat
 import cocoa.foundation.NSInteger
 
+import scala.scalanative.libc.stdlib
 import scala.scalanative.native._
 
 package object scenekit {

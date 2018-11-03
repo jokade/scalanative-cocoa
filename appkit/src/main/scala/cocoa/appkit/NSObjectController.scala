@@ -1,10 +1,11 @@
 // Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.appkit
 
-import scala.language.experimental.macros
-import scalanative.native._
-import objc._
 import cocoa.foundation._
+
+import scala.language.experimental.macros
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 @ObjC
 class NSObjectController[T<:NSObject] extends NSController {
@@ -18,7 +19,7 @@ class NSObjectController[T<:NSObject] extends NSController {
   @inline def validateUserInterfaceItem_(item: id): BOOL = extern
   @inline def content(): id = extern
   @inline def setContent_(content: id): Unit = extern
-  @inline def selection(): T = extern
+  @inline def selection(): id = extern
   @inline def selectedObjects(): NSArray[T] = extern
   @inline def automaticallyPreparesContent(): BOOL = extern
   @inline def setAutomaticallyPreparesContent_(automaticallyPreparesContent: BOOL): Unit = extern
@@ -39,6 +40,7 @@ class NSObjectController[T<:NSObject] extends NSController {
 //  @inline def setFetchPredicate_(fetchPredicate: NSPredicate): Unit = extern
   @inline def usesLazyFetching(): BOOL = extern
   @inline def setUsesLazyFetching_(usesLazyFetching: BOOL): Unit = extern
+
 }
 
 @ObjCClass

@@ -1,11 +1,10 @@
-// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa.foundation
 
 import scalanative.native._
 import objc._
+import scala.scalanative.native.objc.runtime.ObjCObject
 
 @ObjC
-trait NSMutableCopying {
+trait NSMutableCopying extends ObjCObject {
   @inline def mutableCopyWithZone_(zone: NSZone): id = extern
 }
-

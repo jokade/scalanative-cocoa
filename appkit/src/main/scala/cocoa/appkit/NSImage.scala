@@ -4,8 +4,8 @@ package cocoa.appkit
 import cocoa.foundation._
 
 import scala.language.experimental.macros
-import scalanative.native._
-import objc._
+import scala.scalanative.native._
+import scala.scalanative.native.objc._
 
 
 @ObjC
@@ -34,7 +34,7 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
   @inline def lockFocus(): Unit = extern
   @inline def lockFocusFlipped_(flipped: BOOL): Unit = extern
   @inline def unlockFocus(): Unit = extern
-  @inline def bestRepresentationForDevice_(deviceDescription: NSDictionary[NSObject,NSObject]): NSImageRep = extern
+//  @inline def bestRepresentationForDevice_(deviceDescription: NSDictionary[NSObject,NSObject]): NSImageRep = extern
   @inline def cancelIncrementalLoad(): Unit = extern
 //  @inline def initWithCGImage_size_(cgImage: CGImageRef, size: NSSize): NSImage = extern
 //  @inline def CGImageForProposedRect_referenceContext_hints_(proposedDestRect: NSRect, referenceContext: NSGraphicsContext, hints: id): CGImageRef = extern
@@ -57,7 +57,7 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
   @inline def TIFFRepresentation(): NSData = extern
   @inline def representations(): NSArray[NSImageRep] = extern
   @inline def isValid(): BOOL = extern
-  @inline def delegate(): NSImageDelegate = extern
+  @inline def delegate(): id = extern
   @inline def setDelegate_(delegate: NSImageDelegate): Unit = extern
   @inline def cacheMode(): NSImageCacheMode = extern
   @inline def setCacheMode_(cacheMode: NSImageCacheMode): Unit = extern

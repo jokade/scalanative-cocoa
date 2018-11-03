@@ -2,7 +2,7 @@
 package cocoa.foundation
 
 import scala.scalanative.native._
-import objc._
+import scala.scalanative.native.objc._
 
 
 @ObjC

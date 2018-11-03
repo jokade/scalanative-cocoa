@@ -1,13 +1,8 @@
-//     Project: scalanative-cocoa
-//      Module: AppKit
-// Description: Contains enum types defined in AppKit and Scala-specific utilities.
-
-// Copyright (c) 2017. Distributed under the MIT License (see included LICENSE file).
+// Copyright (c) 2018. Distributed under the MIT License (see included LICENSE file).
 package cocoa
 
-import cocoa.foundation.{NSInteger, NSString, NSUInteger}
-
 import scalanative.native._
+import cocoa.foundation._
 
 package object appkit {
 
@@ -22,6 +17,7 @@ package object appkit {
   type NSColorName = NSString
   type NSNibName = NSString
 
+  def NSApplicationMain(): Int = AppKit.NSApplicationMain(0,null)
 
   object NSEventType {
     val LeftMouseDown             :NSEventType = 1.toULong
