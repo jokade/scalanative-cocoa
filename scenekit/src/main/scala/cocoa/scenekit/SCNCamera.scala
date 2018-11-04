@@ -110,6 +110,8 @@ class SCNCamera extends NSObject with NSCopying with NSSecureCoding { //with SCN
 @ObjCClass
 abstract class SCNCameraClass extends NSObjectClass {
   @inline def camera(): SCNCamera = extern
+
+  @inline def apply(): SCNCamera = camera()
 }
 
 object SCNCamera extends SCNCameraClass {

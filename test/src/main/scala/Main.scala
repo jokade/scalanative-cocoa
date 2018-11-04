@@ -10,6 +10,8 @@ object Main {
     val arr = NSArray(i,str)
     NSLog(str)
     NSLog(arr)
+    val dict = NSDictionary(ns"foo" -> @@(42))
+    NSLog(dict.allKeys())
     println("done!")
   }
 

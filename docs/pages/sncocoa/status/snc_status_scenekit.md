@@ -26,17 +26,17 @@ The following table lists all headers from the SceneKit framework, and their sup
 | SCNCamera.h                            | {{page.partial}} {{page.test_needed}} | SCNCamera              |       | 
 | SCNCameraController.h                  | {{page.missing}}  |               |       | 
 | SCNConstraint.h                        | {{page.missing}}  |               |       | 
-| SCNGeometry.h                          | {{page.missing}}  |               |       | 
+| SCNGeometry.h                          | {{page.partial}} {{page.test_needed}} | SCNGeometry, SCNGeometryElement, SCNGeometrySource, SCNGeometryTessellator  |       | 
 | SCNHitTest.h                           | {{page.missing}}  |               |       | 
 | SCNJavascript.h                        | {{page.missing}}  |               |       | 
 | SCNLayer.h                             | {{page.missing}}  |               |       | 
 | SCNLevelOfDetail.h                     | {{page.missing}}  |               |       | 
 | SCNLight.h                             | {{page.partial}} {{page.test_needed}}  | SCNLight              |       | 
-| SCNMaterial.h                          | {{page.missing}}  |               |       | 
-| SCNMaterialProperty.h                  | {{page.missing}}  |               |       | 
+| SCNMaterial.h                          | {{page.partial}} {{page.test_needed}} | SCNMaterial |       | 
+| SCNMaterialProperty.h                  | {{page.partial}} {{page.test_needed}} | SCNMaterialProperty |       | 
 | SCNMorpher.h                           | {{page.missing}}  |               |       | 
 | SCNNode.h                              | {{page.partial}} {{page.test_needed}} | SCNNode, SCNNodeRendererDelegate |       | 
-| SCNParametricGeometry.h                | {{page.missing}}  |               |       | 
+| SCNParametricGeometry.h                | {{page.partial}} {{page.test_needed}} | SCNBox, SCNCapsule, SCNCone, SCNCylinder, SCNFloor, SCNPlane, SCNPyramid, SCNShape, SCNSphere, SCNText, SCNTorus, SCNTube |       | 
 | SCNParticleSystem.h                    | {{page.missing}}  |               |       | 
 | SCNPhysicsBehavior.h                   | {{page.missing}}  |               |       | 
 | SCNPhysicsBody.h                       | {{page.missing}}  |               |       | 

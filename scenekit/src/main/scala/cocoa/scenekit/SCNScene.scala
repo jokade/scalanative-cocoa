@@ -39,4 +39,6 @@ abstract class SCNSceneClass extends NSObjectClass {
 
 object SCNScene extends SCNSceneClass {
   override type InstanceType = SCNScene
+
+  def apply(): SCNScene = scene()
 }
