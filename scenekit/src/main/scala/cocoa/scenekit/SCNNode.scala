@@ -2,17 +2,39 @@ package cocoa.scenekit
 
 import cocoa.appkit.CGFloat
 import cocoa.foundation.{NSArray, NSCopying, NSInteger, NSObject, NSObjectClass, NSSecureCoding, NSString, NSUInteger}
+import de.surfice.smacrotools.debug
 
 import scala.language.experimental.macros
 import scalanative.native._
 import objc._
 import scala.scalanative.native.objc.runtime.{BOOL, id}
+import platform._
 
 @ObjC
-class SCNNode extends NSObject with NSCopying with NSSecureCoding { //with SCNAnimatable with SCNActionable with SCNBoundingVolume {
+class SCNNode extends NSObject with NSCopying with NSSecureCoding with SCNActionable { //with SCNAnimatable  with SCNBoundingVolume {
   @inline def flattenedClone(): SCNNode = extern
 //  @inline def setWorldTransform_(worldTransform: SCNMatrix4): Unit = extern
   @inline def addChildNode_(child: SCNNode): Unit = extern
+  def addChild(geometry: SCNGeometry): SCNNode = {
+    val n = SCNNode(geometry)
+    addChildNode_(n)
+    n
+  }
+  def addChild(name: String, geometry: SCNGeometry): SCNNode = {
+    val n = SCNNode(name,geometry)
+    addChildNode_(n)
+    n
+  }
+  def addChild(name: String, camera: SCNCamera): SCNNode = {
+    val n = SCNNode(name,camera)
+    addChildNode_(n)
+    n
+  }
+  def addChild(name: String, light: SCNLight): SCNNode = {
+    val n = SCNNode(name,light)
+    addChildNode_(n)
+    n
+  }
   @inline def insertChildNode_index_(child: SCNNode, index: NSUInteger): Unit = extern
   @inline def removeFromParentNode(): Unit = extern
   @inline def replaceChildNode_newChild_(oldChild: SCNNode, newChild: SCNNode): Unit = extern
@@ -21,21 +43,19 @@ class SCNNode extends NSObject with NSCopying with NSSecureCoding { //with SCNAn
   @inline def enumerateChildNodesUsingBlock_(block: Ptr[Byte]): Unit = extern
   @inline def enumerateHierarchyUsingBlock_(block: Ptr[Byte]): Unit = extern
 //  @inline def convertPosition_node_(position: SCNVector3, node: SCNNode): SCNVector3 = extern
-//  @inline def convertPosition_node_(position: SCNVector3, node: SCNNode): SCNVector3 = extern
-//  @inline def convertVector_node_(vector: SCNVector3, node: SCNNode): SCNVector3 = extern
 //  @inline def convertVector_node_(vector: SCNVector3, node: SCNNode): SCNVector3 = extern
 //  @inline def convertTransform_node_(transform: SCNMatrix4, node: SCNNode): SCNMatrix4 = extern
 //  @inline def convertTransform_node_(transform: SCNMatrix4, node: SCNNode): SCNMatrix4 = extern
 //  @inline def hitTestWithSegmentFromPoint_pointB_options_(pointA: SCNVector3, pointB: SCNVector3, options: id): NSArray[SCNHitTestResult] = extern
-  @inline def name(): NSString = extern
+  @inline def name: NSString = extern
   @inline def setName_(name: NSString): Unit = extern
-//  @inline def light(): SCNLight = extern
-//  @inline def setLight_(light: SCNLight): Unit = extern
-  @inline def camera(): SCNCamera = extern
+  @inline def light: SCNLight = extern
+  @inline def setLight_(light: SCNLight): Unit = extern
+  @inline def camera: SCNCamera = extern
 //  @inline def camera_=(camera: SCNCamera): Unit = setCamera_(camera)
   @inline def setCamera_(camera: SCNCamera): Unit = extern
-//  @inline def geometry(): SCNGeometry = extern
-//  @inline def setGeometry_(geometry: SCNGeometry): Unit = extern
+  @inline def geometry: SCNGeometry = extern
+  @inline def setGeometry_(geometry: SCNGeometry): Unit = extern
 //  @inline def skinner(): SCNSkinner = extern
 //  @inline def setSkinner_(skinner: SCNSkinner): Unit = extern
 //  @inline def morpher(): SCNMorpher = extern
@@ -43,13 +63,15 @@ class SCNNode extends NSObject with NSCopying with NSSecureCoding { //with SCNAn
 //  @inline def transform(): SCNMatrix4 = extern
 //  @inline def setTransform_(transform: SCNMatrix4): Unit = extern
 //  @inline def worldTransform(): SCNMatrix4 = extern
-  @inline def position(): SCNVector3 = extern
+//  @inline def position(): SCNVector3 = extern
 //  @inline def position_=(position: SCNVector3): Unit = setPosition_(position)
-  @inline def setPosition_(position: SCNVector3): Unit = extern
+  @inline def setPosition(x: PFloat, y: PFloat, z: PFloat): Unit = SceneKit.SCNNode_setPosition(__ptr,x,y,z)
+//  @inline def setPosition_(position: SCNVector3): Unit = extern
 //  @inline def worldPosition(): SCNVector3 = extern
 //  @inline def setWorldPosition_(worldPosition: SCNVector3): Unit = extern
 //  @inline def rotation(): SCNVector4 = extern
 //  @inline def setRotation_(rotation: SCNVector4): Unit = extern
+  @inline def setRotation(x: PFloat, y: PFloat, z: PFloat, w: PFloat): Unit = SceneKit.SCNNode_setRotation(__ptr,x,y,z,w)
 //  @inline def orientation(): SCNQuaternion = extern
 //  @inline def setOrientation_(orientation: SCNQuaternion): Unit = extern
 //  @inline def worldOrientation(): SCNQuaternion = extern
@@ -60,32 +82,33 @@ class SCNNode extends NSObject with NSCopying with NSSecureCoding { //with SCNAn
 //  @inline def setScale_(scale: SCNVector3): Unit = extern
 //  @inline def pivot(): SCNMatrix4 = extern
 //  @inline def setPivot_(pivot: SCNMatrix4): Unit = extern
-  @inline def isHidden(): BOOL = extern
+  @inline def isHidden: BOOL = extern
   @inline def setHidden_(hidden: BOOL): Unit = extern
-  @inline def opacity(): CGFloat = extern
+  @inline def opacity: CGFloat = extern
   @inline def setOpacity_(opacity: CGFloat): Unit = extern
-  @inline def renderingOrder(): NSInteger = extern
+  @inline def renderingOrder: NSInteger = extern
   @inline def setRenderingOrder_(renderingOrder: NSInteger): Unit = extern
-  @inline def castsShadow(): BOOL = extern
+  @inline def castsShadow: BOOL = extern
   @inline def setCastsShadow_(castsShadow: BOOL): Unit = extern
 //  @inline def movabilityHint(): SCNMovabilityHint = extern
 //  @inline def setMovabilityHint_(movabilityHint: SCNMovabilityHint): Unit = extern
-  @inline def parentNode(): SCNNode = extern
-  @inline def childNodes(): NSArray[SCNNode] = extern
+  @inline def parentNode: SCNNode = extern
+  @inline def childNodes: NSArray[SCNNode] = extern
 //  @inline def physicsBody(): SCNPhysicsBody = extern
 //  @inline def setPhysicsBody_(physicsBody: SCNPhysicsBody): Unit = extern
 //  @inline def physicsField(): SCNPhysicsField = extern
 //  @inline def setPhysicsField_(physicsField: SCNPhysicsField): Unit = extern
-//  @inline def constraints(): NSArray[SCNConstraint] = extern
-//  @inline def setConstraints_(constraints: NSArray[SCNConstraint]): Unit = extern
+  @inline def constraints: NSArray[SCNConstraint] = extern
+  @inline def setConstraints_(constraints: NSArray[SCNConstraint]): Unit = extern
+  def setConstraints(constraints: SCNConstraint*): Unit = setConstraints_(NSArray(constraints:_*))
 //  @inline def filters(): NSArray[CIFilter] = extern
 //  @inline def setFilters_(filters: NSArray[CIFilter]): Unit = extern
-  @inline def presentationNode(): SCNNode = extern
-  @inline def isPaused(): BOOL = extern
+  @inline def presentationNode: SCNNode = extern
+  @inline def isPaused: BOOL = extern
   @inline def setPaused_(paused: BOOL): Unit = extern
 //  @inline def rendererDelegate(): id[SCNNodeRendererDelegate] = extern
 //  @inline def setRendererDelegate_(rendererDelegate: id[SCNNodeRendererDelegate]): Unit = extern
-  @inline def categoryBitMask(): NSUInteger = extern
+  @inline def categoryBitMask: NSUInteger = extern
   @inline def setCategoryBitMask_(categoryBitMask: NSUInteger): Unit = extern
 //  @inline def focusBehavior(): SCNNodeFocusBehavior = extern
 //  @inline def setFocusBehavior_(focusBehavior: SCNNodeFocusBehavior): Unit = extern
@@ -136,7 +159,7 @@ class SCNNode extends NSObject with NSCopying with NSSecureCoding { //with SCNAn
 @ObjCClass
 abstract class SCNNodeClass extends NSObjectClass {
   @inline def node(): SCNNode = extern
-//  @inline def nodeWithGeometry_(geometry: SCNGeometry): SCNNode = extern
+  @inline def nodeWithGeometry_(geometry: SCNGeometry): SCNNode = extern
 //  @inline def localUp(): SCNVector3 = extern
 //  @inline def localRight(): SCNVector3 = extern
 //  @inline def localFront(): SCNVector3 = extern
@@ -146,8 +169,35 @@ abstract class SCNNodeClass extends NSObjectClass {
 }
 
 object SCNNode extends SCNNodeClass {
-
   override type InstanceType = SCNNode
+
+  def apply(name: String): SCNNode = {
+    val n = node()
+    n.setName_(NSString(name))
+    n
+  }
+
+  @inline def apply(geometry: SCNGeometry): SCNNode = nodeWithGeometry_(geometry)
+
+  def apply(name: String, geometry: SCNGeometry): SCNNode = {
+    val n = nodeWithGeometry_(geometry)
+    n.setName_(NSString(name))
+    n
+  }
+
+  def apply(name: String, camera: SCNCamera): SCNNode = {
+    val n = node()
+    n.setName_(NSString(name))
+    n.setCamera_(camera)
+    n
+  }
+
+  def apply(name: String, light: SCNLight): SCNNode = {
+    val n = node()
+    n.setName_(NSString(name))
+    n.setLight_(light)
+    n
+  }
 }
 
 @ObjC
