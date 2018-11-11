@@ -15,21 +15,21 @@ class NSImageRep extends NSObject with NSCopying with NSCoding {
   @inline def drawInRect_(rect: NSRect): BOOL = extern
 //  @inline def drawInRect_srcSpacePortionRect_op_requestedAlpha_respectContextIsFlipped_hints_(dstSpacePortionRect: NSRect, srcSpacePortionRect: NSRect, op: NSCompositingOperation, requestedAlpha: CGFloat, respectContextIsFlipped: BOOL, hints: id): BOOL = extern
 //  @inline def CGImageForProposedRect_context_hints_(proposedDestRect: NSRect, context: NSGraphicsContext, hints: id): CGImageRef = extern
-  @inline def size(): NSSize = extern
+  @inline def size: NSSize = extern
   @inline def setSize_(size: NSSize): Unit = extern
-  @inline def hasAlpha(): BOOL = extern
+  @inline def hasAlpha: BOOL = extern
   @inline def setAlpha_(alpha: BOOL): Unit = extern
-  @inline def isOpaque(): BOOL = extern
+  @inline def isOpaque: BOOL = extern
   @inline def setOpaque_(opaque: BOOL): Unit = extern
 //  @inline def colorSpaceName(): NSColorSpaceName = extern
 //  @inline def setColorSpaceName_(colorSpaceName: NSColorSpaceName): Unit = extern
-  @inline def bitsPerSample(): NSInteger = extern
+  @inline def bitsPerSample: NSInteger = extern
   @inline def setBitsPerSample_(bitsPerSample: NSInteger): Unit = extern
-  @inline def pixelsWide(): NSInteger = extern
+  @inline def pixelsWide: NSInteger = extern
   @inline def setPixelsWide_(pixelsWide: NSInteger): Unit = extern
-  @inline def pixelsHigh(): NSInteger = extern
+  @inline def pixelsHigh: NSInteger = extern
   @inline def setPixelsHigh_(pixelsHigh: NSInteger): Unit = extern
-  @inline def layoutDirection(): NSImageLayoutDirection = extern
+  @inline def layoutDirection: NSImageLayoutDirection = extern
   @inline def setLayoutDirection_(layoutDirection: NSImageLayoutDirection): Unit = extern
 }
 

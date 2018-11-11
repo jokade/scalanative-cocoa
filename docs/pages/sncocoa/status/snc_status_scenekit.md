@@ -25,7 +25,7 @@ The following table lists all headers from the SceneKit framework, and their sup
 | SCNCAAnimationExtensions.h             | {{page.missing}}  |               |       | 
 | SCNCamera.h                            | {{page.partial}} {{page.test_needed}} | SCNCamera              |       | 
 | SCNCameraController.h                  | {{page.missing}}  |               |       | 
-| SCNConstraint.h                        | {{page.missing}}  |               |       | 
+| SCNConstraint.h                        | {{page.partial}} {{page.test_needed}} | SCNConstraint, SCNLookAtConstraint |       | 
 | SCNGeometry.h                          | {{page.partial}} {{page.test_needed}} | SCNGeometry, SCNGeometryElement, SCNGeometrySource, SCNGeometryTessellator  |       | 
 | SCNHitTest.h                           | {{page.missing}}  |               |       | 
 | SCNJavascript.h                        | {{page.missing}}  |               |       | 
@@ -47,7 +47,7 @@ The following table lists all headers from the SceneKit framework, and their sup
 | SCNReferenceNode.h                     | {{page.missing}}  |               |       | 
 | SCNRenderer.h                          | {{page.missing}}  |               |       | 
 | SCNScene.h                             | {{page.partial}} {{page.test_needed}} | SCNScene, SCNSceneExportDelegate |       | 
-| SCNSceneRenderer.h                     | {{page.missing}}  |               |       | 
+| SCNSceneRenderer.h                     | {{page.partial}} {{page.test_needed}} | SCNSceneRenderer |       | 
 | SCNSceneSource.h                       | {{page.missing}}  |               |       | 
 | SCNShadable.h                          | {{page.missing}}  |               |       | 
 | SCNSkinner.h                           | {{page.missing}}  |               |       | 

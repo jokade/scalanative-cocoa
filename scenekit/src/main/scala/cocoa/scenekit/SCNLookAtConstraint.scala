@@ -29,5 +29,9 @@ abstract class SCNLookAtConstraintClass extends NSObjectClass {
 object SCNLookAtConstraint extends SCNLookAtConstraintClass {
   override type InstanceType = SCNLookAtConstraint
 
-  def apply(target: SCNNode): SCNLookAtConstraint = lookAtConstraintWithTarget_(target)
+  def apply(target: SCNNode, gimbalLockEnabled: Boolean = true): SCNLookAtConstraint = {
+    val c = lookAtConstraintWithTarget_(target)
+    c.setGimbalLockEnabled_(gimbalLockEnabled)
+    c
+  }
 }

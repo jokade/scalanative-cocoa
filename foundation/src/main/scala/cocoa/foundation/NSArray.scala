@@ -9,9 +9,11 @@ import scala.scalanative.native.objc._
 @ObjC
 class NSArray[T<:NSObject] extends NSObject with NSCopying with NSMutableCopying with NSSecureCoding { //with NSFastEnumeration {
   @inline def objectAtIndex_(index: NSUInteger): id = extern
+  def apply(idx: Int)(implicit wrapper: ObjCWrapper[T]): T = wrapper.__wrap(objectAtIndex_(idx.toULong))
 //  @inline def initWithObjects_cnt_(objects: T, cnt: NSUInteger): NSArray[T] = extern
 //  @inline def initWithCoder_(aDecoder: NSCoder): NSArray[T] = extern
   @inline def count: NSUInteger = extern
+
 //  @inline def arrayByAddingObject_(anObject: T): NSArray[T] = extern
 //  @inline def arrayByAddingObjectsFromArray_(otherArray: T): NSArray[T] = extern
 //  @inline def componentsJoinedByString_(separator: NSString): NSString = extern
@@ -92,3 +94,4 @@ object NSArray extends NSArrayClass {
 //  }
 
 }
+

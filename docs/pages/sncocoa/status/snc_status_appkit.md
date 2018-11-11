@@ -40,7 +40,7 @@ and their support status in SNCocoa.
 | NSArrayController.h                    | {{page.partial}} {{page.test_needed}} | NSArrayController              |       | 
 | NSAttributedString.h                   | {{page.missing}}  |               |       | 
 | NSBezierPath.h                         | {{page.missing}}  |               |       | 
-| NSBitmapImageRep.h                     | {{page.missing}}  |               |       | 
+| NSBitmapImageRep.h                     | {{page.partial}} {{page.test_needed}}  | NSBitmapImageRep |       | 
 | NSBox.h                                | {{page.missing}}  |               |       | 
 | NSBrowser.h                            | {{page.missing}}  |               |       | 
 | NSBrowserCell.h                        | {{page.missing}}  |               |       | 

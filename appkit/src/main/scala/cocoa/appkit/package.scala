@@ -553,4 +553,38 @@ package object appkit {
     val SlideBackward         : NSViewControllerTransitionOptions =  0x180.toUInt   // Same as "Right", but automatically flips to be "Left" when NSApp.userInterfaceLayoutDirection is Right-to-Left.
     val AllowUserInteraction  : NSViewControllerTransitionOptions = 0x1000.toUInt   // Allow user interaction during the transaction; normally it is prevented for the parent view controller while the transition is happening.
   }
+
+  type NSTIFFCompression = NSUInteger
+  object NSTIFFCompression {
+    val None		    :NSTIFFCompression = 1.toUInt
+    val CCITTFAX3		:NSTIFFCompression = 3.toUInt		/* 1 bps only */
+    val CCITTFAX4		:NSTIFFCompression = 4.toUInt		/* 1 bps only */
+    val LZW		      :NSTIFFCompression = 5.toUInt
+    val JPEG		    :NSTIFFCompression = 6.toUInt		/* No longer supported for input or output */
+    val NEXT		    :NSTIFFCompression = 32766.toUInt	/* Input only */
+    val PackBits		:NSTIFFCompression = 32773.toUInt
+    val OldJPEG		  :NSTIFFCompression = 32865.toUInt		/* No longer supported for input or output */
+  }
+
+  type NSBitmapImageFileType = NSUInteger
+  object NSBitmapImageFileType {
+    val TIFF     :NSBitmapImageFileType = 0.toUInt
+    val BMP      :NSBitmapImageFileType = 1.toUInt
+    val GIF      :NSBitmapImageFileType = 2.toUInt
+    val JPEG     :NSBitmapImageFileType = 3.toUInt
+    val PNG      :NSBitmapImageFileType = 4.toUInt
+    val JPEG2000 :NSBitmapImageFileType = 5.toUInt
+  }
+
+  type NSBitmapFormat = NSUInteger
+  object NSBitmapFormat {
+    val AlphaFirst               :NSBitmapFormat = 1.toUInt << 0       // 0 means is alpha last (RGBA, CMYKA, etc.)
+    val AlphaNonpremultiplied    :NSBitmapFormat = 1.toUInt << 1       // 0 means is premultiplied
+    val FloatingPointSamples     :NSBitmapFormat = 1.toUInt << 2  // 0 is integer
+
+    val SixteenBitLittleEndian   :NSBitmapFormat = 1.toUInt << 8
+    val ThirtyTwoBitLittleEndian :NSBitmapFormat = 1.toUInt << 9
+    val SixteenBitBigEndian      :NSBitmapFormat = 1.toUInt << 10
+    val ThirtyTwoBitBigEndian    :NSBitmapFormat = 1.toUInt << 11
+  }
 }

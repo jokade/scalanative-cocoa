@@ -20,7 +20,7 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
 //  @inline def initWithPasteboard_(pasteboard: NSPasteboard): NSImage = extern
   @inline def initWithDataIgnoringOrientation_(data: NSData): NSImage = extern
   @inline def setName_(string: NSImageName): BOOL = extern
-  @inline def name(): NSImageName = extern
+  @inline def name: NSImageName = extern
 //  @inline def drawAtPoint_fromRect_op_delta_(point: NSPoint, fromRect: NSRect, op: NSCompositingOperation, delta: CGFloat): Unit = extern
 //  @inline def drawInRect_fromRect_op_delta_(rect: NSRect, fromRect: NSRect, op: NSCompositingOperation, delta: CGFloat): Unit = extern
 //  @inline def drawInRect_srcSpacePortionRect_op_requestedAlpha_respectContextIsFlipped_hints_(dstSpacePortionRect: NSRect, srcSpacePortionRect: NSRect, op: NSCompositingOperation, requestedAlpha: CGFloat, respectContextIsFlipped: BOOL, hints: id): Unit = extern
@@ -42,7 +42,7 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
 //  @inline def hitTestRect_imageRectDestSpace_context_hints_flipped_(testRectDestSpace: NSRect, imageRectDestSpace: NSRect, context: NSGraphicsContext, hints: id, flipped: BOOL): BOOL = extern
   @inline def recommendedLayerContentsScale_(preferredContentsScale: CGFloat): CGFloat = extern
   @inline def layerContentsForContentsScale_(layerContentsScale: CGFloat): id = extern
-  @inline def size(): NSSize = extern
+  @inline def size: NSSize = extern
   @inline def setSize_(size: NSSize): Unit = extern
   @inline def backgroundColor(): NSColor = extern
   @inline def setBackgroundColor_(backgroundColor: NSColor): Unit = extern
@@ -55,9 +55,9 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
   @inline def matchesOnlyOnBestFittingAxis(): BOOL = extern
   @inline def setMatchesOnlyOnBestFittingAxis_(matchesOnlyOnBestFittingAxis: BOOL): Unit = extern
   @inline def TIFFRepresentation(): NSData = extern
-  @inline def representations(): NSArray[NSImageRep] = extern
-  @inline def isValid(): BOOL = extern
-  @inline def delegate(): id = extern
+  @inline def representations: NSArray[NSImageRep] = extern
+  @inline def isValid: BOOL = extern
+  @inline def delegate: id = extern
   @inline def setDelegate_(delegate: NSImageDelegate): Unit = extern
   @inline def cacheMode(): NSImageCacheMode = extern
   @inline def setCacheMode_(cacheMode: NSImageCacheMode): Unit = extern
@@ -69,10 +69,10 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
   @inline def setAccessibilityDescription_(accessibilityDescription: NSString): Unit = extern
 //  @inline def capInsets(): NSEdgeInsets = extern
 //  @inline def setCapInsets_(capInsets: NSEdgeInsets): Unit = extern
-  @inline def resizingMode(): NSImageResizingMode = extern
+  @inline def resizingMode: NSImageResizingMode = extern
   @inline def setResizingMode_(resizingMode: NSImageResizingMode): Unit = extern
   @inline def setFlipped_(flag: BOOL): Unit = extern
-  @inline def isFlipped(): BOOL = extern
+  @inline def isFlipped: BOOL = extern
   @inline def dissolveToPoint_fraction_(point: NSPoint, fraction: CGFloat): Unit = extern
   @inline def dissolveToPoint_rect_fraction_(point: NSPoint, rect: NSRect, fraction: CGFloat): Unit = extern
 //  @inline def compositeToPoint_op_(point: NSPoint, op: NSCompositingOperation): Unit = extern
@@ -81,11 +81,11 @@ class NSImage extends NSObject with NSCopying with NSCoding with NSSecureCoding 
 //  @inline def compositeToPoint_rect_op_delta_(point: NSPoint, rect: NSRect, op: NSCompositingOperation, delta: CGFloat): Unit = extern
   @inline def lockFocusOnRepresentation_(imageRepresentation: NSImageRep): Unit = extern
   @inline def setScalesWhenResized_(flag: BOOL): Unit = extern
-  @inline def scalesWhenResized(): BOOL = extern
+  @inline def scalesWhenResized: BOOL = extern
   @inline def setDataRetained_(flag: BOOL): Unit = extern
-  @inline def isDataRetained(): BOOL = extern
+  @inline def isDataRetained: BOOL = extern
   @inline def setCachedSeparately_(flag: BOOL): Unit = extern
-  @inline def isCachedSeparately(): BOOL = extern
+  @inline def isCachedSeparately: BOOL = extern
   @inline def setCacheDepthMatchesImageDepth_(flag: BOOL): Unit = extern
   @inline def cacheDepthMatchesImageDepth(): BOOL = extern
 }

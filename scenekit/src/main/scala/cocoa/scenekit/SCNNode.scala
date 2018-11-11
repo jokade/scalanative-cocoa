@@ -80,6 +80,7 @@ class SCNNode extends NSObject with NSCopying with NSSecureCoding with SCNAction
 //  @inline def setEulerAngles_(eulerAngles: SCNVector3): Unit = extern
 //  @inline def scale(): SCNVector3 = extern
 //  @inline def setScale_(scale: SCNVector3): Unit = extern
+  @inline def setScale(x: PFloat, y: PFloat, z: PFloat): Unit = SceneKit.SCNNode_setScale(__ptr,x,y,z)
 //  @inline def pivot(): SCNMatrix4 = extern
 //  @inline def setPivot_(pivot: SCNMatrix4): Unit = extern
   @inline def isHidden: BOOL = extern
