@@ -18,7 +18,7 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools w
 
   def nsquoteImpl()  = {
     val expr = c.prefix match {
-      case Expr(Apply(x,args)) => q"scalanative.native.CQuote(..$args).c()"
+      case Expr(Apply(x,args)) => q"scalanative.unsafe.CQuote(..$args).c()"
     }
     c.Expr(q"cocoa.foundation.NSString($expr)")
   }
@@ -35,7 +35,7 @@ private[this] class Macros(val c: blackbox.Context) extends BlackboxMacroTools w
         q"""import objc.runtime._
             import objc.helper._
            val sel = sel_registerName(${cstring(genSelectorString(method))})
-           $callSuper.cast[${method.returnType}]
+           $callSuper.asInstanceOf[${method.returnType}]
          """
     }
     t

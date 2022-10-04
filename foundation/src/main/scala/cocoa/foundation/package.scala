@@ -5,6 +5,8 @@ package cocoa
 
 import scala.language.experimental.macros
 import scala.scalanative.native._
+import scala.scalanative.unsafe._
+import scala.scalanative.unsigned._
 import objc.runtime._
 
 package object foundation {
@@ -31,7 +33,7 @@ package object foundation {
 
   //implicit def objectToId(o: ObjCObject): id = o.cast[id]
   implicit final class RichObjCObject(val o: ObjCObject) {
-    def toPtr: id = o.cast[id]
+    def toPtr: id = o.asInstanceOf[id]
   }
 
   /** NSString literal. */

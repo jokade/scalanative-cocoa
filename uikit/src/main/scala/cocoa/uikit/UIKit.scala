@@ -2,6 +2,7 @@
 package cocoa.uikit
 
 import scalanative.native._
+import scalanative.unsafe._
 import cocoa.foundation.{BOOL, NSString}
 
 @extern

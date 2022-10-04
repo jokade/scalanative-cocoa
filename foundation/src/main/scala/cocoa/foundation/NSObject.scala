@@ -3,6 +3,7 @@ package cocoa.foundation
 
 import scala.language.experimental.macros
 import scalanative.native._
+import scalanative.unsafe._
 import objc._
 import scala.scalanative.native.objc.runtime.{IMP, ObjCObject}
 

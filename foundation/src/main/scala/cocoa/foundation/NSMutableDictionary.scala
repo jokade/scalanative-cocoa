@@ -2,6 +2,8 @@
 package cocoa.foundation
 
 import scalanative.native._
+import scalanative.unsafe._
+import scalanative.unsigned._
 import objc._
 
 @ObjC
@@ -41,8 +43,8 @@ object NSMutableDictionary extends NSMutableDictionaryClass {
   // TODO: use Iterable instead of Seq?
   def dictionaryWithObjects[K<:NSObject, V<:NSObject](objects: Seq[(K,V)]): NSMutableDictionary[K,V] = Zone { implicit z =>
     val count = objects.size
-    val objArray = stackalloc[id]( sizeof[id] * count)
-    val keyArray = stackalloc[id]( sizeof[id] * count )
+    val objArray = stackalloc[id]( sizeof[id] * count.toUInt)
+    val keyArray = stackalloc[id]( sizeof[id] * count.toUInt )
     for(i<-0 until count) {
       !(keyArray + i) = objects(i)._1.toPtr
       !(objArray + i) = objects(i)._2.toPtr

@@ -2,6 +2,7 @@
 package cocoa.foundation
 
 import scalanative.native._
+import scalanative.unsafe._
 import objc._
 
 import scala.language.experimental.macros

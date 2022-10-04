@@ -4,6 +4,7 @@
 package cocoa.foundation
 
 import scala.scalanative.native._
+import scala.scalanative.unsafe._
 import objc.runtime._
 import cocoa.foundation._
 
@@ -29,6 +30,6 @@ object Foundation {
 //  def CFBridgingRetain_(X: id): CFTypeRef = extern
 //  def CFBridgingRelease_(X: CFTypeRef): id = extern
 
-  def NSLog(format: NSString, args: CVararg*): Unit = extern
+  def NSLog(format: NSString, args: CVarArg*): Unit = extern
   def NXReadNSObjectFromCoder(decoder: NSCoder): NSObject = extern
 }

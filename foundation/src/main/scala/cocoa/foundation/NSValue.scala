@@ -2,6 +2,7 @@
 package cocoa.foundation
 
 import scala.scalanative.native._
+import scala.scalanative.unsafe._
 import objc._
 
 @ObjC

@@ -4,7 +4,9 @@ package cocoa.uikit
 import cocoa.foundation.{BOOL, NSArray, NSCoder, NSData, NSDictionary, NSError, NSObject, NSObjectClass, NSString, NSTimeInterval, NSURL, id}
 
 import scala.language.experimental.macros
+import scalanative.native.objc.{ObjC, ObjCClass}
 import scalanative.native._
+import scalanative.unsafe._
 
 @ObjC
 trait UIApplicationDelegate extends NSObject {

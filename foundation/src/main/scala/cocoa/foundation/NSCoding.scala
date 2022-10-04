@@ -5,9 +5,8 @@
 package cocoa.foundation
 
 import scalanative.native._
+import scalanative.unsafe._
 import objc._
-
-import scala.scalanative.native.extern
 
 @ObjC
 trait NSCoding {
