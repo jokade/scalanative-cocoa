@@ -3,6 +3,7 @@ package cocoa.foundation
 
 import scala.language.experimental.macros
 import scalanative.native._
+import scalanative.unsafe._
 import objc._
 import scala.scalanative.native.objc.runtime.{int32_t, int64_t}
 import scala.scalanative.posix.inttypes.uint8_t

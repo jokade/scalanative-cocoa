@@ -5,6 +5,8 @@ import de.surfice.smacrotools.debug
 
 import scala.language.experimental.macros
 import scalanative.native._
+import scalanative.unsafe._
+import scalanative.unsigned._
 import objc._
 
 
@@ -80,7 +82,7 @@ object NSArray extends NSArrayClass {
   // TODO: use Iterable instead of Seq
   def arrayWithObjects[T<:NSObject](objects: Seq[T]): NSArray[T] = Zone { implicit z =>
     val count = objects.size
-    val array = stackalloc[id]( sizeof[id] * count)
+    val array = stackalloc[id]( sizeof[id] * count.toUInt)
     for(i<-0 until count)
       !(array + i) = objects(i).toPtr
     arrayWithObjects_count_(array,count.toULong)

@@ -2,6 +2,8 @@
 package cocoa.foundation
 
 import scala.scalanative.native._
+import scala.scalanative.unsafe._
+import scala.scalanative.unsigned._
 import objc._
 
 
@@ -63,8 +65,8 @@ object NSDictionary extends NSDictionaryClass {
   // TODO: use Iterable instead of Seq?
   def dictionaryWithObjects[K<:NSObject, V<:NSObject](objects: Seq[(K,V)]): NSDictionary[K,V] = Zone { implicit z =>
     val count = objects.size
-    val objArray = stackalloc[id]( sizeof[id] * count)
-    val keyArray = stackalloc[id]( sizeof[id] * count )
+    val objArray = stackalloc[id]( sizeof[id] * count.toUInt)
+    val keyArray = stackalloc[id]( sizeof[id] * count.toUInt )
     for(i<-0 until count) {
       !(keyArray + i) = objects(i)._1.toPtr
       !(objArray + i) = objects(i)._2.toPtr

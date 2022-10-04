@@ -5,8 +5,6 @@ import de.surfice.smacrotools.MacroAnnotationHandler
 import scala.annotation.{StaticAnnotation, compileTimeOnly}
 import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
-import scala.scalanative.native.objc.ObjCMacroTools
-import scala.scalanative.native.objc.runtime.ObjCObject
 
 @compileTimeOnly("enable macro paradise to expand macro annotations")
 class wrapDictionary extends StaticAnnotation {

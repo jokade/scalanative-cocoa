@@ -5,7 +5,9 @@ import cocoa.foundation.{BOOL, NSArray, NSCoder, NSCoding, NSObject, NSObjectCla
 import de.surfice.smacrotools.debug
 
 import scala.language.experimental.macros
+import scalanative.native.objc.{ObjC, ObjCClass}
 import scalanative.native._
+import scalanative.unsafe._
 
 @ObjC
 @debug

@@ -6,6 +6,7 @@
 package cocoa.foundation
 
 import scalanative.native._
+import scalanative.unsafe._
 
 import scala.language.experimental.macros
 

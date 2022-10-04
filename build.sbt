@@ -1,23 +1,25 @@
-organization in ThisBuild := "de.surfice"
+ThisBuild / organization := "de.surfice"
 
-version in ThisBuild := "0.0.2-SNAPSHOT"
+ThisBuild / version := "0.0.2-SNAPSHOT"
 
-scalaVersion in ThisBuild := "2.11.12"
+ThisBuild / scalaVersion := "2.13.8"
 
 val Version = new {
   val slogging    = "0.5.3"
-  val objc        = "0.0.5-SNAPSHOT"
+  val objc        = "0.0.6"
   val utest       = "0.6.3"
 }
 
 
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq("-deprecation","-unchecked","-feature","-language:implicitConversions","-Xlint"),
-  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
+  //addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
+  scalacOptions += "-Ymacro-annotations",
   libraryDependencies ++= Seq(
-    "de.surfice" %%% "scalanative-interop-objc" % Version.objc,
-    "com.lihaoyi" %%% "utest" % Version.utest % "test"
-    ),
+    "org.scala-lang" % "scala-reflect" % scalaVersion.value
+    //"de.surfice" %%% "scalanative-interop-objc" % Version.objc,
+    //"com.lihaoyi" %%% "utest" % Version.utest % "test"
+  ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 )
 
@@ -31,10 +33,20 @@ lazy val cocoa = project.in(file("."))
   .settings(dontPublish:_*)
   .settings(
     name := "sncocoa"
+  )
+
+lazy val objc = project
+  .enablePlugins(ScalaNativePlugin)
+  .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
+  .settings(
+    libraryDependencies ++= Seq(
+      "de.surfice" %% "smacrotools" % "0.0.9-SNAPSHOT"
     )
+  )
 
 lazy val foundation = project
   .enablePlugins(ScalaNativePlugin)
+  .dependsOn(objc)
   .settings(commonSettings ++ nativeSettings ++ publishingSettings:_*)
   .settings(
     name := "scalanative-cocoa-foundation"
@@ -78,8 +90,8 @@ lazy val test = project
 lazy val dontPublish = Seq(
   publish := {},
   publishLocal := {},
-  com.typesafe.sbt.pgp.PgpKeys.publishSigned := {},
-  com.typesafe.sbt.pgp.PgpKeys.publishLocalSigned := {},
+  com.jsuereth.sbtpgp.PgpKeys.publishSigned := {},
+  com.jsuereth.sbtpgp.PgpKeys.publishLocalSigned := {},
   publishArtifact := false,
   publishTo := Some(Resolver.file("Unused transient repository",file("target/unusedrepo")))
 )
@@ -114,4 +126,3 @@ lazy val publishingSettings = Seq(
     </developers>
   )
 )
-

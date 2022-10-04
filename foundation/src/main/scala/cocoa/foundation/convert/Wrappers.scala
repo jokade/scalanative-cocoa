@@ -5,6 +5,8 @@
 package cocoa.foundation.convert
 
 import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 import cocoa.foundation.{NSArray, NSDictionary, NSEnumerator, NSObject, Foundation, NSQuote}
 import Foundation.NSLog
 import objc.runtime._
@@ -32,7 +34,9 @@ object Wrappers {
     // TODO: more efficient implementation
     override def iterator: Iterator[(K, V)] = KeyValueIterator(keyIterator,ns)
 
-    override def -(key: K): Map[K, V] = ???
+    //override def -(key: K): Map[K, V] = ???
+    override def removed(key: K): Map[K, V] = ???
+    override def updated[V1 >: V](key: K, value: V1): Map[K, V] = ???
 
     override def size: CInt = ns.count().toInt
   }
@@ -66,7 +70,7 @@ object Wrappers {
     override def next(): T = {
       loadNext()
       _consumed = true
-      _next.cast[NSObject].asInstanceOf[T]
+      _next.asInstanceOf[NSObject].asInstanceOf[T]
     }
   }
 }

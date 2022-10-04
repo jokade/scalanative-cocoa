@@ -5,6 +5,7 @@ import cocoa.foundation.NSFastEnumeration.NSFastEnumerationState
 
 import scala.language.experimental.macros
 import scalanative.native._
+import scalanative.unsafe._
 import objc._
 
 @ObjC
